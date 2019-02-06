@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/restaurantlogo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".85"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etusername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/bg_boarder"
+                android:drawableLeft="@drawable/icons_email"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:fontFamily="@font/acme"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:paddingLeft="15dp"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etpassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/bg_boarder"
+                android:drawableLeft="@drawable/iconslock"
+                android:drawablePadding="5dp"
+                android:ems="10"
+                android:fontFamily="@font/acme"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="15dp"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btnlogin"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/acme"
+                android:text="Sign in"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvfacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight=".70"
+                    android:background="#358"
+                    android:drawableLeft="@drawable/facebook2"
+                    android:gravity="center"
+                    android:text="Sign In"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/acme" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="OR"
+                    android:textSize="18sp"
+                    app:fontFamily="@font/acme" />
+
+                <TextView
+                    android:id="@+id/tvgoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_weight=".70"
+                    android:background="#BF1702"
+                    android:drawableLeft="@drawable/g4"
+                    android:gravity="center"
+                    android:text="Sign In"
+                    android:textColor="@color/colorsplash"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/acme" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:text="Forget Password"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/acme" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="New User? Sign In"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/acme" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

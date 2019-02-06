@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/editbox_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tveditcartitemname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/acme"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".90"
+                android:fontFamily="@font/acme"
+                android:gravity="center"
+                android:text="Cost"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tveditcartcost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight=".90"
+                android:fontFamily="@font/acme"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imgmultiple"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/icon_multiplication" />
+
+            <TextView
+                android:id="@+id/tvplus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".95"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/tveditnoofitem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".90"
+                android:background="@android:drawable/editbox_background"
+                android:fontFamily="@font/acme"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvminus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".95"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp" />
+
+            <ImageView
+                android:id="@+id/imgeualto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/icon_equalto" />
+
+            <TextView
+                android:id="@+id/tvedittotalcost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight=".90"
+                android:fontFamily="@font/acme"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

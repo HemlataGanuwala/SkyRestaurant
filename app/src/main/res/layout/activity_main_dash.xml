@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainDashActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/dashtoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <ImageView
+                android:id="@+id/imgviewback"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:src="@drawable/icon_back" />
+
+            <TextView
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingRight="10dp"
+                android:text="Menu"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                app:fontFamily="@font/short_stack" />
+
+            <ImageView
+                android:id="@+id/imgviewcartdash"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:src="@drawable/cart"/>
+
+            <TextView
+                android:id="@+id/tvcount"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:gravity="right|top"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:background="@color/colorsplash"
+                app:fontFamily="@font/short_stack" />
+
+        </android.support.v7.widget.Toolbar>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ViewFlipper
+                android:id="@+id/dashviewflipper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ViewFlipper>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight=".80">
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/dashtablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorsplash"
+                app:tabIndicatorColor="@color/colorPrimary"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabTextColor="@color/colorPrimary">
+
+            </android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/dashviewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

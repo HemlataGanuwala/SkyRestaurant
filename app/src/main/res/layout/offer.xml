@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="#fff"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="2dp"
+        android:background="@drawable/bg_dashrect"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight=".30"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvfestnm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                app:fontFamily="@font/acme" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valid From:"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/acme" />
+
+                <TextView
+                    android:id="@+id/tvfromdt"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/acme"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/acme" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To:"
+                    android:textColor="@color/gray"
+                    android:textSize="12sp"
+                    app:fontFamily="@font/acme" />
+
+                <TextView
+                    android:id="@+id/tvtodt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/acme"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:fontFamily="@font/acme" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvdisc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/acme"
+                android:gravity="center"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="DISCOUNT"
+                android:textSize="13sp"
+                app:fontFamily="@font/acme" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

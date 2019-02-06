@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpmenu">
+
+        <item android:id="@+id/nav_menu"
+            android:icon="@drawable/menu"
+            android:title="Menu"
+            android:checked="true"
+            />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpoffer">
+
+        <item android:id="@+id/nav_offer"
+            android:title="Offer"
+            android:icon="@drawable/offer"
+            android:checked="true"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grporderhis">
+
+        <item android:id="@+id/nav_orderhis"
+            android:icon="@drawable/orderhis"
+            android:title="Order History"
+            android:checked="true"/>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_cartlist"
+            android:icon="@drawable/cartlist"
+            android:title="Cart List"
+            android:checked="true"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpabout">
+
+        <item android:id="@+id/nav_about"
+            android:title="About Us"
+            android:icon="@drawable/aboutus"
+            android:checked="true"/>
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpshare">
+
+        <item
+            android:id="@+id/nav_share"
+            android:checked="true"
+            android:icon="@drawable/icon_shares"
+            android:title="Share with friends" />
+    </group>
+
+      <group android:checkableBehavior="single"
+        android:id="@+id/grprefer">
+
+          <item
+              android:id="@+id/nav_refer"
+              android:checked="true"
+              android:icon="@drawable/icon_earns"
+              android:title="Refer Code" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpwallet">
+
+        <item
+            android:id="@+id/nav_wallet"
+            android:checked="true"
+            android:icon="@drawable/icons_money"
+            android:title="Money Wallet" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grprateus">
+
+        <item
+            android:id="@+id/nav_rateus"
+            android:checked="true"
+            android:icon="@drawable/icon_rating"
+            android:title="Rate Us On The Playstore" />
+    </group>
+
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/grplogin">
+
+        <item android:id="@+id/nav_login"
+            android:icon="@drawable/login"
+            android:title="Login"
+            android:checked="true"/>
+    </group>
+
+</menu>

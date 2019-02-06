@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+
+        <item>@font/aclonica</item>
+        <item>@font/acme</item>
+        <item>@font/actor</item>
+        <item>@font/allan</item>
+        <item>@font/almendra</item>
+        <item>@font/almendra_display</item>
+        <item>@font/almendra_italic</item>
+        <item>@font/amarante</item>
+        <item>@font/annie_use_your_telescope</item>
+        <item>@font/baumans</item>
+        <item>@font/caveat</item>
+        <item>@font/chewy</item>
+        <item>@font/comfortaa_light</item>
+        <item>@font/macondo_swash_caps</item>
+        <item>@font/short_stack</item>
+    </array>
+</resources>

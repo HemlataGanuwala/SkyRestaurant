@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trasperent"
+    android:orientation="vertical"
+    tools:context=".EmailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etmobileno"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="2dp"
+            android:background="@color/colorsplash"
+            android:drawableLeft="@drawable/icon_pass"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/acme"
+            android:hint="Email Address"
+            android:paddingLeft="20dp"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnsend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_button"
+            android:fontFamily="@font/acme"
+            android:text="Send"
+            android:textAllCaps="false"
+            android:textColor="@color/colorsplash"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/emailquet"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            app:fontFamily="@font/acme" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

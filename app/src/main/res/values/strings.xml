@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Flavour Heights</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+    <string name="splash_title">Flavour Heights</string>
+    <string name="facebook_app_id">791721327862294</string>
+    <string name="fb_login_protocol_scheme">fb791721327862294</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="smsquet">Don\'t worry! Just fill in your mobile no and we will help you reset your password</string>
+
+    <string name="emailquet">Don\'t worry! Just fill in your email and we will help you reset your password</string>
+
+    <string name="term">Term and conditions template for website usage Test Changes</string>
+
+    <string name="privacy">Welcome to our website. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern [buisness bane]\'s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.</string>
+
+    <string name="privacys">The term \'[buisness name]\' or \'us\' or \'we\' refers to the owner of the website whose registered office is [company registration number and place of registration]. The term \'you\' refers to the user or viewer of our website </string>
+
+    <string name="terms">The use of this website is subject to the following terms of use:</string>
+
+    <string name="termsss">The content of the pages of this website is for you general information and use only. It is subject to change without notice.
+    This website uses ccokies to monitor browsing preferences. If you do allow cookies to be used, the following personal information may be stored by us for use by third parties:[insert list of information].
+    </string>
+
+    <string name="item">Restaurant Hub is committed to providing superior quality services to users and to the restaurants we work with. To assist us in maintaining a consistently high level of service, users must cancel any reservations that they will be unable to honor at least 120 minutes in advance of the reservation. You may cancel your reservation via the automated email/mobile ‘Confirmation’ communication sent at the time of booking or by calling the restaurant directly.
+
+You may also be required to follow the cancellation policy of the restaurant you book with, which is disclosed at the time the reservation is made and some restaurants may require a debit or credit card number to finalize your reservation. In order to use the reservation services for these restaurants, you must provide valid debit or credit card information. To confirm that the debit or credit card information you have provided is accurate, we may place a temporary authorization on your debit or credit card at the time you provide your debit or credit card information. After we verify that your debit or credit card information is accurate, usually within a few days, the authorization will be removed. Restaurant Hub will only use the debit or credit card information you provide in the ways described in our privacy policy.
+
+The restaurant you book with may have the right under its cancellation policy to make a charge to your debit or credit card in compliance with that policy. Restaurant Hub will not have any liability for any charges made to the debit or credit card account due to any failure to cancel your reservation in accordance with a restaurant’s cancellation policy.</string>
+
+    <string name="text1">Refering your friends is as simple as these 3 Steps:</string>
+
+    <string name="text2">Step 1: Share your\'s a Referral code.</string>
+
+    <string name="text3">Step 2: When your friends using referral code, they will receive worth Rs.50 or more.</string>
+
+    <string name="text4">Step 3: After you will credit your e-wallet with Rs.50</string>
+    <string name="title_activity_maps">Map</string>
+
+</resources>

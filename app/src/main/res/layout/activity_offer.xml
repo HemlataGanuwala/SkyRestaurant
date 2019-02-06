@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/trasperent"
+    android:orientation="vertical"
+    tools:context=".OfferActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbaroffer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageView
+            android:id="@+id/imgvback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/icon_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="10dp"
+            android:text="Offers"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            app:fontFamily="@font/acme" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="left|center"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:text="Offers Available"
+        android:textSize="16sp"
+        app:fontFamily="@font/acme" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleoffer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
