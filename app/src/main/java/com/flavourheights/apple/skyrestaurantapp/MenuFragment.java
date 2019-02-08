@@ -44,9 +44,6 @@ public class MenuFragment extends Fragment {
         bevreages=(TextView)view.findViewById(R.id.tvbeverages);
         dessert=(TextView)view.findViewById(R.id.tvdessert);
 
-
-
-
         cardViewsoup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,10 +51,7 @@ public class MenuFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(),MainDashActivity.class);
                 intent.putExtra("a2",soupsmenu);
-                intent.putExtra("User",user);
-                intent.putExtra("Password",pass);
                 startActivity(intent);
-
 
             }
         });
@@ -74,8 +68,92 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        cardViewcurries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                soupsmenu=currires.getText().toString();
+
+                Intent intent = new Intent(getActivity(),MainDashActivity.class);
+                intent.putExtra("a2",soupsmenu);
+                startActivity(intent);
+
+            }
+        });
+
+
+        cardViewstarter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                soupsmenu=starter.getText().toString();
+
+                Intent intent = new Intent(getActivity(),MainDashActivity.class);
+                intent.putExtra("a2",soupsmenu);
+                startActivity(intent);
+
+            }
+        });
+
+        cardViewsalad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                soupsmenu=salad.getText().toString();
+
+                Intent intent = new Intent(getActivity(),MainDashActivity.class);
+                intent.putExtra("a2",soupsmenu);
+                startActivity(intent);
+
+            }
+        });
+
+
+        cardViewdesert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                soupsmenu=dessert.getText().toString();
+
+                Intent intent = new Intent(getActivity(),MainDashActivity.class);
+                intent.putExtra("a2",soupsmenu);
+                startActivity(intent);
+
+            }
+        });
+
+        cardViewchines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                soupsmenu=chinese.getText().toString();
+
+                Intent intent = new Intent(getActivity(),MainDashActivity.class);
+                intent.putExtra("a2",soupsmenu);
+                startActivity(intent);
+
+            }
+        });
+
+        cardViewbeverage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                soupsmenu=bevreages.getText().toString();
+
+                Intent intent = new Intent(getActivity(),MainDashActivity.class);
+                intent.putExtra("a2",soupsmenu);
+                startActivity(intent);
+
+            }
+        });
+
+
+
         return view;
     }
+
+
 
 //    public void Display()
 //    {

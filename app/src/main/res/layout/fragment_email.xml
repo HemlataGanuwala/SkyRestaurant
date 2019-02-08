@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/etmobileno"
+            android:id="@+id/etemail"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="2dp"

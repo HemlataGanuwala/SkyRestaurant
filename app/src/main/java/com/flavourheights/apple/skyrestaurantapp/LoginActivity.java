@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     SignInButton buttongooglelogin;
     Button buttonlogin;
     String username, password;
-    String path;
+    String path, email, mobile, pass;
     int Status;
     ServiceHandler shh;
     ProgressDialog progress;
@@ -160,6 +160,20 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
             public void onClick(View v) {
 
                 insertLoginData();
+
+                if (username.equals("PhoneNo") || username.equals("Email"))
+                {
+                    new LoginData().execute();
+                }else {
+                    Toast.makeText(LoginActivity.this, "Username Not Matched", Toast.LENGTH_LONG).show();
+                }
+
+                if (password.equals("Password"))
+                {
+                    new LoginData().execute();
+                }else {
+                    Toast.makeText(LoginActivity.this, "Password Not Matched", Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -286,7 +300,6 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         username=editTextuserid.getText().toString();
         password=editTextpassword.getText().toString();
 
-        new LoginData().execute();
     }
 
 //    @Override
@@ -426,6 +439,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 //    @Override public void onAPICallStarted() {
 //        Log.i(TAG, "onAPICallStarted");
 //    }
+
 
 
     class LoginData extends AsyncTask<Void,Void,String> {
