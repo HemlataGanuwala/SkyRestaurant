@@ -1,14 +1,11 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.Html;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -42,7 +36,6 @@ public class RegistrationActivity extends AppCompatActivity {
     ServiceHandler shh;
     String path;
     boolean valid=true;
-    FirebaseDatabase database;
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
                     "@" +
@@ -80,8 +73,6 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextconformpass=(EditText)findViewById(R.id.etconformpass);
 
         textViewcondition=(TextView)findViewById(R.id.tvcondition);
-        String text = "<font color=#000000>I Accept</font> <font color=#E53935>Term and Conditions</font>";
-        textViewcondition.setText(Html.fromHtml(text));
         textViewcondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,18 +84,21 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
         radioButtonaccept=(RadioButton)findViewById(R.id.rbaccept);
-
-        buttonregister=(Button)findViewById(R.id.btnregister);
-        buttonregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                insertData();
-
-
-            }
-        });
-
+//        radioButtonaccept.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if(radioButtonaccept.equals(true))
+//                {
+//                    insertData();
+//                }
+//
+//                else {
+//
+//                    Toast.makeText(RegistrationActivity.this, "Accept Term and Condition", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
 
         editTextconformpass.addTextChangedListener(new TextWatcher() {
             @Override
@@ -119,7 +113,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String passwrd=editTextpass.getText().toString();
+
+                String passwrd = editTextpass.getText().toString();
                 if (s.length() > 0 && passwrd.length() > 0) {
                     if (!editTextpass.equals(passwrd)) {
                         // give an error that password and confirm password not match
@@ -131,7 +126,14 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+        buttonregister=(Button)findViewById(R.id.btnregister);
+        buttonregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                insertData();
+            }
+        });
 
 
     }
@@ -144,24 +146,30 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneno=editTextphoneno.getText().toString();
         password=editTextpass.getText().toString();
         conformpass=editTextconformpass.getText().toString();
+//
+//        radioButtonaccept.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (radioButtonaccept.isChecked()){
+//                    buttonregister.setEnabled(true);
+////                    buttonregister.setTextColor(getResources().getColor(android.R.color.white));
+////                    buttonregister.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+//                }
+//
+//                else {
+//                    buttonregister.setEnabled(false);
+////                    buttonregister.setTextColor(getResources().getColor(android.R.color.white));
+////                    buttonregister.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+//                }
+//            }
+//        });
 
         if(validation()) {
             new RegisterData().execute();
-        }else{
-            Toast.makeText(RegistrationActivity.this, "Please Enter Valid Data", Toast.LENGTH_LONG).show();
+        }else {
+           Toast.makeText(RegistrationActivity.this, "All Field Mandatory", Toast.LENGTH_LONG).show();
         }
 
-        database= FirebaseDatabase.getInstance();
-        DatabaseReference posts = database.getReference();
-        posts.keepSynced(true);
-        Post post = new Post();
-        post.setFname(fname);
-        post.setLname(lname);
-        post.setEmail(emailid);
-        post.setMobileno(phoneno);
-        post.setPassword(password);
-
-        posts.push().setValue(post);
     }
 
     public boolean validation()
@@ -169,42 +177,38 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if(fname.isEmpty())
         {
-            editTextfname.setError("Name should not empty");
+            editTextfname.setError("");
             valid=false;
         }
 
         if (lname.isEmpty())
         {
-            editTextlname.setError("Last name should not empty");
+            editTextlname.setError("");
             valid=false;
         }
 
         if (!EMAIL_ADDRESS_PATTERN.matcher(emailid).matches())
         {
-            editTextemail.setError("Enter valid id");
+            editTextemail.setError("");
             valid=false;
         }
 
-        if (password.length() < 4 && password.length() > 9)
+        if (!password.equals(conformpass))
         {
-            editTextpass.setError("Enter Minimum 4 character");
+            editTextconformpass.setError("Password is not matched");
             valid=false;
         }
-
 
         if(!Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",phoneno)) {
-            editTextphoneno.setError("No should be 10-digit");
             valid = false;
+            editTextphoneno.setError("");
         }
 
-        if(!radioButtonaccept.isChecked())
-        {
-            radioButtonaccept.setError("");
-            valid=false;
-        }
-        else{
-            valid=true;
-        }
+//        if(!radioButtonaccept.equals(false))
+//        {
+//            radioButtonaccept.setError("");
+//            valid=false;
+//        }
 
         return valid;
     }

@@ -3,8 +3,10 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
     <string name="splash_title">Flavour Heights</string>
-    <string name="facebook_app_id">791721327862294</string>
-    <string name="fb_login_protocol_scheme">fb791721327862294</string>
+    <string name="facebook_app_id">292104011498407</string>
+    <string name="fb_login_protocol_scheme">fb292104011498407</string>
+    <!--<string name="facebook_app_id">791721327862294</string>-->
+    <!--<string name="fb_login_protocol_scheme">fb791721327862294</string>-->
 
 
     <!-- TODO: Remove or change this placeholder text -->
