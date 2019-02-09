@@ -2,50 +2,82 @@ package com.flavourheights.apple.skyrestaurantapp;
 
 public class Post {
 
-    String Fname;
-    String Lname;
-    String Email;
-    String Mobileno;
-    String Password;
+    private String firefname;
+    private String firelname;
+    private String fireemail;
+    private String firemobileno;
+    private String firepassword;
+    private String user;
+    private  String frreuserid;
 
-    public String getFname(){
-        return Fname;
+    public Post(String username, String email) {
+
+        this.user=username;
+        this.fireemail=email;
     }
 
-    public void setFname(String fname){
-        this.Fname=fname;
+//    public Post(String firefname, String firelname, String fireemail, String firemobileno, String firepassword){
+//        this.firefname=firefname;
+//        this.firelname=firelname;
+//        this.fireemail=fireemail;
+//        this.firemobileno=firemobileno;
+//        this.firepassword=firepassword;
+//    }
+
+
+    public String getUser() {
+        return user;
     }
 
-    public String getLname(){
-        return Lname;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public void setLname(String lname)
-    {
-        this.Lname=lname;
+    public String getFrreuserid() {
+        return frreuserid;
     }
 
-    public String getEmail(){
-        return Email;
+    public void setFrreuserid(String frreuserid) {
+        this.frreuserid = frreuserid;
     }
 
-    public void setEmail(String email){
-        this.Email=email;
+    public String getFirefname() {
+        return firefname;
     }
 
-    public String getMobileno(){
-        return Mobileno;
+    public void setFirefname(String firefname) {
+        this.firefname = firefname;
     }
 
-    public void setMobileno(String mobileno){
-        this.Mobileno=mobileno;
+    public String getFirelname() {
+        return firelname;
     }
 
-    public String getPassword(){
-        return Password;
+    public void setFirelname(String firelname) {
+        this.firelname = firelname;
     }
 
-    public void setPassword(String password){
-        this.Password=password;
+    public String getFireemail() {
+        return fireemail;
+    }
+
+    public void setFireemail(String fireemail) {
+        this.fireemail = fireemail;
+    }
+
+    public String getFiremobileno() {
+        return firemobileno;
+    }
+
+    public void setFiremobileno(String firemobileno) {
+        this.firemobileno = firemobileno;
+    }
+
+    public String getFirepassword() {
+        return firepassword;
+    }
+
+    public void setFirepassword(String firepassword) {
+        this.firepassword = firepassword;
     }
 }

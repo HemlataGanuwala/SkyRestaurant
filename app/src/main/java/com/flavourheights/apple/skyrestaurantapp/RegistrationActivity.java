@@ -1,12 +1,15 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
 import android.content.Intent;
-import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,18 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -32,12 +47,13 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView textViewcondition;
     RadioButton radioButtonaccept;
     Button buttonregister;
-    String fname, lname, emailid, phoneno, password, conformpass, accept;
+    String fname, lname, emailid, phoneno, password, conformpass, accept, mobileno, fname1, lname1, email1, pass1;
     int Status;
     ServiceHandler shh;
     String path;
     boolean valid=true;
-    DatabaseHelpher databaseHelpher;
+    FirebaseAuth mAuth;
+
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
                     "@" +
@@ -52,10 +68,10 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        databaseHelpher = new DatabaseHelpher(this);
-
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
+
+        mAuth=FirebaseAuth.getInstance();
 
         final Drawable icon=getResources().getDrawable(R.drawable.icon_error);
         final Drawable icon_write=getResources().getDrawable(R.drawable.icons_checkmark);
@@ -77,6 +93,8 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextconformpass=(EditText)findViewById(R.id.etconformpass);
 
         textViewcondition=(TextView)findViewById(R.id.tvcondition);
+        String text = "<font color=#000000>I Accept</font> <font color=#E53935>Term and Conditions</font>";
+        textViewcondition.setText(Html.fromHtml(text));
         textViewcondition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,21 +106,17 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
         radioButtonaccept=(RadioButton)findViewById(R.id.rbaccept);
-//        radioButtonaccept.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if(radioButtonaccept.equals(true))
-//                {
-//                    insertData();
-//                }
-//
-//                else {
-//
-//                    Toast.makeText(RegistrationActivity.this, "Accept Term and Condition", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        });
+
+        buttonregister=(Button)findViewById(R.id.btnregister);
+        buttonregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insertData();
+
+
+            }
+        });
+
 
         editTextconformpass.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,8 +131,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
-                String passwrd = editTextpass.getText().toString();
+                String passwrd=editTextpass.getText().toString();
                 if (s.length() > 0 && passwrd.length() > 0) {
                     if (!editTextpass.equals(passwrd)) {
                         // give an error that password and confirm password not match
@@ -130,14 +143,8 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        buttonregister=(Button)findViewById(R.id.btnregister);
-        buttonregister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                insertData();
-            }
-        });
+
 
 
     }
@@ -150,30 +157,29 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneno=editTextphoneno.getText().toString();
         password=editTextpass.getText().toString();
         conformpass=editTextconformpass.getText().toString();
-//
-//        radioButtonaccept.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (radioButtonaccept.isChecked()){
-//                    buttonregister.setEnabled(true);
-////                    buttonregister.setTextColor(getResources().getColor(android.R.color.white));
-////                    buttonregister.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-//                }
-//
-//                else {
-//                    buttonregister.setEnabled(false);
-////                    buttonregister.setTextColor(getResources().getColor(android.R.color.white));
-////                    buttonregister.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
-//                }
-//            }
-//        });
 
         if(validation()) {
-            InsertData(fname,lname,emailid,phoneno,password);
+
+
+            mAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()){
+                        FirebaseUser user= mAuth.getCurrentUser();
+                        Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        Toast.makeText(RegistrationActivity.this, "Account Not Created Successfully", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
             new RegisterData().execute();
-        }else {
-           Toast.makeText(RegistrationActivity.this, "All Field Mandatory", Toast.LENGTH_LONG).show();
+
+        }else{
+            Toast.makeText(RegistrationActivity.this, "Please Enter Valid Data", Toast.LENGTH_LONG).show();
         }
+
 
     }
 
@@ -182,46 +188,44 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if(fname.isEmpty())
         {
-            editTextfname.setError("");
+            editTextfname.setError("Name should not empty");
             valid=false;
         }
 
         if (lname.isEmpty())
         {
-            editTextlname.setError("");
+            editTextlname.setError("Last name should not empty");
             valid=false;
         }
 
         if (!EMAIL_ADDRESS_PATTERN.matcher(emailid).matches())
         {
-            editTextemail.setError("");
+            editTextemail.setError("Enter valid id");
             valid=false;
         }
 
-        if (!password.equals(conformpass))
+        if (password.length() < 4 && password.length() > 9)
         {
-            editTextconformpass.setError("Password is not matched");
+            editTextpass.setError("Enter Minimum 4 character");
             valid=false;
         }
+
 
         if(!Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",phoneno)) {
+            editTextphoneno.setError("No should be 10-digit");
             valid = false;
-            editTextphoneno.setError("");
         }
 
-//        if(!radioButtonaccept.equals(false))
-//        {
-//            radioButtonaccept.setError("");
-//            valid=false;
-//        }
+        if(!radioButtonaccept.isChecked())
+        {
+            radioButtonaccept.setError("");
+            valid=false;
+        }
+        else{
+            valid=true;
+        }
 
         return valid;
-    }
-
-
-    private void InsertData(String fname, String lname, String email,String mobileno,String password) {
-      databaseHelpher.RegistrationData(fname, lname, email,mobileno,password);
-
     }
 
 
