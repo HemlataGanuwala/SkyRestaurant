@@ -150,7 +150,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/ANDROIDSTUDIO/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_check_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_attach_money_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -160,8 +160,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="icon_check" />
+                            <entry key="color" value="6d686e" />
+                            <entry key="outputName" value="icon_cost" />
                             <entry key="sourceFile" value="C:\Users\Hema" />
                           </map>
                         </option>
