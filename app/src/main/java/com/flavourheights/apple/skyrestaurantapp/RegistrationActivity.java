@@ -1,18 +1,22 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -43,16 +47,17 @@ import java.util.regex.Pattern;
 public class RegistrationActivity extends AppCompatActivity {
 
     ImageView imageViewback;
-    EditText editTextfname, editTextlname, editTextemail, editTextphoneno, editTextpass, editTextconformpass;
+    EditText editTextfname, editTextlname, editTextemail, editTextphoneno, editTextpass, editTextconformpass,textViewrefercode;
     TextView textViewcondition;
     RadioButton radioButtonaccept;
     Button buttonregister;
-    String fname, lname, emailid, phoneno, password, conformpass, accept, mobileno, fname1, lname1, email1, pass1;
+    String fname, lname, emailid, phoneno, password, conformpass, refercode,regrefercode;
     int Status;
     ServiceHandler shh;
     String path;
     boolean valid=true;
     FirebaseAuth mAuth;
+    CheckBox checkBoxrefercode;
 
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
@@ -72,6 +77,8 @@ public class RegistrationActivity extends AppCompatActivity {
         path = globalVariable.getconstr();
 
         mAuth=FirebaseAuth.getInstance();
+        textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
+        textViewrefercode.setVisibility(View.GONE);
 
         final Drawable icon=getResources().getDrawable(R.drawable.icon_error);
         final Drawable icon_write=getResources().getDrawable(R.drawable.icons_checkmark);
@@ -92,6 +99,8 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextpass=(EditText)findViewById(R.id.etpassword);
         editTextconformpass=(EditText)findViewById(R.id.etconformpass);
 
+        new GetReferCode().execute();
+
         textViewcondition=(TextView)findViewById(R.id.tvcondition);
         String text = "<font color=#000000>I Accept</font> <font color=#E53935>Term and Conditions</font>";
         textViewcondition.setText(Html.fromHtml(text));
@@ -104,6 +113,23 @@ public class RegistrationActivity extends AppCompatActivity {
 
             }
         });
+
+        checkBoxrefercode = (CheckBox)findViewById(R.id.chkrefercode);
+        checkBoxrefercode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ((checkBoxrefercode).isChecked())
+                {
+                    textViewrefercode.setVisibility(View.VISIBLE);
+//                    regrefercode = textViewrefercode.getText().toString();
+//                    new ReferCodeData().execute();
+                }
+
+            }
+        });
+
+
 
         radioButtonaccept=(RadioButton)findViewById(R.id.rbaccept);
 
@@ -143,14 +169,33 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-
-
-
+    public void popupMessage()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationActivity.this);
+        builder.setTitle(R.string.app_name);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setMessage("Do you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void insertData()
     {
+
+
         fname=editTextfname.getText().toString();
         lname=editTextlname.getText().toString();
         emailid=editTextemail.getText().toString();
@@ -158,21 +203,30 @@ public class RegistrationActivity extends AppCompatActivity {
         password=editTextpass.getText().toString();
         conformpass=editTextconformpass.getText().toString();
 
+        if ((checkBoxrefercode).isChecked())
+        {
+            textViewrefercode.setVisibility(View.VISIBLE);
+            regrefercode = textViewrefercode.getText().toString();
+            new ReferCodeData().execute();
+        }
+
+
+
         if(validation()) {
 
 
-            mAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        FirebaseUser user= mAuth.getCurrentUser();
-                        Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Toast.makeText(RegistrationActivity.this, "Account Not Created Successfully", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
+//            mAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()){
+//                        FirebaseUser user= mAuth.getCurrentUser();
+//                        Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_LONG).show();
+//                    }
+//                    else {
+//                        Toast.makeText(RegistrationActivity.this, "Account Not Created Successfully", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            });
 
             new RegisterData().execute();
 
@@ -229,6 +283,59 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
+    public class GetReferCode extends AsyncTask<String, String, String>
+    {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progress=new ProgressDialog(ReferCodeActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh=new ServiceHandler();
+            String url = path+"Registration/ReferAndEarn";
+            Log.d("Url:", ">"+url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.GET , null);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    refercode = c1.getString("Response");
+                }
+
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //textViewRefer.setText(refercode);
+
+        }
+    }
+
 
     class RegisterData extends AsyncTask<String,String,String>
     {
@@ -252,6 +359,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 params2.add(new BasicNameValuePair("ConfirmedPassword",conformpass));
                 params2.add(new BasicNameValuePair("Email",emailid));
                 params2.add(new BasicNameValuePair("PhoneNo",phoneno));
+                params2.add(new BasicNameValuePair("ReferCode",refercode));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 
@@ -305,6 +413,55 @@ public class RegistrationActivity extends AppCompatActivity {
             editTextphoneno.setText(" ");
             editTextpass.setText(" ");
             editTextconformpass.setText(" ");
+
+        }
+
+    }
+
+    class ReferCodeData extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Registration/getReferCode";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
+                params2.add(new BasicNameValuePair("UserName",emailid));
+                params2.add(new BasicNameValuePair("RefStatus","1"));
+
+                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+
+                if (Jsonstr != null)
+                {
+                    JSONObject c1= new JSONObject(Jsonstr);
+                    Status =c1.getInt("Status");
+                }
+                else{
+                    Toast.makeText(RegistrationActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch ( JSONException e){
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
 
         }
 

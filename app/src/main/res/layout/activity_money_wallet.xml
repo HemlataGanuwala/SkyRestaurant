@@ -63,6 +63,7 @@
             android:textSize="26sp" />
 
         <EditText
+            android:id="@+id/etrefcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
@@ -71,6 +72,7 @@
             android:paddingTop="30dp" />
 
         <Button
+            android:id="@+id/btnreadme"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="120dp"
@@ -92,6 +94,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/tvrefcode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"

@@ -11,7 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flavourheights.apple.skyrestaurantapp.Model.CartListPlanet;
+
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +30,7 @@ public class ReferCodeActivity extends AppCompatActivity {
     ImageView imageViewback;
     ProgressDialog progress;
     ServiceHandler shh;
-    String path;
+    String path,user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,7 @@ public class ReferCodeActivity extends AppCompatActivity {
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
+       user = globalVariable.getUsername();
 
         textViewRefer=(TextView)findViewById(R.id.tvrefercode);
 
@@ -48,7 +53,7 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 Intent intent3 = new Intent(Intent.ACTION_SEND);
                 intent3.setType("text/plain");
-                String shareBody = "https://drive.google.com/open?id=1zrD8iqWKn5YSqFTTZ4GnNcu5FbLMGH0N";
+                String shareBody = "https://drive.google.com/open?id=15roJeXDa2CbIaeou6ObR6aWc-_k5xyEA";
                 String refer_code= refercode;
                 String value= shareBody+""+" My Refer Code is"+" "+refer_code;
                 String shareSub = "Your Sub Here";
@@ -94,11 +99,19 @@ public class ReferCodeActivity extends AppCompatActivity {
 
             try{
                 List<NameValuePair> params2 = new ArrayList<>();
-                String jsonStr = shh.makeServiceCall(url, ServiceHandler.GET , null);
+                params2.add(new BasicNameValuePair("Email",user));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
 
                 if (jsonStr != null) {
                     JSONObject c1 = new JSONObject(jsonStr);
-                    refercode = c1.getString("Response");
+                    JSONArray classArray = c1.getJSONArray("Response");
+
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        refercode = a1.getString("ReferCode");
+
+
+                    }
                 }
 
                 else

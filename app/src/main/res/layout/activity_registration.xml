@@ -140,6 +140,7 @@
                 android:textColor="@color/gray"
                 android:textSize="16sp" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -169,6 +170,22 @@
 
             </LinearLayout>
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chkrefercode"
+                android:text="I Have Referal Code"/>
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/etregrefercode"
+                android:textColor="@color/colorPrimary"
+                android:inputType="textCapCharacters"
+                android:textSize="16sp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/bg_rect"/>
+
             <Button
                 android:id="@+id/btnregister"
                 android:layout_width="match_parent"
@@ -176,6 +193,7 @@
                 android:background="@drawable/bg_button"
                 android:fontFamily="@font/acme"
                 android:text="Register"
+                android:layout_marginTop="10dp"
                 android:textAllCaps="false"
                 android:textColor="#fff"
                 android:textSize="18sp" />
