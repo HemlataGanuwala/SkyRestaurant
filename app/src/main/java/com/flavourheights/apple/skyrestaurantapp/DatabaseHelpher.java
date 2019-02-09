@@ -95,7 +95,7 @@ public Boolean RegistrationData(String fname,String lname,String email,String ph
     {
         SQLiteDatabase db = getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("select * from " + TABLE_Registration, null);
+        Cursor cursor = db.rawQuery("select * from Registration", null);
         return cursor;
     }
 

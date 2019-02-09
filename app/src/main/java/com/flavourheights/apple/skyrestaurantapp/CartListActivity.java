@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -78,22 +79,24 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-        imageViewedit = (ImageView)findViewById(R.id.imgpencile);
-        imageViewedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(CartListActivity.this, EditCartActivity.class);
-                intent.putExtra("User",user);
-                intent.putExtra("Pass",pass);
-                startActivity(intent);
-            }
-        });
+//        imageViewedit = (ImageView)findViewById(R.id.img_edit_pencile);
+//        imageViewedit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent(CartListActivity.this, EditCartActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclecartlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(CartListActivity.this));
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarcartlist);
         setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setTitle("Cart List");
+
 
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         headerview=navigationView.getHeaderView(0);
@@ -115,6 +118,38 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_cart_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(CartListActivity.this, MainDashActivity.class);
+                startActivity(intent1);
+                return true;
+
+
+            case R.id.cartpencile:
+                Intent intent = new Intent(CartListActivity.this, EditCartActivity.class);
+                startActivity(intent);
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+//        if (item.getItemId() == android.R.id.home) {
+//            finish(); // close this activity and return to preview activity (if there is any)
+//        }
+
 
     }
 

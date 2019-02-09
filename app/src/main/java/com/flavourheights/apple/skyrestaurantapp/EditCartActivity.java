@@ -35,7 +35,7 @@ import java.util.List;
 
 public class EditCartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EditCartAdapter.ClickOnItemListener{
 
-    ImageView imageViewback;
+    ImageView imageViewback,imageVieweditcheck;
     NavigationView navigationView;
     private SharedPreferences preferences;
     private DrawerLayout drawerLayout;
@@ -46,14 +46,13 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
     private static final String PREFS_NAME = "PrefsFile";
     Fragment fragment = null;
     RecyclerView recyclerView;
-    String subitem, path,user,pass,eRate,eCount,eTotamt;
+    String subitem, path,user,pass,totamt,totaleditcount;
     ServiceHandler shh;
     ArrayList<CartListPlanet> mPlanetlist= new ArrayList<CartListPlanet>();
     EditCartAdapter adapter;
-    double ammount, totalamount;
     TextView textViewtotlcost;
-    String eSubitem;
-    int Status = 1,rate,totalcost,totcount,qP,tQ,qM,tQM;
+    int Status = 1,rate,totalcost,totcount;
+    CartListPlanet cartListPlanet;
 
 
     @Override
@@ -98,6 +97,17 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+        imageVieweditcheck=(ImageView)findViewById(R.id.img_edit_check);
+        imageVieweditcheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                new UpdateCount().execute();
+                Intent i = new Intent(EditCartActivity.this, CartListActivity.class);
+                startActivity(i);
+
+            }
+        });
+
 
         preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -111,18 +121,6 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
 
 
     }
-
-//    public void Display()
-//    {
-//        Intent intent = getIntent();
-//        Bundle bundle = intent.getExtras();
-//        if (bundle != null)
-//        {
-//            user = (String)bundle.get("User");
-//            pass = (String)bundle.get("Pass");
-//        }
-//
-//    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -214,6 +212,17 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
     public void onOrderItemClick(int total) {
 
         textViewtotlcost.setText(String.valueOf(total));
+        totamt = String.valueOf(total);
+
+        for (int i=0; i<mPlanetlist.size();i++) {
+            totaleditcount = mPlanetlist.get(i).getTotalCount();
+//            CartListPlanet planet = new CartListPlanet(subitem, String.valueOf(rate), totamt, totaleditcount);
+//            mPlanetlist.add(planet);
+//            new UpdateCount().execute();
+        }
+
+//        totaleditcount = cartListPlanet.getTotalCount();
+
     }
 
 
@@ -234,11 +243,11 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
                 params2.add(new BasicNameValuePair("SubItemName",subitem));
-                params2.add(new BasicNameValuePair("ItemRate",String.valueOf(rate)));
+                //params2.add(new BasicNameValuePair("ItemRate",String.valueOf(rate)));
                 params2.add(new BasicNameValuePair("Username",user));
                 params2.add(new BasicNameValuePair("Password",pass));
-                params2.add(new BasicNameValuePair("TotalCount",String.valueOf(mPlanet.getTotalCount())));
-                params2.add(new BasicNameValuePair("TotalAmt",String.valueOf(mPlanet.getTotalCost())));
+                params2.add(new BasicNameValuePair("TotalCount",totaleditcount));
+                params2.add(new BasicNameValuePair("TotalAmt",totamt));
 
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);

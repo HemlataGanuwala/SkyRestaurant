@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
     int countitem;
     List<ItemPlanet> mPlanetlist = new ArrayList<ItemPlanet>();
     int count=0;
-    TextView textViewcount;
+    TextView textViewcount,textViewmenu;
     ServiceHandler shh;
     ProgressDialog progress;
    ItemAllFragment fragment;
@@ -52,31 +53,37 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
+        user = globalVariable.getUsername();
+        pass = globalVariable.getloginPassword();
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.dashtoolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Menu");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        toolbar.setTitle("Menu");
 
+        //textViewmenu = (TextView) toolbar.findViewById(R.id.tvtextmenu);
         textViewcount = (TextView)findViewById(R.id.tvcount);
 
-        imageViewback=(ImageView)findViewById(R.id.imgviewback);
-        imageViewback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainDashActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        imageViewback=(ImageView)findViewById(R.id.imgviewback);
+//        imageViewback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(MainDashActivity.this, MainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        imageViewcart=(ImageView)findViewById(R.id.imgviewcartdash);
-        imageViewcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainDashActivity.this, CartListActivity.class);
-                intent.putExtra("Username",user);
-                intent.putExtra("Password",pass);
-                startActivity(intent);
-            }
-        });
+//        imageViewcart=(ImageView)findViewById(R.id.imgviewcartdash);
+//        imageViewcart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(MainDashActivity.this, CartListActivity.class);
+//                intent.putExtra("Username",user);
+//                intent.putExtra("Password",pass);
+//                startActivity(intent);
+//            }
+//        });
 
         Display();
         Displaylogin();
@@ -116,6 +123,38 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
         viewFlipper.setInAnimation(MainDashActivity.this,android.R.anim.slide_in_left);
         viewFlipper.setOutAnimation(MainDashActivity.this,android.R.anim.slide_out_right);
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_main_dash, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(MainDashActivity.this, MainActivity.class);
+                startActivity(intent1);
+                return true;
+
+
+            case R.id.cartlistmaindash:
+                Intent intent = new Intent(MainDashActivity.this, CartListActivity.class);
+                startActivity(intent);
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+//        if (item.getItemId() == android.R.id.home) {
+//            finish(); // close this activity and return to preview activity (if there is any)
+//        }
 
 
     }

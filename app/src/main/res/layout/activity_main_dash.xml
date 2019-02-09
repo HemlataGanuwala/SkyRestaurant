@@ -21,27 +21,28 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <ImageView
-                android:id="@+id/imgviewback"
-                android:layout_width="40dp"
-                android:layout_height="30dp"
-                android:src="@drawable/icon_back" />
+            <!--<ImageView-->
+                <!--android:id="@+id/imgviewback"-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:src="@drawable/icon_back" />-->
 
-            <TextView
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingRight="10dp"
-                android:text="Menu"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                app:fontFamily="@font/short_stack" />
+            <!--<TextView-->
+                <!--android:id="@+id/tvtextmenu"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:paddingRight="10dp"-->
+                <!--android:text="Menu"-->
+                <!--android:textColor="@android:color/white"-->
+                <!--android:textSize="24sp"-->
+                <!--app:fontFamily="@font/short_stack" />-->
 
-            <ImageView
-                android:id="@+id/imgviewcartdash"
-                android:layout_width="40dp"
-                android:layout_height="30dp"
-                android:src="@drawable/cart"/>
+            <!--<ImageView-->
+                <!--android:id="@+id/imgviewcartdash"-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:src="@drawable/cart"/>-->
 
             <TextView
                 android:id="@+id/tvcount"
@@ -50,12 +51,11 @@
                 android:gravity="right|top"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
+                android:layout_marginLeft="70dp"
                 android:background="@color/colorsplash"
                 app:fontFamily="@font/short_stack" />
 
         </android.support.v7.widget.Toolbar>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -68,8 +68,6 @@ public class ItemAllFragment extends Fragment{
 
         Displayitem();
 
-        Displaylogin();
-
         mPlanetlist1.clear();
 
         new getAllItem().execute();
@@ -104,16 +102,16 @@ public class ItemAllFragment extends Fragment{
         }
     }
 
-    public void Displaylogin()
-    {
-        Intent intent = getActivity().getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null)
-        {
-            user = (String)bundle.get("User");
-            pass = (String)bundle.get("Password");
-        }
-    }
+//    public void Displaylogin()
+//    {
+//        Intent intent = getActivity().getIntent();
+//        Bundle bundle = intent.getExtras();
+//        if (bundle != null)
+//        {
+//            user = (String)bundle.get("User");
+//            pass = (String)bundle.get("Password");
+//        }
+//    }
 
     class getAllItem extends AsyncTask<Void, Void, String>
     {
@@ -305,7 +303,7 @@ public class ItemAllFragment extends Fragment{
                 params2.add(new BasicNameValuePair("ItemRate",rate1));
                 params2.add(new BasicNameValuePair("Username",user));
                 params2.add(new BasicNameValuePair("Password",pass));
-                params2.add(new BasicNameValuePair("TotalCount",cnt));
+                params2.add(new BasicNameValuePair("TotalCount","1"));
                 params2.add(new BasicNameValuePair("TotalAmt",rate1));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);

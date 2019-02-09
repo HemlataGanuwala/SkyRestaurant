@@ -61,8 +61,14 @@ public class SplashActivity extends AppCompatActivity {
 
         if (c != null)
         {
-            dataemail = c.getString(c.getColumnIndex("Email"));
-            datapass = c.getString(c.getColumnIndex("Password"));
+            if (c.moveToFirst()) {
+                do {
+                    dataemail = c.getString(c.getColumnIndex("Email"));
+                    datapass = c.getString(c.getColumnIndex("Password"));
+
+                }
+                while (c.moveToNext());
+            }
         }
     }
 }

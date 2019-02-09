@@ -1,6 +1,7 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class RegistrationActivity extends AppCompatActivity {
     ServiceHandler shh;
     String path;
     boolean valid=true;
+    DatabaseHelpher databaseHelpher;
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
                     "@" +
@@ -49,6 +51,8 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        databaseHelpher = new DatabaseHelpher(this);
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
@@ -165,6 +169,7 @@ public class RegistrationActivity extends AppCompatActivity {
 //        });
 
         if(validation()) {
+            InsertData(fname,lname,emailid,phoneno,password);
             new RegisterData().execute();
         }else {
            Toast.makeText(RegistrationActivity.this, "All Field Mandatory", Toast.LENGTH_LONG).show();
@@ -211,6 +216,12 @@ public class RegistrationActivity extends AppCompatActivity {
 //        }
 
         return valid;
+    }
+
+
+    private void InsertData(String fname, String lname, String email,String mobileno,String password) {
+      databaseHelpher.RegistrationData(fname, lname, email,mobileno,password);
+
     }
 
 

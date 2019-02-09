@@ -38,7 +38,12 @@
                 android:textColor="@color/colorsplash"
                 android:textSize="24sp" />
 
-
+            <ImageView
+                android:id="@+id/img_edit_check"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:src="@drawable/icon_check" />
 
         </android.support.v7.widget.Toolbar>
 

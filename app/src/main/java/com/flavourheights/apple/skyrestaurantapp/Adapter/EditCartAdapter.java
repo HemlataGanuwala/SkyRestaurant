@@ -102,7 +102,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
 
                // totalamount = totalamount + Integer.parseInt(String.valueOf(holder.textViewrate.getText()));
 
-                mPlanetList.get(holder.getAdapterPosition()).setTotalCost(holder.textViewtot.getText().toString());
+               // mPlanetList.get(holder.getAdapterPosition()).setTotalCost(holder.textViewtot.getText().toString());
             }
         });
 
