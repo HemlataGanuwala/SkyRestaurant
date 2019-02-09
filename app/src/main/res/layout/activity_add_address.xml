@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddAddressActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/imgback"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_back"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Add Address"
+            android:gravity="center"
+            android:textColor="@color/colorsplash"
+            android:textSize="24sp"
+            android:fontFamily="@font/acme"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/spincity"
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+        </Spinner>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
+        <Spinner
+            android:id="@+id/spinlocation"
+            android:layout_width="match_parent"
+            android:layout_height="80dp">
+
+        </Spinner>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
+        <EditText
+            android:id="@+id/ethouseno"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorsplash"
+            android:drawableLeft="@drawable/houseno"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:hint="House number/name"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
+
+        <EditText
+            android:id="@+id/etlocality"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorsplash"
+            android:drawableLeft="@drawable/icon_location"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:hint="Apartment/LocalityName"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
+
+        <EditText
+            android:id="@+id/etotheradd"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/colorsplash"
+            android:drawableLeft="@drawable/icon_appartment"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:hint="Address Other(Optional)"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
+        <Button
+            android:id="@+id/btnsave"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_button"
+            android:fontFamily="@font/acme"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

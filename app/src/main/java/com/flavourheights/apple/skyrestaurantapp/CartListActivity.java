@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
     NavigationView navigationView;
     private SharedPreferences preferences;
     private DrawerLayout drawerLayout;
+    Button buttonorder;
     CartListPlanet mPlanet;
     View headerview;
     ImageView imageViewshow;
@@ -109,6 +111,14 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
+        buttonorder=(Button)findViewById(R.id.btnorder);
+        buttonorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CartListActivity.this, PlaceOrderActivity.class);
+                startActivity(intent);
+            }
+        });
 
         preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         drawerLayout = findViewById(R.id.drawer_layout);
