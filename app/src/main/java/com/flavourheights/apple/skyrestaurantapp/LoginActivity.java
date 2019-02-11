@@ -180,19 +180,19 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
                 insertLoginData();
 
-                if (username.equals("PhoneNo") || username.equals("Email"))
-                {
-                    new LoginData().execute();
-                }else {
-                    Toast.makeText(LoginActivity.this, "Username Not Matched", Toast.LENGTH_LONG).show();
-                }
-
-                if (password.equals("Password"))
-                {
-                    new LoginData().execute();
-                }else {
-                    Toast.makeText(LoginActivity.this, "Password Not Matched", Toast.LENGTH_LONG).show();
-                }
+//                if (username.equals("PhoneNo") || username.equals("Email"))
+//                {
+//                    new LoginData().execute();
+//                }else {
+//                    Toast.makeText(LoginActivity.this, "Username Not Matched", Toast.LENGTH_LONG).show();
+//                }
+//
+//                if (password.equals("Password"))
+//                {
+//                    new LoginData().execute();
+//                }else {
+//                    Toast.makeText(LoginActivity.this, "Password Not Matched", Toast.LENGTH_LONG).show();
+//                }
 
             }
         });
@@ -371,8 +371,10 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
     public void insertLoginData()
     {
-        username=editTextuserid.getText().toString();
-        password=editTextpassword.getText().toString();
+        username=editTextuserid.getText().toString().trim();
+        password=editTextpassword.getText().toString().trim();
+
+        new LoginData().execute();
 
     }
 
@@ -532,7 +534,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         protected String doInBackground(Void... voids) {
 
             shh = new ServiceHandler();
-            String url = path + "Registration/Logindata";
+            String url = path + "Registration/GetLoginData";
             Log.d("Url: ", "> " + url);
 
             try
