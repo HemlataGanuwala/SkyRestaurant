@@ -186,24 +186,27 @@ public class ItemAllFragment extends Fragment{
 
             @Override
             public void iconImageViewOnClick(View v, int position) {
+                int t1 =0;
+                t1 = recyclerView.getAdapter().getItemCount();
 
-                count++;
-//                textViewcount.setText(String.valueOf(count));
-                cnt = String.valueOf(count);
+                for (int i=0; i<t1; i++)
+                {
+                    ItemPlanet planet1 = mPlanetlist1.get(position);
+                    subitem1 = planet1.getSubItemname();
+                    rate1 = planet1.getRate();
+                }
+                new getAllItemcount().execute();
 
-                //Intent intent = new Intent(getActivity(),MainDashActivity.class);
-                ItemPlanet planet1 = mPlanetlist1.get(position);
-//                intent.putExtra("SubItem",planet1.getSubItemname());
-//                intent.putExtra("Rate",planet1.getRate());
-//                intent.putExtra("CountItem",cnt);
-                subitem1 = planet1.getSubItemname();
-                rate1 = planet1.getRate();
-//                intent.putExtra("Username",user);
-//                intent.putExtra("Password",pass);
-
-//                startActivity(intent);
-
-                new RegisterData().execute();
+                if (Response == null)
+                {
+                    count++;
+                    cnt = String.valueOf(count);
+                    new RegisterData().execute();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "Item Already Added", Toast.LENGTH_LONG).show();
+                }
 
                 activityCommunicator.passDataActivity(cnt);
 
@@ -230,57 +233,57 @@ public class ItemAllFragment extends Fragment{
 
     }
 
-    //    class getAllItemcount extends AsyncTask<Void, Void, String>
-//    {
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-////            progress=new ProgressDialog(getContext());
-////            progress.setMessage("Loading...");
-////            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-////            progress.setIndeterminate(true);
-////            progress.setProgress(0);
-////            progress.show();
-//        }
-//
-//        @Override
-//        protected String doInBackground(Void... params) {
-//            shh = new ServiceHandler();
-//            String url = path + "Registration/GetItemsCount";
-//            Log.d("Url: ", "> " + url);
-//
-//            try{
-//                List<NameValuePair> params2 = new ArrayList<>();
-//                params2.add(new BasicNameValuePair("Username", user));
-//                params2.add(new BasicNameValuePair("Password", pass));
-//                params2.add(new BasicNameValuePair("SubItemName", subitem1));
-//                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
-//
-//                if (jsonStr != null) {
-//                    JSONObject c1 = new JSONObject(jsonStr);
-//                   Response  = c1.getString("Response");
-//
-//
-//                }
-//                else
-//                {
-//                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-//                }
-//
-//            }
-//            catch (JSONException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//           // progress.dismiss();
-//        }
-//    }
+        class getAllItemcount extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progress=new ProgressDialog(getContext());
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/GetItemsCount";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("Username", user));
+                params2.add(new BasicNameValuePair("Password", pass));
+                params2.add(new BasicNameValuePair("SubItemName", subitem1));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                   Response  = c1.getString("Response");
+
+
+                }
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+           // progress.dismiss();
+        }
+    }
 
    public class RegisterData extends AsyncTask<String,String,String>
     {
