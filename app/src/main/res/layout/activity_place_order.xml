@@ -42,7 +42,7 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/icon_cost"
                 android:drawablePadding="10dp"
@@ -55,7 +55,7 @@
             <TextView
                 android:id="@+id/tvcost"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/acme"
                 android:gravity="center|right"
@@ -71,10 +71,10 @@
             android:background="#cdc6c6"/>
 
 
-        <TextView
-            android:id="@+id/tvmobileno"
+        <EditText
+            android:id="@+id/etmobileno"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:background="@color/colorsplash"
             android:drawableLeft="@drawable/icon_phone"
             android:drawablePadding="10dp"
@@ -96,7 +96,7 @@
             <TextView
 
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/icon_calender"
                 android:drawablePadding="10dp"
@@ -109,7 +109,7 @@
             <TextView
                 android:id="@+id/tvdate"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_weight="1"
                 android:background="@color/browser_actions_bg_grey"
                 android:fontFamily="@font/acme"
@@ -126,7 +126,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50sp"
+            android:layout_height="50dp"
             android:gravity="bottom|center|left"
             android:hint="Select Address"
             android:paddingLeft="20dp"
@@ -143,7 +143,7 @@
         <TextView
             android:id="@+id/tvaddress"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="70dp"
             android:background="@color/colorsplash"
             android:gravity="center"
             android:textColor="@color/cardview_dark_background" />
@@ -156,8 +156,8 @@
             <TextView
                 android:id="@+id/tvaddadress"
                 android:layout_width="130dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="250dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="220dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_background"
                 android:gravity="center"
@@ -219,10 +219,11 @@
         <Button
             android:id="@+id/btnproceed"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bg_button"
             android:fontFamily="@font/acme"
             android:text="Proceed"

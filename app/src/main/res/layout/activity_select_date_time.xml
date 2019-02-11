@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SelectDateTimeActivity">
+
+    <DatePicker
+        android:id="@+id/datepicker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:calendarViewShown="true"
+        android:spinnersShown="false">
+
+    </DatePicker>
+
+    <TimePicker
+        android:id="@+id/timepicker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+    </TimePicker>
+
+    <Button
+        android:id="@+id/date_time_set"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_button"
+        android:text="Set"
+        android:textColor="@color/colorsplash"
+        android:fontFamily="@font/acme"
+        android:textAllCaps="false"
+        android:textSize="18sp"/>
+
+</LinearLayout>

@@ -40,10 +40,6 @@
             android:background="@color/cardview_light_background"
             android:orientation="vertical">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -51,7 +47,7 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="280dp"
+                        android:layout_height="180dp"
                         android:background="@color/cardview_light_background"
                         android:src="@drawable/refer" />
 
@@ -109,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:paddingTop="30dp"
+                        android:paddingTop="20dp"
                         android:text="Your Referal Code is"
                         android:textColor="@color/colorPrimary"
                         android:textSize="30sp"
@@ -121,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:paddingTop="30dp"
+                        android:paddingTop="20dp"
                         android:textColor="@color/blue"
                         android:textSize="28sp"
                         android:textStyle="bold" />
@@ -142,9 +138,6 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
-            </ScrollView>
-
 
         </LinearLayout>
 

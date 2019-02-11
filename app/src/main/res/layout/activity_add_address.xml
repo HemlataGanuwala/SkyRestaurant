@@ -37,7 +37,7 @@
         <Spinner
             android:id="@+id/spincity"
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="60dp">
 
         </Spinner>
 
@@ -49,7 +49,7 @@
         <Spinner
             android:id="@+id/spinlocation"
             android:layout_width="match_parent"
-            android:layout_height="80dp">
+            android:layout_height="60dp">
 
         </Spinner>
 
@@ -61,7 +61,7 @@
         <EditText
             android:id="@+id/ethouseno"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:background="@color/colorsplash"
             android:drawableLeft="@drawable/houseno"
             android:drawablePadding="10dp"
@@ -80,7 +80,7 @@
         <EditText
             android:id="@+id/etlocality"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:background="@color/colorsplash"
             android:drawableLeft="@drawable/icon_location"
             android:drawablePadding="10dp"
@@ -99,7 +99,7 @@
         <EditText
             android:id="@+id/etotheradd"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:background="@color/colorsplash"
             android:drawableLeft="@drawable/icon_appartment"
             android:drawablePadding="10dp"
