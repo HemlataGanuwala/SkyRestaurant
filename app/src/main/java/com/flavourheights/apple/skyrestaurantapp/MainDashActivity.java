@@ -144,6 +144,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
 
             case R.id.cartlistmaindash:
+
                 Intent intent = new Intent(MainDashActivity.this, CartListActivity.class);
                 startActivity(intent);
                 return true;

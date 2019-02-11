@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         GetData();
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
-        globalVariable.setconstr("http://192.168.0.105:8099/api/");
+        globalVariable.setconstr("http://192.168.0.105:8098/api/");
         globalVariable.setUsername(dataemail);
         globalVariable.setloginPassword(datapass);
 //        globalVariable.setconstr("http://restaurant.skyvisioncables.com/api/");

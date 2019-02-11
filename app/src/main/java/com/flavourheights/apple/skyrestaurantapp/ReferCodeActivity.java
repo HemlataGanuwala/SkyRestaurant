@@ -94,7 +94,7 @@ public class ReferCodeActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             shh=new ServiceHandler();
-            String url = path+"Registration/ReferAndEarn";
+            String url = path+"Registration/getRegReferCode";
             Log.d("Url:", ">"+url);
 
             try{

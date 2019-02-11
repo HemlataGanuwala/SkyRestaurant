@@ -129,7 +129,7 @@ public class ItemAllFragment extends Fragment{
         @Override
         protected String doInBackground(Void... params) {
             shh = new ServiceHandler();
-            String url = path + "Registration/getItemsWise";
+            String url = path + "Registration/getItemsWiseRecord";
             Log.d("Url: ", "> " + url);
 
             try{
@@ -238,12 +238,7 @@ public class ItemAllFragment extends Fragment{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            progress=new ProgressDialog(getContext());
-//            progress.setMessage("Loading...");
-//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//            progress.setIndeterminate(true);
-//            progress.setProgress(0);
-//            progress.show();
+
         }
 
         @Override

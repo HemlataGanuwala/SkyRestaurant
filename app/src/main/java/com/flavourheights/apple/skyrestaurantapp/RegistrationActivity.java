@@ -58,6 +58,7 @@ public class RegistrationActivity extends AppCompatActivity {
     boolean valid=true;
     FirebaseAuth mAuth;
     CheckBox checkBoxrefercode;
+    DatabaseHelpher databaseHelpher;
 
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
@@ -72,6 +73,8 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        databaseHelpher = new DatabaseHelpher(this);
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
@@ -124,6 +127,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     textViewrefercode.setVisibility(View.VISIBLE);
 //                    regrefercode = textViewrefercode.getText().toString();
 //                    new ReferCodeData().execute();
+                }
+                else
+                {
+                    textViewrefercode.setVisibility(View.GONE);
                 }
 
             }
@@ -227,6 +234,9 @@ public class RegistrationActivity extends AppCompatActivity {
 //                    }
 //                }
 //            });
+
+
+            databaseHelpher.RegistrationData(fname, lname, emailid,phoneno,password);
 
             new RegisterData().execute();
 
