@@ -123,6 +123,13 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
 
             case R.id.cartlistmaindash:
+
+                new getAllItem().execute();
+
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {}
+
                 if (count.equals("null")) {
                     setContentView(R.layout.message);
 //                    Toast.makeText(this, "No Item in Cart", Toast.LENGTH_LONG).show();

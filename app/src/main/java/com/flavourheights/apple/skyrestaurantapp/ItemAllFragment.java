@@ -72,7 +72,7 @@ public class ItemAllFragment extends Fragment{
 
         new getAllItem().execute();
 
-        //new getAllItemcount().execute();
+        new getAllItemcount().execute();
 
 //        sendData();
 
@@ -186,18 +186,22 @@ public class ItemAllFragment extends Fragment{
 
             @Override
             public void iconImageViewOnClick(View v, int position) {
-                int t1 =0;
-                t1 = recyclerView.getAdapter().getItemCount();
-
-                for (int i=0; i<t1; i++)
-                {
+//                int t1 =0;
+//                t1 = recyclerView.getAdapter().getItemCount();
+//
+//                for (int i=0; i<t1; i++)
+//                {
                     ItemPlanet planet1 = mPlanetlist1.get(position);
                     subitem1 = planet1.getSubItemname();
                     rate1 = planet1.getRate();
-                }
+//                }
                 new getAllItemcount().execute();
 
-                if (Response == null)
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {}
+
+                if (Response == "null")
                 {
                     count++;
                     cnt = String.valueOf(count);
