@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 import com.flavourheights.apple.skyrestaurantapp.Model.ItemPlanet;
 
@@ -37,7 +38,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
     String subitem, rate,user,pass;
     int countitem;
     List<ItemPlanet> mPlanetlist = new ArrayList<ItemPlanet>();
-    int count=0;
+    String count;
     TextView textViewcount,textViewmenu;
     ServiceHandler shh;
     ProgressDialog progress;
@@ -53,6 +54,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
+
         user = globalVariable.getUsername();
         pass = globalVariable.getloginPassword();
 
@@ -64,31 +66,6 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
         //textViewmenu = (TextView) toolbar.findViewById(R.id.tvtextmenu);
         textViewcount = (TextView)findViewById(R.id.tvcount);
-
-//        imageViewback=(ImageView)findViewById(R.id.imgviewback);
-//        imageViewback.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(MainDashActivity.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
-//        imageViewcart=(ImageView)findViewById(R.id.imgviewcartdash);
-//        imageViewcart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(MainDashActivity.this, CartListActivity.class);
-//                intent.putExtra("Username",user);
-//                intent.putExtra("Password",pass);
-//                startActivity(intent);
-//            }
-//        });
-
-        Display();
-        Displaylogin();
-//        DisplayFragment();
-
 
         int images[] = {R.drawable.rest_slide1, R.drawable.rest_slide2, R.drawable.rest_slide3, R.drawable.rest_slide4, R.drawable.rest_slide5};
         viewFlipper = (ViewFlipper)findViewById(R.id.dashviewflipper);
@@ -107,8 +84,10 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-
         createTab();
+        Display();
+//        Displaylogin();
+        new getAllItem().execute();
 
     }
 
@@ -144,11 +123,15 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
 
             case R.id.cartlistmaindash:
+                if (count.equals("null")) {
+                    setContentView(R.layout.message);
+//                    Toast.makeText(this, "No Item in Cart", Toast.LENGTH_LONG).show();
+                }else {
 
-                Intent intent = new Intent(MainDashActivity.this, CartListActivity.class);
-                startActivity(intent);
-                return true;
-
+                    Intent intent = new Intent(MainDashActivity.this, CartListActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -186,16 +169,16 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
         }
     }
 
-    public void Displaylogin()
-    {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null)
-        {
-            user = (String)bundle.get("User");
-            pass = (String)bundle.get("Password");
-        }
-    }
+//    public void Displaylogin()
+//    {
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        if (bundle != null)
+//        {
+//            user = (String)bundle.get("User");
+//            pass = (String)bundle.get("Password");
+//        }
+//    }
 
 
 
@@ -237,14 +220,9 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
                 if (jsonStr != null) {
                     JSONObject c1 = new JSONObject(jsonStr);
-                    JSONArray classArray = c1.getJSONArray("Response");
-                    for (int i = 0; i < classArray.length(); i++) {
-                        JSONObject a1 = classArray.getJSONObject(i);
-                        count = a1.getInt("TotalAmt");
-
-                    }
-
+                    count = c1.getString("Response");
                 }
+
                 else
                 {
                     //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
@@ -262,7 +240,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progress.dismiss();
-            textViewcount.setText(count);
+//            textViewcount.setText(count);
 
         }
     }

@@ -8,6 +8,7 @@ public class GlobalClass extends Application {
     public String constr = "";
     public String Username = "";
     public String LoginPassword = "";
+    public String MobileNo = "";
 
     public String getconstr() {
 
@@ -42,6 +43,11 @@ public class GlobalClass extends Application {
 
     }
 
+    public String getMobileNo() {
+        return MobileNo;
+    }
 
-
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
+    }
 }

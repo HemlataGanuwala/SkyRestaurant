@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -49,9 +50,9 @@ public class RegistrationActivity extends AppCompatActivity {
     ImageView imageViewback;
     EditText editTextfname, editTextlname, editTextemail, editTextphoneno, editTextpass, editTextconformpass,textViewrefercode;
     TextView textViewcondition;
-    RadioButton radioButtonaccept;
+    CheckBox radioButtonaccept;
     Button buttonregister;
-    String fname, lname, emailid, phoneno, password, conformpass, refercode,regrefercode;
+    String fname, lname, emailid, phoneno, password, conformpass, refercode,regrefercode, response, mobileno, user;
     int Status;
     ServiceHandler shh;
     String path;
@@ -78,6 +79,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
+        user = globalVariable.getUsername();
+        mobileno = globalVariable.getMobileNo();
 
         mAuth=FirebaseAuth.getInstance();
         textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
@@ -103,6 +106,8 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextconformpass=(EditText)findViewById(R.id.etconformpass);
 
         new GetReferCode().execute();
+//        new CheckRegData().execute();
+
 
         textViewcondition=(TextView)findViewById(R.id.tvcondition);
         String text = "<font color=#000000>I Accept</font> <font color=#E53935>Term and Conditions</font>";
@@ -127,9 +132,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     textViewrefercode.setVisibility(View.VISIBLE);
 //                    regrefercode = textViewrefercode.getText().toString();
 //                    new ReferCodeData().execute();
-                }
-                else
-                {
+                }else {
                     textViewrefercode.setVisibility(View.GONE);
                 }
 
@@ -138,13 +141,19 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
 
-        radioButtonaccept=(RadioButton)findViewById(R.id.rbaccept);
+        radioButtonaccept=(CheckBox)findViewById(R.id.rbaccept);
+
 
         buttonregister=(Button)findViewById(R.id.btnregister);
         buttonregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertData();
+
+                if (user == null || mobileno == null) {
+                    insertData();
+                }else {
+                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
+                }
 
 
             }
@@ -218,6 +227,19 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
 
+        radioButtonaccept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    radioButtonaccept.setError(null);
+                } else {
+                    radioButtonaccept.setError("Accept term and conditions");
+                }
+            }
+        });
+
+
+
 
         if(validation()) {
 
@@ -235,12 +257,14 @@ public class RegistrationActivity extends AppCompatActivity {
 //                }
 //            });
 
+                databaseHelpher.RegistrationData(fname,lname,emailid,phoneno,password);
+                new RegisterData().execute();
 
-            databaseHelpher.RegistrationData(fname, lname, emailid,phoneno,password);
 
-            new RegisterData().execute();
 
-        }else{
+
+        }
+        else{
             Toast.makeText(RegistrationActivity.this, "Please Enter Valid Data", Toast.LENGTH_LONG).show();
         }
 
@@ -282,7 +306,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if(!radioButtonaccept.isChecked())
         {
-            radioButtonaccept.setError("");
+            radioButtonaccept.setError("Accept term and condition");
             valid=false;
         }
         else{
@@ -400,8 +424,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 if (radioButtonaccept.isChecked()){
                     buttonregister.setEnabled(true);
-//                    buttonregister.setTextColor(getResources().getColor(android.R.color.white));
-//                    buttonregister.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
 
                     Toast.makeText(RegistrationActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
@@ -410,8 +432,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 else {
                     buttonregister.setEnabled(false);
-//                    buttonregister.setTextColor(getResources().getColor(android.R.color.white));
-//                    buttonregister.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+
                     Toast.makeText(RegistrationActivity.this, "Accept Term and Conditions", Toast.LENGTH_LONG).show();
                 }
 
@@ -472,9 +493,10 @@ public class RegistrationActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-
         }
 
     }
+
+
 
 }

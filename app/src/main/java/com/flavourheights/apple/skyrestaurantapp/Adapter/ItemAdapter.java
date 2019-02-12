@@ -40,7 +40,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListHolder> {
 
         void iconImageViewOnClick(View v, int position);
 
-        void iconSettingImageViewOnClick(View v, int position);
+
     }
 
     public void setOnCountClickListner(OnCountClickListener listner){
@@ -92,7 +92,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListHolder> {
 
     public class ListHolder extends RecyclerView.ViewHolder {
         TextView textViewitemname,textViewsubitemname,textViewrate;
-        ImageView imageViewitem, imageViewcart, imageViewsetting;
+        ImageView imageViewitem, imageViewcart;
         //LinearLayout parentlayout;
         public ListHolder(View itemView) {
             super(itemView);
@@ -102,7 +102,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListHolder> {
             textViewrate = (TextView) itemView.findViewById(R.id.tvrate);
             imageViewitem = (ImageView) itemView.findViewById(R.id.imgviewitem);
             imageViewcart=(ImageView) itemView.findViewById(R.id.imagecart);
-            imageViewsetting=(ImageView) itemView.findViewById(R.id.imagesetting);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,17 +128,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ListHolder> {
                 }
             });
 
-            imageViewsetting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(mlistner != null){
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            mlistner.iconSettingImageViewOnClick(v, getAdapterPosition());
-                        }
-                    }
-                }
-            });
+
         }
     }
 

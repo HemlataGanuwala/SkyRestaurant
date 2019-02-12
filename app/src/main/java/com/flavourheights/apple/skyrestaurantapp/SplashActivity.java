@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
     String path;
     ImageView logo;
     DatabaseHelpher databaseHelpher;
-    String dataemail,datapass;
+    String dataemail,datapass,datamobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +26,10 @@ public class SplashActivity extends AppCompatActivity {
         GetData();
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
-        globalVariable.setconstr("http://192.168.0.105:8098/api/");
+        globalVariable.setconstr("http://192.168.0.108:8098/api/");
         globalVariable.setUsername(dataemail);
         globalVariable.setloginPassword(datapass);
+        globalVariable.setMobileNo(datamobile);
 //        globalVariable.setconstr("http://restaurant.skyvisioncables.com/api/");
 //        globalVariable.setconstr("http://restaurant.flavourheights.co.in/api/");
 
@@ -65,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                 do {
                     dataemail = c.getString(c.getColumnIndex("Email"));
                     datapass = c.getString(c.getColumnIndex("Password"));
-
+                    datamobile = c.getString(c.getColumnIndex("PhoneNo"));
                 }
                 while (c.moveToNext());
             }

@@ -157,7 +157,9 @@
                     android:fontFamily="@font/acme"
                     android:gravity="center"
                     android:textColor="@color/cardview_dark_background"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
 
                 <TextView
                     android:id="@+id/tvcondition"

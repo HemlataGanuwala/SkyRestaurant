@@ -214,10 +214,6 @@ public class ItemAllFragment extends Fragment{
 
             }
 
-            @Override
-            public void iconSettingImageViewOnClick(View v, int position) {
-
-            }
         });
 
 
