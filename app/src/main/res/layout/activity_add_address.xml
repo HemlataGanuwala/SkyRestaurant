@@ -34,28 +34,58 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spincity"
+        <TextView
+            android:id="@+id/tvselectcity"
             android:layout_width="match_parent"
-            android:layout_height="30dp">
-
-        </Spinner>
+            android:layout_height="40dp"
+            android:drawableRight="@drawable/downarrow"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:paddingLeft="20dp"
+            android:paddingRight="30dp"
+            android:text="Select Your City"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+            android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tvcity"
             android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
             android:background="#cdc6c6"/>
 
-        <Spinner
-            android:id="@+id/spinlocation"
+        <TextView
+            android:id="@+id/tvselectlocation"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="40dp"
+            android:drawableRight="@drawable/downarrow"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:paddingLeft="20dp"
+            android:paddingRight="30dp"
+            android:text="Select Your location"
+            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
+            android:textSize="16sp" />
 
-        </Spinner>
+
+        <TextView
+            android:id="@+id/tvlocation"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:paddingLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
 
         <View
             android:layout_width="match_parent"
@@ -72,7 +102,7 @@
             android:fontFamily="@font/acme"
             android:gravity="center|left"
             android:hint="House number/name"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
         <View
@@ -91,7 +121,7 @@
             android:fontFamily="@font/acme"
             android:gravity="center|left"
             android:hint="Apartment/LocalityName"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
         <View
@@ -110,7 +140,7 @@
             android:fontFamily="@font/acme"
             android:gravity="center|left"
             android:hint="Address Other(Optional)"
-            android:paddingLeft="10dp"
+            android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
         <View

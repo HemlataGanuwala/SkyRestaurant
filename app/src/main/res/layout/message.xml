@@ -12,6 +12,13 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
 
+        <ImageView
+            android:id="@+id/imageback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_back"/>
+
+
     </android.support.v7.widget.Toolbar>
 
     <TextView

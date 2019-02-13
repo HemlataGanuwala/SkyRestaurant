@@ -54,7 +54,7 @@
                 android:layout_marginLeft="70dp"
                 android:background="@color/colorsplash"
                 app:fontFamily="@font/short_stack"
-                android:visibility="invisible"/>
+                android:visibility="visible"/>
 
         </android.support.v7.widget.Toolbar>
 

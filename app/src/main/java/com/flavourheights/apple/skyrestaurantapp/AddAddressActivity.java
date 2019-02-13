@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,16 +24,15 @@ import java.util.List;
 
 public class AddAddressActivity extends AppCompatActivity {
 
-    Spinner spinnercity, spinnerlocation;
+//    Spinner spinnercity, spinnerlocation;
     ImageView imageViewback;
     EditText editTexthouseno, editTextapartment, editTextotheraddress;
+    TextView textViewcity, textViewlocation, textViewselectcity, textViewselectlocation;
     Button buttonsave;
     ServiceHandler shh;
-    String path, houseno, appartmentname, otheraddress, city, location;
+    String path, houseno, appartmentname, otheraddress, city, location, tv_city, tv_location;
     int Status=1;
     boolean valid=true;
-    private String spcity[]={"Select City","Nagpur"};
-    private String splocation[]={"Select Location","Nandanvan", "New Nandanva", "Manish Nagar", "Ganesh Peth", "Bhande Plot", "Jagnade Square", "Sakardara", "Mahal", "Zashi Rani Square Bardi", "Railway Station", "Sadar"};
 
     ArrayAdapter adapter;
     @Override
@@ -49,19 +49,64 @@ public class AddAddressActivity extends AppCompatActivity {
         editTexthouseno=(EditText)findViewById(R.id.ethouseno);
         editTextapartment=(EditText)findViewById(R.id.etlocality);
 
+        textViewselectcity=(TextView)findViewById(R.id.tvselectcity);
+        textViewselectlocation=(TextView)findViewById(R.id.tvselectlocation);
+        textViewcity=(TextView)findViewById(R.id.tvcity);
+        textViewlocation=(TextView)findViewById(R.id.tvlocation);
+
         buttonsave=(Button)findViewById(R.id.btnsave);
 
-        spinnercity=(Spinner)findViewById(R.id.spincity);
-        spinnerlocation=(Spinner)findViewById(R.id.spinlocation);
+        textViewselectcity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(AddAddressActivity.this, SelectCityActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, spcity);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnercity.setAdapter(adapter);
+        textViewselectlocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(AddAddressActivity.this, SelectLocationActivity.class);
+                startActivity(intent);
+            }
+        });
 
-//        spinnerbranch.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
-        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, splocation);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerlocation.setAdapter(adapter);
+//        spinnercity=(Spinner)findViewById(R.id.spincity);
+//        spinnerlocation=(Spinner)findViewById(R.id.spinlocation);
+//
+//        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, spcity);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnercity.setAdapter(adapter);
+//        spinnercity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                TextView spin_city=(TextView) view;
+//                textViewcity.setText(spinnercity.getSelectedItem().toString());
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
+//
+////        spinnerbranch.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
+//        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, splocation);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerlocation.setAdapter(adapter);
+//        spinnerlocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                TextView spin_location=(TextView) view;
+//                textViewlocation.setText(spinnerlocation.getSelectedItem().toString());
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         imageViewback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +126,8 @@ public class AddAddressActivity extends AppCompatActivity {
 
     public void insertData()
     {
-        city=spinnercity.getSelectedItem().toString();
-        location=spinnerlocation.getSelectedItem().toString();
+//        city=spinnercity.getSelectedItem().toString();
+//        location=spinnerlocation.getSelectedItem().toString();
         houseno=editTexthouseno.getText().toString();
         appartmentname=editTextapartment.getText().toString();
         otheraddress=editTextotheraddress.getText().toString();
@@ -96,14 +141,6 @@ public class AddAddressActivity extends AppCompatActivity {
 
     public boolean validation()
     {
-        if (city.isEmpty())
-        {
-            ((TextView)spinnercity.getSelectedView()).setError("Please Select City");
-        }
-        if (location.isEmpty())
-        {
-            ((TextView)spinnerlocation.getSelectedView()).setError("Please Select Location");
-        }
         if (houseno.isEmpty())
         {
             editTexthouseno.setError("Enter House No");
@@ -131,8 +168,8 @@ public class AddAddressActivity extends AppCompatActivity {
 
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("City",city));
-                params2.add(new BasicNameValuePair("Location",location));
+//                params2.add(new BasicNameValuePair("City",city));
+//                params2.add(new BasicNameValuePair("Location",location));
                 params2.add(new BasicNameValuePair("HouseNo",houseno));
                 params2.add(new BasicNameValuePair("AppartmentName",appartmentname));
                 params2.add(new BasicNameValuePair("OtherAdd",otheraddress));
@@ -162,8 +199,8 @@ public class AddAddressActivity extends AppCompatActivity {
 
                 Toast.makeText(AddAddressActivity.this, "Address Save Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(AddAddressActivity.this, PlaceOrderActivity.class);
-                intent.putExtra("City", city);
-                intent.putExtra("Location", location);
+//                intent.putExtra("City", city);
+//                intent.putExtra("Location", location);
                 intent.putExtra("HouseNo", houseno);
                 intent.putExtra("AppartmentName", appartmentname);
                 intent.putExtra("OtherAddress", otheraddress);
