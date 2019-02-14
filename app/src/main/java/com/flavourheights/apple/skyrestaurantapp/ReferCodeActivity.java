@@ -53,7 +53,7 @@ public class ReferCodeActivity extends AppCompatActivity {
 
                 Intent intent3 = new Intent(Intent.ACTION_SEND);
                 intent3.setType("text/plain");
-                String shareBody = "https://drive.google.com/open?id=15roJeXDa2CbIaeou6ObR6aWc-_k5xyEA";
+                String shareBody = "https://drive.google.com/open?id=1LUvJ6nP_0Qit8QCaDQtl5JhrdGHQoQ1x";
                 String refer_code= refercode;
                 String value= shareBody+""+" My Refer Code is"+" "+refer_code;
                 String shareSub = "Your Sub Here";

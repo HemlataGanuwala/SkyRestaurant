@@ -1,5 +1,6 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
+import android.animation.ValueAnimator;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -18,16 +19,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.flavourheights.apple.skyrestaurantapp.Adapter.OfferAdapter;
+import com.flavourheights.apple.skyrestaurantapp.Model.ItemPlanet;
+import com.flavourheights.apple.skyrestaurantapp.Model.OfferPlanet;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -36,14 +46,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String PREFS_NAME = "PrefsFile";
     ViewFlipper viewFlipper;
     Fragment fragment = null;
-    ImageView imageViewshow, imageViewback;
+    ImageView imageViewshow;
     NavigationView navigationView;
     View headerview;
     Class fragmentClass;
     private SharedPreferences preferences;
-    String user,pass,path, count;
+    String user,pass,path,festnm,fromdt,todt,disc,date,date1,festival,discount,fromdate,todate,count;
     ServiceHandler shh;
+    TextView first,second;
+    OfferPlanet offerPlanet;
+    List<OfferPlanet> mPlanetlist1 = new ArrayList<OfferPlanet>();
     ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +72,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        first = (TextView) findViewById(R.id.first);
+//        second = (TextView) findViewById(R.id.second);
+
+//        new getofferlist().execute();
+
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         headerview=navigationView.getHeaderView(0);
         imageViewshow=(ImageView)headerview.findViewById(R.id.imgshow);
@@ -69,14 +88,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        imageViewback=(ImageView)findViewById(R.id.imageback);
-        imageViewback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+//        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+//        animator.setRepeatCount(ValueAnimator.INFINITE);
+//        animator.setInterpolator(new LinearInterpolator());
+//        animator.setDuration(9000L);
+//        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                final float progress = (float) animation.getAnimatedValue();
+//                final float width = first.getWidth();
+//                final float translationX = width * progress;
+//                first.setTranslationX(translationX);
+//                second.setTranslationX(translationX - width);
+//            }
+//        });
+//        animator.start();
 
 //        Display();
 
@@ -94,6 +120,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Fipperimage(image);
         }
 
+        new getAllItem().execute();
+
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -108,8 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
-
-        new getAllItem().execute();
     }
 
 //    public void Display()
@@ -146,13 +172,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cartlist:
+                new getAllItem().execute();
+
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {}
+
+                if (count.equals("null")) {
+                    setContentView(R.layout.message);
+//                    Toast.makeText(this, "No Item in Cart", Toast.LENGTH_LONG).show();
+                }else {
 
                     Intent intent = new Intent(MainActivity.this, CartListActivity.class);
-                    intent.putExtra("Username", user);
-                    intent.putExtra("Password", pass);
                     startActivity(intent);
                     return true;
-
+                }
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -204,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_share:
                 Intent intent3 = new Intent(Intent.ACTION_SEND);
                 intent3.setType("text/plain");
-                String shareBody = "https://drive.google.com/open?id=15roJeXDa2CbIaeou6ObR6aWc-_k5xyEA";
+                String shareBody = "https://drive.google.com/open?id=1LUvJ6nP_0Qit8QCaDQtl5JhrdGHQoQ1x";
                 String shareSub = "Your Sub Here";
                 intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 intent3.putExtra(Intent.EXTRA_SUBJECT, shareSub);
@@ -238,11 +273,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_cartlist:
 
-                    Intent intent6 = new Intent(getApplicationContext(), CartList2Activity.class);
-                    intent6.putExtra("Username", user);
-                    intent6.putExtra("Password", pass);
-                    startActivity(intent6);
-
+                Intent intent6= new Intent(getApplicationContext(), CartList2Activity.class);
+                intent6.putExtra("Username",user);
+                intent6.putExtra("Password",pass);
+                startActivity(intent6);
                 break;
 
             case R.id.nav_orderhis:
@@ -281,12 +315,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress=new ProgressDialog(MainActivity.this);
-            progress.setMessage("Loading...");
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            progress.setProgress(0);
-            progress.show();
+//            progress=new ProgressDialog(MainActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
         }
 
         @Override
@@ -322,8 +356,84 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            progress.dismiss();
+//            progress.dismiss();
 //            textViewcount.setText(count);
+
+        }
+    }
+
+    class getofferlist extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progress=new ProgressDialog(OfferActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getOffer";
+            Log.d("Url: ", "> " + url);
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.GET, null);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        festnm = a1.getString("FestivalName");
+                        fromdt = a1.getString("ValidFrom");
+                        todt = a1.getString("Validto");
+                        disc = a1.getString("Discount");
+
+
+//                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+//                        String date = formatter.format(Date.parse(fromdt));
+
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        Date d = sdf.parse(fromdt);
+                        String df = d.toString();
+                        System.out.println(d);
+
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+                        date = formatter.format(Date.parse(df));
+
+                        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                        Date d1 = sdf1.parse(todt);
+                        String dt = d1.toString();
+                        System.out.println(d);
+
+                        SimpleDateFormat formatter1 = new SimpleDateFormat("dd-MMM-yyyy");
+                        date1 = formatter1.format(Date.parse(dt));
+
+
+                    }
+
+
+                } else {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
 
         }
     }
