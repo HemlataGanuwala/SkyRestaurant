@@ -1,5 +1,6 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,6 +25,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flavourheights.apple.skyrestaurantapp.Adapter.ItemAdapter;
+import com.flavourheights.apple.skyrestaurantapp.Model.ItemPlanet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView textViewcondition;
     CheckBox radioButtonaccept;
     Button buttonregister;
-    String fname, lname, emailid, phoneno, password, conformpass, refercode,regrefercode, response, mobileno, user;
+    String fname, lname, emailid, phoneno, password, conformpass, refercode,regrefercode, response, mobileno, user,referuser,refername,refermobile,referlastname;
     int Status;
     ServiceHandler shh;
     String path;
@@ -105,6 +109,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextpass=(EditText)findViewById(R.id.etpassword);
         editTextconformpass=(EditText)findViewById(R.id.etconformpass);
 
+        new getReferData().execute();
         new GetReferCode().execute();
 //        new CheckRegData().execute();
 
@@ -223,7 +228,11 @@ public class RegistrationActivity extends AppCompatActivity {
         {
             textViewrefercode.setVisibility(View.VISIBLE);
             regrefercode = textViewrefercode.getText().toString();
-            new ReferCodeData().execute();
+            if (regrefercode != null)
+            {
+                new ReferCodeData().execute();
+            }
+
         }
 
 
@@ -461,12 +470,14 @@ public class RegistrationActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             shh = new ServiceHandler();
-            String url = path + "Registration/getReferCode";
+            String url = path + "Registration/AddReferCode";
 
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
                 params2.add(new BasicNameValuePair("ReferCode",regrefercode));
                 params2.add(new BasicNameValuePair("UserName",emailid));
+                params2.add(new BasicNameValuePair("RUserName",referuser));
+                params2.add(new BasicNameValuePair("RAmount","50"));
                 params2.add(new BasicNameValuePair("RefStatus","1"));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
@@ -495,6 +506,103 @@ public class RegistrationActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    class UpdateReferCodeData extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Registration/UpdateRegReferAmt";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
+                params2.add(new BasicNameValuePair("UserName",emailid));
+                params2.add(new BasicNameValuePair("RAmount","50"));
+
+                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+
+                if (Jsonstr != null)
+                {
+                    JSONObject c1= new JSONObject(Jsonstr);
+                    Status =c1.getInt("Status");
+                }
+                else{
+                    Toast.makeText(RegistrationActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch ( JSONException e){
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+
+    }
+
+    class getReferData extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getReferCodeData";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ReferCode", regrefercode));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        referuser = a1.getString("Email");
+                        refername = a1.getString("CustFirstName");
+                        referlastname = a1.getString("CustLastName");
+                        refermobile = a1.getString("PhoneNo");
+                    }
+                }
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
     }
 
 

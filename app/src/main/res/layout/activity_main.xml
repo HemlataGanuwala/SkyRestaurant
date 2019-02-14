@@ -50,29 +50,29 @@
                 android:layout_height="match_parent"></ViewFlipper>
         </LinearLayout>
 
-        <FrameLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+        <!--<FrameLayout-->
+            <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1">-->
 
-            <TextView
-                android:id="@+id/first"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="18sp"
-                />
+            <!--<TextView-->
+                <!--android:id="@+id/first"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:textSize="18sp"-->
+                <!--/>-->
 
-            <TextView
-                android:id="@+id/second"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="32sp"
-               />
+            <!--<TextView-->
+                <!--android:id="@+id/second"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:textSize="32sp"-->
+               <!--/>-->
 
-        </FrameLayout>
+        <!--</FrameLayout>-->
 
         <FrameLayout
             android:id="@+id/fragment_container"

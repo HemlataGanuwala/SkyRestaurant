@@ -29,6 +29,7 @@ import com.flavourheights.apple.skyrestaurantapp.Model.ItemPlanet;
 import com.flavourheights.apple.skyrestaurantapp.Model.OfferPlanet;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,11 +51,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     View headerview;
     Class fragmentClass;
     private SharedPreferences preferences;
-    String user,pass,path,festnm,fromdt,todt,disc,date,date1,festival,discount,fromdate,todate;
+    String user,pass,path,festnm,fromdt,todt,disc,date,date1,festival,discount,fromdate,todate,count;
     ServiceHandler shh;
     TextView first,second;
     OfferPlanet offerPlanet;
     List<OfferPlanet> mPlanetlist1 = new ArrayList<OfferPlanet>();
+    ProgressDialog progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +72,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        first = (TextView) findViewById(R.id.first);
-        second = (TextView) findViewById(R.id.second);
+//        first = (TextView) findViewById(R.id.first);
+//        second = (TextView) findViewById(R.id.second);
 
 //        new getofferlist().execute();
 
@@ -85,21 +88,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
-        animator.setRepeatCount(ValueAnimator.INFINITE);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(9000L);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                final float progress = (float) animation.getAnimatedValue();
-                final float width = first.getWidth();
-                final float translationX = width * progress;
-                first.setTranslationX(translationX);
-                second.setTranslationX(translationX - width);
-            }
-        });
-        animator.start();
+//        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+//        animator.setRepeatCount(ValueAnimator.INFINITE);
+//        animator.setInterpolator(new LinearInterpolator());
+//        animator.setDuration(9000L);
+//        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation) {
+//                final float progress = (float) animation.getAnimatedValue();
+//                final float width = first.getWidth();
+//                final float translationX = width * progress;
+//                first.setTranslationX(translationX);
+//                second.setTranslationX(translationX - width);
+//            }
+//        });
+//        animator.start();
 
 //        Display();
 
@@ -116,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         {
             Fipperimage(image);
         }
+
+        new getAllItem().execute();
 
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
@@ -167,10 +172,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cartlist:
-                Intent intent = new Intent(MainActivity.this, CartListActivity.class);
-                intent.putExtra("Username",user);
-                intent.putExtra("Password",pass);
-                startActivity(intent);
+                new getAllItem().execute();
+
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {}
+
+                if (count.equals("null")) {
+                    setContentView(R.layout.message);
+//                    Toast.makeText(this, "No Item in Cart", Toast.LENGTH_LONG).show();
+                }else {
+
+                    Intent intent = new Intent(MainActivity.this, CartListActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
                 return true;
 
             default:
@@ -223,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_share:
                 Intent intent3 = new Intent(Intent.ACTION_SEND);
                 intent3.setType("text/plain");
-                String shareBody = "https://drive.google.com/open?id=15roJeXDa2CbIaeou6ObR6aWc-_k5xyEA";
+                String shareBody = "https://drive.google.com/open?id=1LUvJ6nP_0Qit8QCaDQtl5JhrdGHQoQ1x";
                 String shareSub = "Your Sub Here";
                 intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 intent3.putExtra(Intent.EXTRA_SUBJECT, shareSub);
@@ -292,6 +308,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawers();
         return true;
 
+    }
+
+    class getAllItem extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progress=new ProgressDialog(MainActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getItemsWise";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("Username", user));
+                params2.add(new BasicNameValuePair("Password", pass));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    count = c1.getString("Response");
+                }
+
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            progress.dismiss();
+//            textViewcount.setText(count);
+
+        }
     }
 
     class getofferlist extends AsyncTask<Void, Void, String> {

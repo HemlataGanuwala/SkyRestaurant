@@ -127,7 +127,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
                 new getAllItem().execute();
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (Exception e) {}
 
                 if (count.equals("null")) {
