@@ -138,11 +138,11 @@
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="20dp"
                     android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
-                    android:layout_weight="1"
-                     />
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp" />
 
                 <!--<TextView-->
                 <!--android:id="@+id/textView4"-->
@@ -157,13 +157,12 @@
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/btgoogle"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="70dp"
                     android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:visibility="visible"
-                    android:layout_marginTop="10dp"/>
+                    android:visibility="visible" />
 
                 <Button
                     android:layout_width="match_parent"

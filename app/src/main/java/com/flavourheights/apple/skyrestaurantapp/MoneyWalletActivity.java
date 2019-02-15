@@ -156,7 +156,14 @@ public class MoneyWalletActivity extends AppCompatActivity {
 
 //            count = Integer.parseInt(cnt);
 //            balance = count * (50);
-            textViewbalance.setText(String.valueOf(balance));
+
+            if (!balance.equals("null"))
+            {
+                textViewbalance.setText(String.valueOf(balance));
+            }else {
+                textViewbalance.setText("0.00");
+            }
+
         }
     }
 }
