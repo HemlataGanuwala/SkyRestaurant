@@ -57,10 +57,15 @@
             android:id="@+id/tvbalance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="130dp"
+            android:layout_marginRight="130dp"
+            android:drawableLeft="@drawable/icon_rupee"
             android:gravity="center"
-            android:paddingTop="30dp"
-            android:textColor="@color/gray"
-            android:textSize="26sp" />
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:text="0.00"
+            android:textColor="@color/browser_actions_title_color"
+            android:textSize="30dp" />
 
         <EditText
             android:id="@+id/etrefcode"

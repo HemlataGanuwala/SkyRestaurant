@@ -86,7 +86,7 @@ public class RegistrationActivity extends AppCompatActivity {
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
-//        mobileno = globalVariable.getMobileNo();
+        mobileno = globalVariable.getMobileNo();
 
         mAuth=FirebaseAuth.getInstance();
         textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
@@ -156,12 +156,15 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (emailid == null || mobileno == null) {
-                    insertData();
-                }else {
-                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
-                }
+                if (user == null || mobileno == null) {
 
+                    insertData();
+
+                }else {
+
+                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
+
+                }
 
             }
         });
@@ -255,9 +258,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if(validation()) {
 
-                databaseHelpher.RegistrationData(fname,lname,emailid,phoneno,password);
+                databaseHelpher.RegistrationData(fname, lname, emailid, phoneno, password);
                 new RegisterData().execute();
-
         }
         else{
             Toast.makeText(RegistrationActivity.this, "Please Enter Valid Data", Toast.LENGTH_LONG).show();

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flavourheights.apple.skyrestaurantapp.Adapter.CartAdapter;
 import com.flavourheights.apple.skyrestaurantapp.Model.CartListPlanet;
@@ -29,9 +30,9 @@ public class MoneyWalletActivity extends AppCompatActivity {
     Button buttonreadme;
     EditText editTextrefercode;
     TextView textViewbalance;
-    String refcode,path,user,cnt;
+    String refcode,path,user,balance;
     ServiceHandler shh;
-    int count,balance;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,50 @@ public class MoneyWalletActivity extends AppCompatActivity {
         });
     }
 
+//    public class addBalance extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//
+//            shh= new ServiceHandler();
+//            String url= path + "Cart/GetCartItems";
+//            Log.d("Url",">"+url);
+//
+//            try {
+//                List<NameValuePair> params2 = new ArrayList<>();
+//                params2.add(new BasicNameValuePair("Username", user));
+//                params2.add(new BasicNameValuePair("RefStatus", "1"));
+//                params2.add(new BasicNameValuePair("ReferCode", refcode));
+//
+//                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
+//
+//                if (jsonStr != null) {
+//                    JSONObject c1 = new JSONObject(jsonStr);
+//                    cnt = c1.getString("Response");
+//                }
+//            }catch (JSONException e){
+//                e.printStackTrace();
+//            }
+//
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//
+//            count = Integer.parseInt(cnt);
+//            balance = count * (50);
+//            textViewbalance.setText(String.valueOf(balance));
+//        }
+//    }
+
     public class addBalance extends AsyncTask<String, String, String> {
 
         @Override
@@ -74,20 +119,28 @@ public class MoneyWalletActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             shh= new ServiceHandler();
-            String url= path + "Cart/GetCartItems";
+            String url= path + "Registration/getRamount";
             Log.d("Url",">"+url);
 
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("Username", user));
-                params2.add(new BasicNameValuePair("RefStatus", "1"));
+
+                params2.add(new BasicNameValuePair("Email", user));
                 params2.add(new BasicNameValuePair("ReferCode", refcode));
 
                 String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
-
                 if (jsonStr != null) {
                     JSONObject c1 = new JSONObject(jsonStr);
-                    cnt = c1.getString("Response");
+                    JSONArray classArray = c1.getJSONArray("Response");
+
+                    for (int i = 0; i < classArray.length(); i++) {
+
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        balance = a1.getString("RAmount");
+                    }
+                }
+                else{
+                    Toast.makeText(MoneyWalletActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
                 }
             }catch (JSONException e){
                 e.printStackTrace();
@@ -101,8 +154,8 @@ public class MoneyWalletActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            count = Integer.parseInt(cnt);
-            balance = count * (50);
+//            count = Integer.parseInt(cnt);
+//            balance = count * (50);
             textViewbalance.setText(String.valueOf(balance));
         }
     }
