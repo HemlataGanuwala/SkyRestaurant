@@ -56,22 +56,6 @@ public class AddAddressActivity extends AppCompatActivity {
 
         buttonsave=(Button)findViewById(R.id.btnsave);
 
-        textViewselectcity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(AddAddressActivity.this, SelectCityActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        textViewselectlocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(AddAddressActivity.this, SelectLocationActivity.class);
-                startActivity(intent);
-            }
-        });
-
 //        spinnercity=(Spinner)findViewById(R.id.spincity);
 //        spinnerlocation=(Spinner)findViewById(R.id.spinlocation);
 //

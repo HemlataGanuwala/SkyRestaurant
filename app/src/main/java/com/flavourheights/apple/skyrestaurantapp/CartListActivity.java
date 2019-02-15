@@ -116,7 +116,7 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(CartListActivity.this, PlaceOrderActivity.class);
-                intent.putExtra("Cost", totalamount);
+                intent.putExtra("Cost", String.valueOf(totalamount));
                 startActivity(intent);
             }
         });

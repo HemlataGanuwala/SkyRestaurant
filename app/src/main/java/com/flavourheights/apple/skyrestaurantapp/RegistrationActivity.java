@@ -64,6 +64,8 @@ public class RegistrationActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     CheckBox checkBoxrefercode;
     DatabaseHelpher databaseHelpher;
+    int amount, ramount=50;
+    int total;
 
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
@@ -84,7 +86,7 @@ public class RegistrationActivity extends AppCompatActivity {
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
-        mobileno = globalVariable.getMobileNo();
+//        mobileno = globalVariable.getMobileNo();
 
         mAuth=FirebaseAuth.getInstance();
         textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
@@ -109,7 +111,7 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextpass=(EditText)findViewById(R.id.etpassword);
         editTextconformpass=(EditText)findViewById(R.id.etconformpass);
 
-        new getReferData().execute();
+
         new GetReferCode().execute();
 //        new CheckRegData().execute();
 
@@ -154,7 +156,7 @@ public class RegistrationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (user == null || mobileno == null) {
+                if (emailid == null || mobileno == null) {
                     insertData();
                 }else {
                     Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
@@ -230,8 +232,12 @@ public class RegistrationActivity extends AppCompatActivity {
             regrefercode = textViewrefercode.getText().toString();
             if (regrefercode != null)
             {
+                new getReferData().execute();
                 new ReferCodeData().execute();
+                new UpdateReferCodeData().execute();
             }
+
+
 
         }
 
@@ -247,30 +253,10 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         if(validation()) {
-
-
-//            mAuth.createUserWithEmailAndPassword(emailid,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                @Override
-//                public void onComplete(@NonNull Task<AuthResult> task) {
-//                    if (task.isSuccessful()){
-//                        FirebaseUser user= mAuth.getCurrentUser();
-//                        Toast.makeText(RegistrationActivity.this, "Account Created Successfully", Toast.LENGTH_LONG).show();
-//                    }
-//                    else {
-//                        Toast.makeText(RegistrationActivity.this, "Account Not Created Successfully", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            });
 
                 databaseHelpher.RegistrationData(fname,lname,emailid,phoneno,password);
                 new RegisterData().execute();
-
-
-
 
         }
         else{
@@ -303,7 +289,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         if (password.length() < 4 && password.length() > 9)
         {
-            editTextpass.setError("Enter Minimum 4 character");
+            editTextpass.setError("Enter should not empty");
             valid=false;
         }
 
@@ -513,6 +499,8 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            amount=amount+ramount;
+
         }
 
 
@@ -525,8 +513,8 @@ public class RegistrationActivity extends AppCompatActivity {
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
                 params2.add(new BasicNameValuePair("ReferCode",regrefercode));
-                params2.add(new BasicNameValuePair("UserName",emailid));
-                params2.add(new BasicNameValuePair("RAmount","50"));
+//                params2.add(new BasicNameValuePair("UserName",emailid));
+                params2.add(new BasicNameValuePair("RAmount",String.valueOf(amount)));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 
@@ -551,6 +539,7 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
 
         }
 
@@ -584,6 +573,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         refername = a1.getString("CustFirstName");
                         referlastname = a1.getString("CustLastName");
                         refermobile = a1.getString("PhoneNo");
+                        amount = a1.getInt("RAmount");
                     }
                 }
                 else

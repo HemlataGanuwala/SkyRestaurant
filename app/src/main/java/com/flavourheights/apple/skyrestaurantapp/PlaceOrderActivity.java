@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,18 +37,13 @@ import java.util.regex.Pattern;
 
 public class PlaceOrderActivity extends AppCompatActivity {
 
-    TextView textViewcost, textViewdate;
-    EditText editTextmobileno, editTextaddress;
+    TextView textViewcost, textViewdate, textViewmobileno;
+    EditText editTextaddress;
     ImageView imageViewback;
     RadioButton radioButtoncash, radioButtononline;
-    RadioGroup radioGrouppaymentmode;
     Button buttonproceed;
     private int mYear, mMonth, mDay, mHour, mMinite;
-    long time;
-    DateFormat dateFormat;
-    Calendar date;
-    DatePickerDialog.OnDateSetListener listener;
-    String path, mdate, mobileno, address, cdate, paymentmode, user, mtime, cost;
+    String path, mdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
     boolean valid=true;
     ServiceHandler shh;
     int Status=1;
@@ -61,22 +57,34 @@ public class PlaceOrderActivity extends AppCompatActivity {
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
+        mobileno = globalVariable.getMobileNo();
 
         buttonproceed=(Button)findViewById(R.id.btnproceed);
 
         textViewcost = (TextView) findViewById(R.id.tvcost);
         textViewdate = (TextView) findViewById(R.id.tvdate);
+        textViewmobileno = (TextView) findViewById(R.id.etmobileno);
 
-        editTextmobileno = (EditText) findViewById(R.id.etmobileno);
         editTextaddress = (EditText)findViewById(R.id.etaddress);
 
-        radioGrouppaymentmode=(RadioGroup)findViewById(R.id.rgpaymentmode);
         radioButtoncash=(RadioButton)findViewById(R.id.rbcashpay);
         radioButtononline=(RadioButton)findViewById(R.id.rbonlinepay);
 
         display();
 
-        textViewcost.setText(cost);
+//        amount= String.valueOf(totalamount);
+
+
+        buttonproceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new getCustomerData().execute();
+
+                    insertData();
+
+            }
+        });
 
         textViewdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +106,6 @@ public class PlaceOrderActivity extends AppCompatActivity {
             }
         });
 
-        buttonproceed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                insertData();
-
-            }
-        });
 
     }
 
@@ -113,10 +113,12 @@ public class PlaceOrderActivity extends AppCompatActivity {
     {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if (bundle != null)
+        if (bundle!=null)
         {
-            cost= (String)bundle.get("Cost");
+            totalamount = (String) bundle.get("Cost");
         }
+        textViewcost.setText(totalamount);
+        textViewmobileno.setText(mobileno);
     }
 
     private void datePicker(){
@@ -159,7 +161,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
                         mtime= mHour+ ":" + mMinite;
 
-                        cdate= mdate + " " +mdate;
+                        cdate= mdate + "  " +mtime;
 
                         textViewdate.setText(cdate);
                     }
@@ -169,13 +171,13 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     public void insertData()
     {
-        mobileno=editTextmobileno.getText().toString();
         address=editTextaddress.getText().toString();
 
         if (radioButtoncash.isChecked()==true)
         {
             paymentmode = "Cash Payment";
         }else {
+
             paymentmode = "Online Payment";
         }
 
@@ -192,24 +194,66 @@ public class PlaceOrderActivity extends AppCompatActivity {
         {
             editTextaddress.setError("Enter your Address");
             valid=false;
+        }else {
+            valid=true;
         }
 
-        if (cdate.isEmpty())
-        {
-            textViewdate.setError("Please Select Date");
-            valid=false;
-        }
-
-        if (mobileno.isEmpty())
-        {
-            editTextmobileno.setError("Enter Mobile no");
-            valid=false;
-        }
-        else if(!Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",mobileno)) {
-            editTextmobileno.setError("Enter valid mobile no");
-            valid = false;
-        }
         return valid;
+    }
+
+    class getCustomerData extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Registration/getCustDetail";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+
+                params2.add(new BasicNameValuePair("Email",user));
+                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+
+                if (Jsonstr != null) {
+                    JSONObject c1 = new JSONObject(Jsonstr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+
+                    for (int i = 0; i < classArray.length(); i++) {
+
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        custfname = a1.getString("CustFirstName");
+                        custlname = a1.getString("CustLastName");
+                        refferamount = a1.getString("RAmount");
+
+                        custname = custfname + "  " + custlname;
+                    }
+                }
+                else{
+                    Toast.makeText(PlaceOrderActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch ( JSONException e){
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+
     }
 
     class OrderData extends AsyncTask<String,String,String>
@@ -224,17 +268,20 @@ public class PlaceOrderActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 
             shh = new ServiceHandler();
-            String url = path + "Registration/SaveAddress";
+            String url = path + "Registration/saveOrderMaster";
 
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
 
                 params2.add(new BasicNameValuePair("Address",address));
                 params2.add(new BasicNameValuePair("UserName",user));
+                params2.add(new BasicNameValuePair("CustomerName",custname));
                 params2.add(new BasicNameValuePair("MobileNo",mobileno));
+                params2.add(new BasicNameValuePair("RAmount",refferamount));
+                params2.add(new BasicNameValuePair("TotalAmout",String.valueOf(totalamount)));
                 params2.add(new BasicNameValuePair("ODate",mdate));
                 params2.add(new BasicNameValuePair("OTime",mtime));
-                params2.add(new BasicNameValuePair("TotalAmount",cost));
+                params2.add(new BasicNameValuePair("PaymentMode",paymentmode));
                 params2.add(new BasicNameValuePair("Status","1"));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
@@ -263,20 +310,22 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
             if (Status == 1)
             {
+                    if (radioButtoncash.isChecked() || radioButtononline.isChecked()) {
+                        Toast.makeText(PlaceOrderActivity.this, "Your Order Proceed Successfully", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(PlaceOrderActivity.this, MakePaymentActivity.class);
+                        startActivity(intent);
 
-
-
-            } else {
-
-
-                }
-
+                    } else {
+                        Toast.makeText(PlaceOrderActivity.this, "Please check your payment option", Toast.LENGTH_LONG).show();
+                    }
             }
 
-
         }
-
     }
+
+}
+
+
 
 
 
