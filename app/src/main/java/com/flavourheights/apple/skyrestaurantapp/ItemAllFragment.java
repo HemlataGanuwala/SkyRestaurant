@@ -64,11 +64,13 @@ public class ItemAllFragment extends Fragment{
         user = globalVariable.getUsername();
         pass = globalVariable.getloginPassword();
 
-        textViewcount = (TextView) view.findViewById(R.id.tvcount);
+//        textViewcount = (TextView) view.findViewById(R.id.tvcount);
 
         Displayitem();
 
         mPlanetlist1.clear();
+
+        new getAllCount().execute();
 
         new getAllItem().execute();
 
@@ -231,6 +233,58 @@ public class ItemAllFragment extends Fragment{
         activityCommunicator = (ActivityCommunicator)context;
 
 
+    }
+
+    class getAllCount extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progress=new ProgressDialog(MainActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getItemsWise";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("Username", user));
+                params2.add(new BasicNameValuePair("Password", pass));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    count = c1.getInt("Response");
+                }
+
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            progress.dismiss();
+//            textViewcount.setText(count);
+
+        }
     }
 
         class getAllItemcount extends AsyncTask<Void, Void, String>

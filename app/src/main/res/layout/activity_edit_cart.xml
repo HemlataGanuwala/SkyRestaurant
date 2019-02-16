@@ -42,7 +42,7 @@
                 android:id="@+id/img_edit_check"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="30dp"
                 android:src="@drawable/icon_check" />
 
         </android.support.v7.widget.Toolbar>

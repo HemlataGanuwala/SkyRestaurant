@@ -171,12 +171,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View actionView = MenuItemCompat.getActionView(menuItem);
         textViewitemcount = (TextView) actionView.findViewById(R.id.cart_badge);
 
-        if (textViewitemcount.getText().equals("0"))
+        if (count.equals("0") )
         {
             textViewitemcount.setVisibility(View.GONE);
         }
         else {
             textViewitemcount.setVisibility(View.VISIBLE);
+            textViewitemcount.setText(count);
         }
 
         actionView.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 new getAllItem().execute();
 
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (Exception e) {}
 
                 if (count.equals("null")) {

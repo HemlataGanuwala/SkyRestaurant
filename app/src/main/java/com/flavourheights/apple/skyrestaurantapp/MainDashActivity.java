@@ -117,13 +117,13 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
         View actionView = MenuItemCompat.getActionView(menuItem);
         textViewitemcount = (TextView) actionView.findViewById(R.id.cart_badge);
 
-        if (textViewitemcount.getText().equals("0"))
+        if (count.equals("0"))
         {
             textViewitemcount.setVisibility(View.GONE);
         }
         else {
             textViewitemcount.setVisibility(View.VISIBLE);
-//            textViewitemcount.setText(someValue);
+            textViewitemcount.setText(count);
         }
 
 //        setupBadge();
