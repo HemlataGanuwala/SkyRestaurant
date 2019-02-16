@@ -68,7 +68,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 //        toolbar.setTitle("Menu");
 
         //textViewmenu = (TextView) toolbar.findViewById(R.id.tvtextmenu);
-        textViewcount = (TextView)findViewById(R.id.tvcount);
+//        textViewcount = (TextView)findViewById(R.id.tvcount);
 
         int images[] = {R.drawable.rest_slide1, R.drawable.rest_slide2, R.drawable.rest_slide3, R.drawable.rest_slide4, R.drawable.rest_slide5};
         viewFlipper = (ViewFlipper)findViewById(R.id.dashviewflipper);

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SharedPreferences preferences;
     String user,pass,path,festnm,fromdt,todt,disc,date,date1,festival,discount,fromdate,todate,count;
     ServiceHandler shh;
-    TextView first,second;
+    TextView first,second,textViewitemcount;
     OfferPlanet offerPlanet;
     List<OfferPlanet> mPlanetlist1 = new ArrayList<OfferPlanet>();
     ProgressDialog progress;
@@ -165,7 +166,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        final MenuItem menuItem = menu.findItem(R.id.cartlist);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        textViewitemcount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        if (textViewitemcount.getText().equals("0"))
+        {
+            textViewitemcount.setVisibility(View.GONE);
+        }
+        else {
+            textViewitemcount.setVisibility(View.VISIBLE);
+        }
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
         return true;
+
     }
 
     @Override

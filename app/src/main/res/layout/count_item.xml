@@ -24,7 +24,7 @@
         android:background="@drawable/actionbar_count_text"
         android:gravity="center"
         android:padding="3dp"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:text="0"
         android:textSize="10sp"/>
 

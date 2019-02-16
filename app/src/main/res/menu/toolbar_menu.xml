@@ -6,7 +6,8 @@
         android:icon="@drawable/cart"
         android:iconTint="@android:color/white"
         android:title="List"
-        app:showAsAction="ifRoom"></item>
+        app:actionLayout="@layout/count_item"
+        app:showAsAction="always"></item>
 
 
 </menu>
