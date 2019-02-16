@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,10 +40,12 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
     int countitem;
     List<ItemPlanet> mPlanetlist = new ArrayList<ItemPlanet>();
     String count;
-    TextView textViewcount,textViewmenu;
+    TextView textViewcount,textViewitemcount;
     ServiceHandler shh;
     ProgressDialog progress;
    ItemAllFragment fragment;
+    int mCartItemCount;
+
 
     Menu defaultMenu;
 
@@ -109,6 +112,28 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_main_dash, menu);
+        final MenuItem menuItem = menu.findItem(R.id.cartlistmaindash);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        textViewitemcount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        if (textViewitemcount.getText().equals("0"))
+        {
+            textViewitemcount.setVisibility(View.GONE);
+        }
+        else {
+            textViewitemcount.setVisibility(View.VISIBLE);
+//            textViewitemcount.setText(someValue);
+        }
+
+//        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
         return true;
     }
 
@@ -148,6 +173,22 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 //        }
 
 
+    }
+
+    private void setupBadge() {
+
+        if (textViewitemcount != null) {
+            if (mCartItemCount == 0) {
+                if (textViewitemcount.getVisibility() != View.GONE) {
+                    textViewitemcount.setVisibility(View.GONE);
+                }
+            } else {
+                textViewitemcount.setText(String.valueOf(Math.min(mCartItemCount, 99)));
+                if (textViewitemcount.getVisibility() != View.VISIBLE) {
+                    textViewitemcount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     public void createTab()
@@ -192,7 +233,15 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
     @Override
     public void passDataActivity(String someValue) {
-        textViewcount.setText(someValue);
+        if (textViewitemcount.equals("0"))
+        {
+            textViewitemcount.setVisibility(View.GONE);
+        }
+        else {
+            textViewitemcount.setVisibility(View.VISIBLE);
+            textViewitemcount.setText(someValue);
+        }
+
         //countitem = Integer.parseInt(someValue);
     }
 
