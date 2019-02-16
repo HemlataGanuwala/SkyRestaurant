@@ -43,7 +43,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
     RadioButton radioButtoncash, radioButtononline;
     Button buttonproceed;
     private int mYear, mMonth, mDay, mHour, mMinite;
-    String path, mdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
+    String path, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
     boolean valid=true;
     ServiceHandler shh;
     int Status=1;
@@ -85,6 +85,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
             }
         });
+
+         sdate = DateFormat.getDateTimeInstance().format(new Date());
 
         textViewdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +191,15 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
     public boolean validation()
     {
+
+        if(!sdate.equals(cdate))
+        {
+            textViewdate.setError("Select valid date and time");
+            valid=false;
+        }else {
+            valid=true;
+        }
+
 
         if (address.isEmpty())
         {
