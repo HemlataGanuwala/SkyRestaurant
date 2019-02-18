@@ -123,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         new getAllItem().execute();
 
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {}
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -200,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Thread.sleep(1000);
                 } catch (Exception e) {}
 
-                if (count.equals("null")) {
+                if (count.equals("0")) {
                     setContentView(R.layout.message);
 //                    Toast.makeText(this, "No Item in Cart", Toast.LENGTH_LONG).show();
                 }else {

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -97,16 +98,16 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-        imageVieweditcheck=(ImageView)findViewById(R.id.img_edit_check);
-        imageVieweditcheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                new UpdateCount().execute();
-                Intent i = new Intent(EditCartActivity.this, CartListActivity.class);
-                startActivity(i);
-
-            }
-        });
+//        imageVieweditcheck=(ImageView)findViewById(R.id.img_edit_check);
+//        imageVieweditcheck.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                new UpdateCount().execute();
+//                Intent i = new Intent(EditCartActivity.this, CartListActivity.class);
+//                startActivity(i);
+//
+//            }
+//        });
 
 
         preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
@@ -205,6 +206,38 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
         // Close the navigation drawer
         drawerLayout.closeDrawers();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_editcart_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent1 = new Intent(EditCartActivity.this, MainDashActivity.class);
+                startActivity(intent1);
+                return true;
+
+
+            case R.id.cartcheck:
+                Intent intent = new Intent(EditCartActivity.this, CartListActivity.class);
+                startActivity(intent);
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+//        if (item.getItemId() == android.R.id.home) {
+//            finish(); // close this activity and return to preview activity (if there is any)
+//        }
+
+
     }
 
 

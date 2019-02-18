@@ -2,6 +2,7 @@ package com.flavourheights.apple.skyrestaurantapp;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,10 @@ public class SplashActivity extends AppCompatActivity {
 
         databaseHelpher = new DatabaseHelpher(this);
         GetData();
+
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {}
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         globalVariable.setconstr("http://192.168.0.114:8098/api/");
@@ -53,6 +58,41 @@ public class SplashActivity extends AppCompatActivity {
 
         Animation myanim = AnimationUtils.loadAnimation(this,R.anim.splashanimation);
         logo.startAnimation(myanim);
+
+        isInternetOn();
+    }
+
+    public void isInternetOn() {
+
+        // get Connectivity Manager object to check connection
+        ConnectivityManager connec =
+                (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if ( connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED ) {
+
+            // if connected with internet
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    LoginActivity.this.startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+//                    LoginActivity.this.finish();
+//                }
+//            },2000);// 4000 =4 seconds
+
+        } else if (
+                connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED  ) {
+
+            Toast.makeText(this, "Internet Connection Not Connected ", Toast.LENGTH_LONG).show();
+
+
+
+        }
+
     }
 
 

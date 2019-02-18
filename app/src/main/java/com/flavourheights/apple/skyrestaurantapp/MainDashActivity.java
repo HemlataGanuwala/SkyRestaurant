@@ -155,7 +155,7 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
                     Thread.sleep(2000);
                 } catch (Exception e) {}
 
-                if (count.equals("null")) {
+                if (count.equals("0")) {
                     setContentView(R.layout.message);
 //                    Toast.makeText(this, "No Item in Cart", Toast.LENGTH_LONG).show();
                 }else {

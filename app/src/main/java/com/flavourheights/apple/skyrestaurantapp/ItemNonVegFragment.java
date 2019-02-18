@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.flavourheights.apple.skyrestaurantapp.Adapter.ItemAdapter;
 import com.flavourheights.apple.skyrestaurantapp.Model.ItemPlanet;
@@ -129,8 +130,97 @@ public class ItemNonVegFragment extends Fragment {
                 }
             });
 
+//            adapter.setOnItemClickListner(new ItemAdapter.OnItemClickListner() {
+//                @Override
+//                public void onItemClick(int position) {
+//
+//                }
+//
+//                @Override
+//                public void iconImageViewOnClick(View v, int position) {
+////                int t1 =0;
+////                t1 = recyclerView.getAdapter().getItemCount();
+////
+////                for (int i=0; i<t1; i++)
+////                {
+//                    ItemPlanet planet1 = mPlanetlist1.get(position);
+//                    subitem1 = planet1.getSubItemname();
+//                    rate1 = planet1.getRate();
+////                }
+//                    new getAllItemcount().execute();
+//
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (Exception e) {}
+//
+//                    if (Response == "null")
+//                    {
+//                        count++;
+//                        cnt = String.valueOf(count);
+//                        new RegisterData().execute();
+//                    }
+//                    else
+//                    {
+//                        Toast.makeText(getActivity(), "Item Already Added", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    activityCommunicator.passDataActivity(cnt);
+//
+//
+//
+//                }
+//
+//            });
+
         }
     }
+
+//    class getAllItemcount extends AsyncTask<Void, Void, String>
+//    {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... params) {
+//            shh = new ServiceHandler();
+//            String url = path + "Registration/GetItemsCount";
+//            Log.d("Url: ", "> " + url);
+//
+//            try{
+//                List<NameValuePair> params2 = new ArrayList<>();
+//                params2.add(new BasicNameValuePair("Username", user));
+//                params2.add(new BasicNameValuePair("Password", pass));
+//                params2.add(new BasicNameValuePair("SubItemName", subitem1));
+//                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+//
+//                if (jsonStr != null) {
+//                    JSONObject c1 = new JSONObject(jsonStr);
+//                    Response  = c1.getString("Response");
+//
+//
+//                }
+//                else
+//                {
+//                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//            catch (JSONException e)
+//            {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            // progress.dismiss();
+//        }
+//    }
 
 
 

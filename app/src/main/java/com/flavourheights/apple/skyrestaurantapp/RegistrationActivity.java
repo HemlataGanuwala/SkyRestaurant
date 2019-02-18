@@ -3,6 +3,7 @@ package com.flavourheights.apple.skyrestaurantapp;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -55,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText editTextfname, editTextlname, editTextemail, editTextphoneno, editTextpass, editTextconformpass,textViewrefercode;
     TextView textViewcondition;
     CheckBox radioButtonaccept;
-    Button buttonregister;
+    Button buttonregister,buttonreg;
     String fname, lname, emailid, phoneno, password, conformpass, refercode,regrefercode, response, mobileno, user,referuser,refername,refermobile,referlastname;
     int Status;
     ServiceHandler shh;
@@ -66,6 +67,7 @@ public class RegistrationActivity extends AppCompatActivity {
     DatabaseHelpher databaseHelpher;
     int amount, ramount=50;
     int total;
+    String dataemail,datapass,datamobile;
 
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
@@ -83,10 +85,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
         databaseHelpher = new DatabaseHelpher(this);
 
+        GetData();
+
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
-        user = globalVariable.getUsername();
-        mobileno = globalVariable.getMobileNo();
+//        user = globalVariable.getUsername();
+//        mobileno = globalVariable.getMobileNo();
 
         mAuth=FirebaseAuth.getInstance();
         textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
@@ -152,49 +156,90 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         buttonregister=(Button)findViewById(R.id.btnregister);
-        buttonregister.setOnClickListener(new View.OnClickListener() {
+        buttonreg=(Button)findViewById(R.id.btnregister);
+        buttonreg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (user == null || mobileno == null) {
-
+                if (user == null || mobileno == null)
+                {
                     insertData();
-
-                }else {
-
+                }
+                else
+                {
                     Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
-
                 }
-
             }
         });
+//        buttonregister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (user == null || mobileno == null)
+//                {
+//                    insertData();
+//                }
+//                else
+//                {
+//                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
+//                }
+//
+////                if (user == null || mobileno == null)
+////                {
+////
+////                    insertData();
+////
+////                }else {
+////
+////                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
+////
+////                }
+//
+//            }
+//        });
 
 
-        editTextconformpass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        editTextconformpass.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                String passwrd=editTextconformpass.getText().toString();
+//                if (s.length() > 0 && passwrd.length() > 0) {
+//                    if (!editTextpass.equals(passwrd)) {
+//                        // give an error that password and confirm password not match
+//
+//                    }
+//
+//                }
+//
+//            }
+//        });
 
-            }
+    }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+    public void GetData()
+    {
+        Cursor c = databaseHelpher.GetRegData();
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String passwrd=editTextpass.getText().toString();
-                if (s.length() > 0 && passwrd.length() > 0) {
-                    if (!editTextpass.equals(passwrd)) {
-                        // give an error that password and confirm password not match
-
-                    }
-
+        if (c != null)
+        {
+            if (c.moveToFirst()) {
+                do {
+                    user = c.getString(c.getColumnIndex("Email"));
+                    password = c.getString(c.getColumnIndex("Password"));
+                    mobileno = c.getString(c.getColumnIndex("PhoneNo"));
                 }
-
+                while (c.moveToNext());
             }
-        });
-
+        }
     }
 
     public void popupMessage()
@@ -293,6 +338,14 @@ public class RegistrationActivity extends AppCompatActivity {
         {
             editTextpass.setError("Enter should not empty");
             valid=false;
+        }
+
+        if (!conformpass.equals(password))
+        {
+            editTextconformpass.setText("Password is not matched");
+            valid = false;
+        }else {
+            valid = true;
         }
 
 
