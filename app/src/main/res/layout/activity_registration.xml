@@ -74,7 +74,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/acme"
                 android:hint="Last Name"
-                android:inputType="textPersonName|textPassword"
+                android:inputType="textPersonName|textCapWords"
                 android:paddingLeft="10dp"
                 android:textColor="@color/gray"
                 android:textSize="16sp" />

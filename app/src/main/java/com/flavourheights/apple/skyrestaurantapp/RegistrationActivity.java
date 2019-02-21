@@ -311,9 +311,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
         }
 
-        else if (password.isEmpty() || !Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$",password))
+        else if (password.isEmpty() || !Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[@#$%^&!*])(?=\\S+$).{6,}$",password))
         {
-            editTextpass.setError("Password should contain one special character and one numeric");
+            editTextpass.setError("Password should contain one special character and one numeric and length should be minimum 6");
             valid = false;
 
         }

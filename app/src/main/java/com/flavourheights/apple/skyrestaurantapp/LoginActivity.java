@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
-        mobileno = mobile;
+        globalVariable.setMobileNo(mobile);
 
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarlogin);

@@ -1,6 +1,7 @@
 package com.flavourheights.apple.skyrestaurantapp;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -48,10 +49,10 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
     TextView textViewcost, textViewdate, textViewmobileno;
     EditText editTextaddress1,editTextaddress2,editTextaddress3;
     ImageView imageViewback;
-    RadioButton radioButtoncash, radioButtononline;
+    RadioButton radioButtoncash, radioButtononline, radioButtoncashondelivery;
     Button buttonproceed,buttonaddaddress;
     private int mYear, mMonth, mDay, mHour, mMinite;
-    String path, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
+    String path, cartstatus, password, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
     boolean valid=true;
     ServiceHandler shh;
     int Status=1;
@@ -59,6 +60,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
     RecyclerView recyclerView;
     List<AddressPlanet> mPlanetlist= new ArrayList<AddressPlanet>();
     AddressAdapter adapter;
+    ProgressDialog progress;
 
 
     @Override
@@ -84,20 +86,14 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 
         radioButtoncash=(RadioButton)findViewById(R.id.rbcashpay);
         radioButtononline=(RadioButton)findViewById(R.id.rbonlinepay);
+        radioButtoncashondelivery = (RadioButton) findViewById(R.id.rbcashondelivery);
 
         recyclerView=(RecyclerView)findViewById(R.id.rvaddress);
         recyclerView.setLayoutManager(new LinearLayoutManager(PlaceOrderActivity.this));
 
         new getAddressData().execute();
 
-//        displayAddress();
-
         display();
-
-
-
-//        amount= String.valueOf(totalamount);
-
 
         buttonproceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +101,9 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 
                 new getCustomerData().execute();
 
-                    insertData();
+                insertData();
+
+                new UpdateCartStatus().execute();
 
             }
         });
@@ -226,14 +224,19 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 
     public void insertData()
     {
-        address=editTextaddress1.getText().toString() +""+ editTextaddress2.getText().toString() +""+ editTextaddress3.getText().toString();
+//        address=editTextaddress1.getText().toString() +""+ editTextaddress2.getText().toString() +""+ editTextaddress3.getText().toString();
+        address = datahouseno+" "+datalandmark+" "+datalocality+" "+datacity+" "+datapincode;
 
         if (radioButtoncash.isChecked()==true)
         {
             paymentmode = "Cash Payment";
-        }else {
+        }else if (radioButtononline.isChecked() == true){
 
             paymentmode = "Online Payment";
+        }else if (radioButtoncashondelivery.isChecked() == true){
+            paymentmode = "Cash on Delivery";
+        }else {
+            Toast.makeText(PlaceOrderActivity.this, "Select your payment mode", Toast.LENGTH_LONG).show();
         }
 
         if (validation())
@@ -448,22 +451,181 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            if (Status == 1)
-            {
-                    if (radioButtoncash.isChecked() || radioButtononline.isChecked()) {
-                        Toast.makeText(PlaceOrderActivity.this, "Your Order Proceed Successfully", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(PlaceOrderActivity.this, MakePaymentActivity.class);
-                        startActivity(intent);
+            if (Status == 1) {
+                if (radioButtoncash.isChecked() || radioButtoncashondelivery.isChecked()) {
+//                        Toast.makeText(PlaceOrderActivity.this, "Your Order Place Successfully", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(PlaceOrderActivity.this, MakePaymentActivity.class);
+                    intent.putExtra("Cost", totalamount);
+                    startActivity(intent);
 
-                    } else {
-                        Toast.makeText(PlaceOrderActivity.this, "Please check your payment option", Toast.LENGTH_LONG).show();
-                    }
+                } else if (radioButtononline.isChecked()) {
+                    Intent intent = new Intent(PlaceOrderActivity.this, OnlinePaymentActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(PlaceOrderActivity.this, "Please select your payment option", Toast.LENGTH_LONG).show();
+                }
             }
 
         }
     }
 
-}
+    class UpdateCartStatus extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress = new ProgressDialog(PlaceOrderActivity.this);
+            progress.setMessage("Loading...");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.setProgress(0);
+            progress.show();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Cart/UpdateStatus";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+
+                params2.add(new BasicNameValuePair("Username", user));
+                params2.add(new BasicNameValuePair("Status", "1"));
+
+                String Jsonstr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
+
+                if (Jsonstr != null) {
+                    JSONObject c1 = new JSONObject(Jsonstr);
+                    Status = c1.getInt("Status");
+                } else {
+                    Toast.makeText(PlaceOrderActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            new getCartData().execute();
+
+
+        }
+
+    }
+
+
+    class getCartData extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Cart/GetCartItems";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+
+                params2.add(new BasicNameValuePair("Email", user));
+                params2.add(new BasicNameValuePair("Password", password));
+                String Jsonstr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
+
+                if (Jsonstr != null) {
+                    JSONObject c1 = new JSONObject(Jsonstr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+
+                    for (int i = 0; i < classArray.length(); i++) {
+
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        cartstatus = a1.getString("Status");
+
+                    }
+                } else {
+                    Toast.makeText(PlaceOrderActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            new deleteCartItem().execute();
+
+        }
+
+    }
+
+
+        class deleteCartItem extends AsyncTask<String, String, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+//                progress = new ProgressDialog(PlaceOrderActivity.this);
+//                progress.setMessage("Loading...");
+//                progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//                progress.setIndeterminate(true);
+//                progress.setProgress(0);
+//                progress.show();
+            }
+
+
+            @Override
+            protected String doInBackground(String... strings) {
+
+                shh = new ServiceHandler();
+                String url = path + "Cart/DeleteCartItem";
+
+                try {
+                    List<NameValuePair> params2 = new ArrayList<>();
+
+                    params2.add(new BasicNameValuePair("Username", user));
+                    params2.add(new BasicNameValuePair("Status", cartstatus));
+
+                    String Jsonstr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
+
+                    if (Jsonstr != null) {
+                        JSONObject c1 = new JSONObject(Jsonstr);
+                        Status = c1.getInt("Status");
+                    } else {
+                        Toast.makeText(PlaceOrderActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                return null;
+            }
+
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+
+            }
+
+        }
+    }
+
+
 
 
 

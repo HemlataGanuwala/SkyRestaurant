@@ -24,7 +24,7 @@ public class MakePaymentActivity extends AppCompatActivity {
 
         display();
 
-        message = "Your Payment Of Amount" + amount + "Has Been Successfully Processed";
+        message = "Your Payment Of Amount" + " " + amount+ " " + "Has Been Successfully Processed";
         textViewmessage.setText(message);
 
         buttonhome.setOnClickListener(new View.OnClickListener() {

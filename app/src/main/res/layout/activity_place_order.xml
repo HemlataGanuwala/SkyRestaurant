@@ -292,6 +292,16 @@
                             android:text="Cash Payment"
                             android:textSize="16sp" />
 
+                        <RadioButton
+                            android:id="@+id/rbcashondelivery"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@color/colorsplash"
+                            android:fontFamily="@font/acme"
+                            android:text="Cash On Delivery"
+                            android:textSize="16sp" />
+
+
                     </RadioGroup>
 
                 </LinearLayout>
