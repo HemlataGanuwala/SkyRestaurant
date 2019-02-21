@@ -514,7 +514,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            new getCartData().execute();
+//            new getCartData().execute();
 
 
         }
