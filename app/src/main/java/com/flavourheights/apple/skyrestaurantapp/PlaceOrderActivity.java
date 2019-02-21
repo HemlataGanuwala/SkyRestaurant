@@ -72,8 +72,10 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
         mobileno = globalVariable.getMobileNo();
+        password = globalVariable.getloginPassword();
 
         buttonproceed=(Button)findViewById(R.id.btnproceed);
+        buttonaddaddress = (Button) findViewById(R.id.btnaddaddress);
 
         textViewcost = (TextView) findViewById(R.id.tvcost);
         textViewdate = (TextView) findViewById(R.id.tvdate);
@@ -82,11 +84,13 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 //        editTextaddress1 = (EditText)findViewById(R.id.etaddress1);
 //        editTextaddress2 = (EditText)findViewById(R.id.etaddress2);
 //        editTextaddress3 = (EditText)findViewById(R.id.etaddress3);
-        buttonaddaddress = (Button) findViewById(R.id.btnaddaddress);
+
 
         radioButtoncash=(RadioButton)findViewById(R.id.rbcashpay);
         radioButtononline=(RadioButton)findViewById(R.id.rbonlinepay);
         radioButtoncashondelivery = (RadioButton) findViewById(R.id.rbcashondelivery);
+
+        new getAllItem().execute();
 
         recyclerView=(RecyclerView)findViewById(R.id.rvaddress);
         recyclerView.setLayoutManager(new LinearLayoutManager(PlaceOrderActivity.this));
@@ -108,7 +112,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
             }
         });
 
-         sdate = DateFormat.getDateTimeInstance().format(new Date());
+        sdate = DateFormat.getDateTimeInstance().format(new Date());
 
         textViewdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +152,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         if (bundle!=null)
         {
             totalamount = (String) bundle.get("Cost");
-            totalcount = (String) bundle.get("Count");
+//            totalcount = (String) bundle.get("Count");
         }
         textViewcost.setText(totalamount);
         textViewmobileno.setText(mobileno);
@@ -253,20 +257,17 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         {
             textViewdate.setError("Select valid date and time");
             valid=false;
-        }else {
-            valid=true;
         }
 
-
-        if (address.isEmpty())
+        else if (address.isEmpty())
         {
             editTextaddress1.setError("Enter your Address");
-
             valid=false;
-        }else {
-            valid=true;
         }
 
+        else {
+            valid = true;
+        }
         return valid;
     }
 
@@ -400,6 +401,59 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 
     }
 
+    class getAllItem extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progress=new ProgressDialog(MainActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getItemsWise";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("Username", user));
+                params2.add(new BasicNameValuePair("Password", password));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    totalcount = c1.getString("Response");
+                }
+
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            progress.dismiss();
+//            textViewcount.setText(count);
+
+        }
+    }
+
+
     class OrderData extends AsyncTask<String,String,String>
     {
         @Override
@@ -427,7 +481,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
                 params2.add(new BasicNameValuePair("OTime",mtime));
                 params2.add(new BasicNameValuePair("PaymentMode",paymentmode));
                 params2.add(new BasicNameValuePair("NoOfItem", totalcount));
-                params2.add(new BasicNameValuePair("Status","1"));
+                params2.add(new BasicNameValuePair("Status","0"));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 

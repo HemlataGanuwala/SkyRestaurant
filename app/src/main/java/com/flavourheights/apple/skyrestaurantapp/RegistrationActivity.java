@@ -306,7 +306,14 @@ public class RegistrationActivity extends AppCompatActivity {
         else if (emailid.isEmpty() || !EMAIL_ADDRESS_PATTERN.matcher(emailid).matches())
         {
 
-            editTextemail.setError("Email valid id");
+            editTextemail.setError("Enter valid Email id");
+            valid = false;
+
+        }
+
+        else if (phoneno.isEmpty() || !Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",phoneno)){
+
+            editTextphoneno.setError("Number should be 10-digit");
             valid = false;
 
         }
@@ -318,12 +325,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         }
 
-        else if (phoneno.isEmpty() || !Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",phoneno)){
-
-            editTextphoneno.setError("Number should be 10-digit");
-            valid = false;
-
-        }
 
         else if (conformpass.isEmpty() || !conformpass.equals(password))
         {
