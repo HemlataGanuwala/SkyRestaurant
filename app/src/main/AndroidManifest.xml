@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MakePaymentActivity"></activity>
+        <activity android:name=".OnlinePaymentActivity"></activity>
+        <activity android:name=".MyAccountActivity" />
+        <activity android:name=".MakePaymentActivity" />
         <activity android:name=".SelectDateTimeActivity" />
         <activity android:name=".AddAddressActivity" />
         <activity android:name=".PlaceOrderActivity" />

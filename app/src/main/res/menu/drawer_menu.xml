@@ -101,4 +101,13 @@
             android:checked="true"/>
     </group>
 
+    <group android:checkableBehavior="single"
+        android:id="@+id/grpmyaccount">
+
+        <item android:id="@+id/nav_myaccount"
+            android:icon="@drawable/icon_acount"
+            android:title="My Account"
+            android:checked="true"/>
+    </group>
+
 </menu>

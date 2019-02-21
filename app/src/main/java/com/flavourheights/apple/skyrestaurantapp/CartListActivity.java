@@ -117,6 +117,7 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             public void onClick(View v) {
                 Intent intent=new Intent(CartListActivity.this, PlaceOrderActivity.class);
                 intent.putExtra("Cost", String.valueOf(totalamount));
+                intent.putExtra("Count", String.valueOf(totcount));
                 startActivity(intent);
             }
         });
@@ -251,6 +252,12 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
                 startActivity(intent7);
                 break;
 
+            case R.id.nav_myaccount:
+
+                Intent intent9 = new Intent(getApplicationContext(), OrderHistoryActivity.class);
+                startActivity(intent9);
+                break;
+
             default:
                 fragmentClass = MenuFragment.class;
                 break;
@@ -346,10 +353,11 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
                 totalamount = totalamount + ammount;
             }
             textViewtotlcost.setText(String.valueOf(totalamount));
-
-
         }
     }
+
+
+
 
 
 }

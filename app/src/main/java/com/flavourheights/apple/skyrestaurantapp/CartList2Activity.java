@@ -179,6 +179,12 @@ public class CartList2Activity extends AppCompatActivity implements NavigationVi
                 startActivity(intent7);
                 break;
 
+            case R.id.nav_myaccount:
+
+                Intent intent9 = new Intent(getApplicationContext(), OrderHistoryActivity.class);
+                startActivity(intent9);
+                break;
+
             default:
                 fragmentClass = MenuFragment.class;
                 break;

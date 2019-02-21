@@ -12,37 +12,87 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
-        <ImageView
-            android:id="@+id/imgback"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:src="@drawable/icon_back" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Make Payment"
+            android:fontFamily="@font/acme"
             android:gravity="center"
+            android:text="Payment Status"
             android:textColor="@color/colorsplash"
-            android:textSize="24sp"
-            android:fontFamily="@font/acme"/>
+            android:textSize="24sp" />
 
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="350dp"
+        android:background="@color/colorsplash"
         android:orientation="vertical">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center|left"
-            android:paddingLeft="30dp"
-            android:text="Payment Method"
-            android:textSize="14sp"
+            android:layout_height="200dp"
+            android:paddingTop="40dp"
+            android:paddingBottom="40dp"
+            android:src="@drawable/thumbs_up" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="Your Payment Status Is"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                app:fontFamily="@font/acme" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:paddingBottom="15dp"
+                android:text="Successful"
+                android:textColor="@color/green"
+                android:textSize="20dp"
+                app:fontFamily="@font/acme" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6" />
+
+
+        <TextView
+            android:id="@+id/tvshowmessage"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="40dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:fontFamily="@font/acme" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnhome"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bg_button"
+        android:fontFamily="@font/acme"
+        android:text="Home"
+        android:textAllCaps="false"
+        android:textColor="@color/colorsplash"
+        android:textSize="24sp" />
 
 </LinearLayout>

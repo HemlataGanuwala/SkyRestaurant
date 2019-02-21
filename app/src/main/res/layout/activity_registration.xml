@@ -59,7 +59,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/acme"
                 android:hint="First Name"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapWords"
                 android:paddingLeft="10dp"
                 android:textColor="@color/gray"
                 android:textSize="16sp" />
@@ -74,7 +74,7 @@
                 android:drawablePadding="10dp"
                 android:fontFamily="@font/acme"
                 android:hint="Last Name"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textPassword"
                 android:paddingLeft="10dp"
                 android:textColor="@color/gray"
                 android:textSize="16sp" />
@@ -172,21 +172,21 @@
 
             </LinearLayout>
 
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/chkrefercode"
-                android:text="I Have Referal Code"/>
+            <!--<CheckBox-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/chkrefercode"-->
+                <!--android:text="I Have Referal Code"/>-->
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:id="@+id/etregrefercode"
-                android:textColor="@color/colorPrimary"
-                android:inputType="textCapCharacters"
-                android:textSize="16sp"
-                android:paddingLeft="5dp"
-                android:background="@drawable/bg_rect"/>
+            <!--<EditText-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:id="@+id/etregrefercode"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:inputType="textCapCharacters"-->
+                <!--android:textSize="16sp"-->
+                <!--android:paddingLeft="5dp"-->
+                <!--android:background="@drawable/bg_rect"/>-->
 
             <Button
                 android:id="@+id/btnregister"

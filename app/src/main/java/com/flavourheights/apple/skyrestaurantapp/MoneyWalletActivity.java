@@ -27,12 +27,10 @@ import java.util.List;
 public class MoneyWalletActivity extends AppCompatActivity {
 
     ImageView imageViewback;
-    Button buttonreadme;
-    EditText editTextrefercode;
     TextView textViewbalance;
     String refcode,path,user,balance;
     ServiceHandler shh;
-    int count;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +41,6 @@ public class MoneyWalletActivity extends AppCompatActivity {
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
 
-        buttonreadme = (Button)findViewById(R.id.btnreadme);
-        editTextrefercode = (EditText)findViewById(R.id.etrefcode);
         textViewbalance = (TextView)findViewById(R.id.tvbalance);
         imageViewback=(ImageView)findViewById(R.id.imgback);
         imageViewback.setOnClickListener(new View.OnClickListener() {
@@ -55,13 +51,10 @@ public class MoneyWalletActivity extends AppCompatActivity {
             }
         });
 
-        buttonreadme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refcode = editTextrefercode.getText().toString();
-                new addBalance().execute();
-            }
-        });
+        new getRefferCode().execute();
+
+        new addBalance().execute();
+
     }
 
 //    public class addBalance extends AsyncTask<String, String, String> {
@@ -107,6 +100,54 @@ public class MoneyWalletActivity extends AppCompatActivity {
 //            textViewbalance.setText(String.valueOf(balance));
 //        }
 //    }
+
+    public class getRefferCode extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Registration/getRegReferCode";
+            Log.d("Url", ">" + url);
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+
+                params2.add(new BasicNameValuePair("Email", user));
+
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+
+                    for (int i = 0; i < classArray.length(); i++) {
+
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        refcode = a1.getString("ReferCode");
+
+                    }
+                } else {
+                    Toast.makeText(MoneyWalletActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+    }
 
     public class addBalance extends AsyncTask<String, String, String> {
 

@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_share:
                 Intent intent3 = new Intent(Intent.ACTION_SEND);
                 intent3.setType("text/plain");
-                String shareBody = "https://drive.google.com/open?id=1LUvJ6nP_0Qit8QCaDQtl5JhrdGHQoQ1x";
+                String shareBody = "https://drive.google.com/open?id=1baC8GWcGn16YmEgcWhUYphcaYyhLJ7Ht";
                 String shareSub = "Your Sub Here";
                 intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 intent3.putExtra(Intent.EXTRA_SUBJECT, shareSub);
@@ -308,6 +308,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 Intent intent7= new Intent(getApplicationContext(), OrderHistoryActivity.class);
                 startActivity(intent7);
+                break;
+
+            case R.id.nav_myaccount:
+
+                Intent intent8= new Intent(getApplicationContext(), MyAccountActivity.class);
+                startActivity(intent8);
                 break;
 
             default:

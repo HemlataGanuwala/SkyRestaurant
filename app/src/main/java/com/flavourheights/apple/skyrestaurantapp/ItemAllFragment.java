@@ -357,6 +357,7 @@ public class ItemAllFragment extends Fragment{
                 params2.add(new BasicNameValuePair("Password",pass));
                 params2.add(new BasicNameValuePair("TotalCount","1"));
                 params2.add(new BasicNameValuePair("TotalAmt",rate1));
+                params2.add(new BasicNameValuePair("Status","0"));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 

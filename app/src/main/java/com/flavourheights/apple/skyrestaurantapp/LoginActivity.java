@@ -48,6 +48,7 @@ import com.google.android.gms.tasks.Task;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,12 +61,14 @@ import static com.flavourheights.apple.skyrestaurantapp.GoogleHelper.RC_SIGN_IN;
 public class LoginActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     EditText editTextuserid, editTextpassword;
-    TextView textViewregister, textViewforgetpass;
+    TextView textViewregister, textViewforgetpass, textViewrefercode;
+    CheckBox checkBoxrefercode;
     LoginButton facebook;
     SignInButton buttongooglelogin;
     Button buttonlogin,buttonsignout;
     String username, password;
-    String path, email, mobile, pass;
+    String path, email, mobile, pass, regrefercode, refercode, referuser, refername, referlastname, refermobile, mobileno;
+    int amount, ramount=50;
     int Status;
     ServiceHandler shh;
     ProgressDialog progress;
@@ -87,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     CallbackManager callbackManager;
     private static final String EMAIL = "email";
     LoginButton loginButton;
-   DatabaseHelpher databaseHelpher;
+    DatabaseHelpher databaseHelpher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,21 +98,42 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         setContentView(R.layout.activity_login);
 
         databaseHelpher = new DatabaseHelpher(this);
+        display();
+        textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
+        textViewrefercode.setVisibility(View.GONE);
 
         editTextuserid=(EditText)findViewById(R.id.etusername);
         editTextpassword=(EditText)findViewById(R.id.etpassword);
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
+        mobileno = mobile;
+
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarlogin);
         setSupportActionBar(toolbar);
+
+        checkBoxrefercode = (CheckBox)findViewById(R.id.chkrefercode);
+        checkBoxrefercode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if ((checkBoxrefercode).isChecked())
+                {
+                    textViewrefercode.setVisibility(View.VISIBLE);
+//                    regrefercode = textViewrefercode.getText().toString();
+//                    new ReferCodeData().execute();
+                }else {
+                    textViewrefercode.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
 
         buttongooglelogin = (SignInButton)findViewById(R.id.btgoogle);
         buttonsignout = (Button)findViewById(R.id.btnsignout);
@@ -151,8 +175,6 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
 
         textViewforgetpass=(TextView)findViewById(R.id.tvforgetpass);
         textViewforgetpass.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +273,15 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         getPreferencedata();
 
 
+    }
+
+    public void display(){
+        Intent intent = getIntent();
+        Bundle bundle  = intent.getExtras();
+        if (bundle != null)
+        {
+            mobile = (String)bundle.get("MobileNo");
+        }
     }
 
     private void getUserProfile(AccessToken currentAccessToken) {
@@ -374,6 +405,20 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         username=editTextuserid.getText().toString().trim();
         password=editTextpassword.getText().toString().trim();
 
+
+        if ((checkBoxrefercode).isChecked())
+        {
+            textViewrefercode.setVisibility(View.VISIBLE);
+            regrefercode = textViewrefercode.getText().toString();
+            if (regrefercode != null)
+            {
+                new getReferData().execute();
+                new ReferCodeData().execute();
+                new UpdateReferCodeData().execute();
+            }
+
+        }
+
         new LoginData().execute();
 
     }
@@ -473,6 +518,12 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
                 startActivity(intent7);
                 break;
 
+            case R.id.nav_myaccount:
+
+                Intent intent9= new Intent(getApplicationContext(), MyAccountActivity.class);
+                startActivity(intent9);
+                break;
+
             default:
                 fragmentClass = MenuFragment.class;
                 break;
@@ -517,7 +568,6 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 //    }
 
 
-
     class LoginData extends AsyncTask<Void,Void,String> {
         @Override
         protected void onPreExecute() {
@@ -543,6 +593,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
                 List<NameValuePair> params2 = new ArrayList<>();
                 params2.add(new BasicNameValuePair("Email", username));
                 params2.add(new BasicNameValuePair("Password", password));
+                params2.add(new BasicNameValuePair("ReferCode",refercode));
 
                 String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
 
@@ -602,6 +653,157 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
             }
         }
 
+    }
+
+    class ReferCodeData extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Registration/AddReferCode";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
+                params2.add(new BasicNameValuePair("UserName",username));
+                params2.add(new BasicNameValuePair("RUserName",referuser));
+                params2.add(new BasicNameValuePair("RAmount","50"));
+                params2.add(new BasicNameValuePair("RefStatus","1"));
+
+                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+
+                if (Jsonstr != null)
+                {
+                    JSONObject c1= new JSONObject(Jsonstr);
+                    Status =c1.getInt("Status");
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch ( JSONException e){
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+
+    }
+
+    class UpdateReferCodeData extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            amount=amount+ramount;
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Registration/UpdateRegReferAmt";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
+                params2.add(new BasicNameValuePair("UserName",username));
+                params2.add(new BasicNameValuePair("RAmount",String.valueOf(amount)));
+
+                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+
+                if (Jsonstr != null)
+                {
+                    JSONObject c1= new JSONObject(Jsonstr);
+                    Status =c1.getInt("Status");
+                }
+                else{
+                    Toast.makeText(LoginActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch ( JSONException e){
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+
+        }
+
+    }
+
+    class getReferData extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getReferCodeData";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ReferCode", regrefercode));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        referuser = a1.getString("Email");
+                        refername = a1.getString("CustFirstName");
+                        referlastname = a1.getString("CustLastName");
+                        refermobile = a1.getString("PhoneNo");
+                        amount = a1.getInt("RAmount");
+                    }
+                }
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
     }
 
 }

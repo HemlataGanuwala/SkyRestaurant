@@ -48,12 +48,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     ImageView imageViewback;
-    EditText editTextfname, editTextlname, editTextemail, editTextphoneno, editTextpass, editTextconformpass,textViewrefercode;
+    EditText editTextfname, editTextlname, editTextemail, editTextphoneno, editTextpass, editTextconformpass;
     TextView textViewcondition;
     CheckBox radioButtonaccept;
     Button buttonregister,buttonreg;
@@ -63,11 +64,12 @@ public class RegistrationActivity extends AppCompatActivity {
     String path;
     boolean valid=true;
     FirebaseAuth mAuth;
-    CheckBox checkBoxrefercode;
+//    CheckBox checkBoxrefercode;
     DatabaseHelpher databaseHelpher;
     int amount, ramount=50;
     int total;
     String dataemail,datapass,datamobile;
+    ProgressDialog progress;
 
     public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9+._%-+]{1,256}" +
@@ -77,6 +79,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     "." +
                     "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" +
                     ")+");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +96,8 @@ public class RegistrationActivity extends AppCompatActivity {
 //        mobileno = globalVariable.getMobileNo();
 
         mAuth=FirebaseAuth.getInstance();
-        textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
-        textViewrefercode.setVisibility(View.GONE);
+//        textViewrefercode = (EditText) findViewById(R.id.etregrefercode);
+//        textViewrefercode.setVisibility(View.GONE);
 
         final Drawable icon=getResources().getDrawable(R.drawable.icon_error);
         final Drawable icon_write=getResources().getDrawable(R.drawable.icons_checkmark);
@@ -133,70 +136,41 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        checkBoxrefercode = (CheckBox)findViewById(R.id.chkrefercode);
-        checkBoxrefercode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if ((checkBoxrefercode).isChecked())
-                {
-                    textViewrefercode.setVisibility(View.VISIBLE);
-//                    regrefercode = textViewrefercode.getText().toString();
-//                    new ReferCodeData().execute();
-                }else {
-                    textViewrefercode.setVisibility(View.GONE);
-                }
-
-            }
-        });
+//        checkBoxrefercode = (CheckBox)findViewById(R.id.chkrefercode);
+//        checkBoxrefercode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if ((checkBoxrefercode).isChecked())
+//                {
+//                    textViewrefercode.setVisibility(View.VISIBLE);
+////                    regrefercode = textViewrefercode.getText().toString();
+////                    new ReferCodeData().execute();
+//                }else {
+//                    textViewrefercode.setVisibility(View.GONE);
+//                }
+//
+//            }
+//        });
 
 
 
         radioButtonaccept=(CheckBox)findViewById(R.id.rbaccept);
 
-
-        buttonregister=(Button)findViewById(R.id.btnregister);
         buttonreg=(Button)findViewById(R.id.btnregister);
         buttonreg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user == null || mobileno == null)
-                {
-                    insertData();
-                }
-                else
-                {
-                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-//        buttonregister.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                if (user == null || mobileno == null)
+//                if (user == null|| mobileno == null)
 //                {
-//                    insertData();
+                    insertData();
 //                }
 //                else
 //                {
 //                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
 //                }
-//
-////                if (user == null || mobileno == null)
-////                {
-////
-////                    insertData();
-////
-////                }else {
-////
-////                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
-////
-////                }
-//
-//            }
-//        });
-
+            }
+        });
 
 //        editTextconformpass.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -273,22 +247,21 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneno=editTextphoneno.getText().toString();
         password=editTextpass.getText().toString();
         conformpass=editTextconformpass.getText().toString();
-
-        if ((checkBoxrefercode).isChecked())
-        {
-            textViewrefercode.setVisibility(View.VISIBLE);
-            regrefercode = textViewrefercode.getText().toString();
-            if (regrefercode != null)
-            {
-                new getReferData().execute();
-                new ReferCodeData().execute();
-                new UpdateReferCodeData().execute();
-            }
-
-
-
-        }
-
+//
+//        if ((checkBoxrefercode).isChecked())
+//        {
+//            textViewrefercode.setVisibility(View.VISIBLE);
+//            regrefercode = textViewrefercode.getText().toString();
+//            if (regrefercode != null)
+//            {
+//                new getReferData().execute();
+//                new ReferCodeData().execute();
+//                new UpdateReferCodeData().execute();
+//            }
+//
+//
+//
+//        }
 
         radioButtonaccept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -301,71 +274,69 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        if(validation()) {
+        if(!emailid.equals(user)  || !phoneno.equals(mobileno)) {
 
-                databaseHelpher.RegistrationData(fname, lname, emailid, phoneno, password);
-                new RegisterData().execute();
+            validation();
         }
-        else{
-            Toast.makeText(RegistrationActivity.this, "Please Enter Valid Data", Toast.LENGTH_LONG).show();
-        }
+        else {
 
+            Toast.makeText(RegistrationActivity.this, "You are already registered", Toast.LENGTH_LONG).show();
+        }
 
     }
 
-    public boolean validation()
+
+    public void validation()
     {
 
-        if(fname.isEmpty())
+        if (fname.isEmpty() || !Pattern.matches("[A-Z][a-zA-Z]*",fname))
         {
-            editTextfname.setError("Name should not empty");
-            valid=false;
-        }
-
-        if (lname.isEmpty())
-        {
-            editTextlname.setError("Last name should not empty");
-            valid=false;
-        }
-
-        if (!EMAIL_ADDRESS_PATTERN.matcher(emailid).matches())
-        {
-            editTextemail.setError("Enter valid id");
-            valid=false;
-        }
-
-        if (password.length() < 4 && password.length() > 9)
-        {
-            editTextpass.setError("Enter should not empty");
-            valid=false;
-        }
-
-        if (!conformpass.equals(password))
-        {
-            editTextconformpass.setText("Password is not matched");
+            editTextfname.setError("Enter Valid Name");
             valid = false;
-        }else {
-            valid = true;
+
         }
 
+        else if (lname.isEmpty() || !Pattern.matches("[a-zA-z]+([ '-][a-zA-Z]+)*",lname))
+        {
+            editTextlname.setError("Enter Valid Surname");
+            valid = false;
 
-        if(!Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",phoneno)) {
-            editTextphoneno.setError("No should be 10-digit");
+        }
+
+        else if (emailid.isEmpty() || !EMAIL_ADDRESS_PATTERN.matcher(emailid).matches())
+        {
+
+            editTextemail.setError("Email valid id");
+            valid = false;
+
+        }
+
+        else if (password.isEmpty() || !Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$",password))
+        {
+            editTextpass.setError("Password should contain one special character and one numeric");
+            valid = false;
+
+        }
+
+        else if (phoneno.isEmpty() || !Pattern.matches("^(?:(?:\\+|0{0,2})91(\\s*[\\-]\\s*)?|[0]?)?[789]\\d{9}$",phoneno)){
+
+            editTextphoneno.setError("Number should be 10-digit");
+            valid = false;
+
+        }
+
+        else if (conformpass.isEmpty() || !conformpass.equals(password))
+        {
+            editTextconformpass.setError("Password not matched");
             valid = false;
         }
 
-        if(!radioButtonaccept.isChecked())
-        {
-            radioButtonaccept.setError("Accept term and condition");
-            valid=false;
-        }
-        else{
-            valid=true;
+        else {
+            databaseHelpher.RegistrationData(fname, lname, emailid, phoneno, password);
+            new RegisterData().execute();
         }
 
-        return valid;
     }
-
 
     public class GetReferCode extends AsyncTask<String, String, String>
     {
@@ -426,6 +397,12 @@ public class RegistrationActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progress=new ProgressDialog(RegistrationActivity.this);
+            progress.setMessage("Loading...");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.setProgress(0);
+            progress.show();
         }
 
 
@@ -444,6 +421,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 params2.add(new BasicNameValuePair("Email",emailid));
                 params2.add(new BasicNameValuePair("PhoneNo",phoneno));
                 params2.add(new BasicNameValuePair("ReferCode",refercode));
+
+
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 
@@ -473,15 +452,16 @@ public class RegistrationActivity extends AppCompatActivity {
             {
 
                 if (radioButtonaccept.isChecked()){
-                    buttonregister.setEnabled(true);
+                    buttonreg.setEnabled(true);
 
                     Toast.makeText(RegistrationActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
+                    intent.putExtra("MobileNo", phoneno);
                     startActivity(intent);
                 }
 
                 else {
-                    buttonregister.setEnabled(false);
+                    buttonreg.setEnabled(false);
 
                     Toast.makeText(RegistrationActivity.this, "Accept Term and Conditions", Toast.LENGTH_LONG).show();
                 }
@@ -499,156 +479,156 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    class ReferCodeData extends AsyncTask<String,String,String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            shh = new ServiceHandler();
-            String url = path + "Registration/AddReferCode";
-
-            try {
-                List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
-                params2.add(new BasicNameValuePair("UserName",emailid));
-                params2.add(new BasicNameValuePair("RUserName",referuser));
-                params2.add(new BasicNameValuePair("RAmount","50"));
-                params2.add(new BasicNameValuePair("RefStatus","1"));
-
-                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
-
-                if (Jsonstr != null)
-                {
-                    JSONObject c1= new JSONObject(Jsonstr);
-                    Status =c1.getInt("Status");
-                }
-                else{
-                    Toast.makeText(RegistrationActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
-                }
-            }
-            catch ( JSONException e){
-                e.printStackTrace();
-            }
-
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-        }
-
-    }
-
-    class UpdateReferCodeData extends AsyncTask<String,String,String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            amount=amount+ramount;
-
-        }
-
-
-        @Override
-        protected String doInBackground(String... strings) {
-
-            shh = new ServiceHandler();
-            String url = path + "Registration/UpdateRegReferAmt";
-
-            try {
-                List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
+//    class ReferCodeData extends AsyncTask<String,String,String>
+//    {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//        }
+//
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//
+//            shh = new ServiceHandler();
+//            String url = path + "Registration/AddReferCode";
+//
+//            try {
+//                List<NameValuePair> params2 = new ArrayList<>();
+//                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
 //                params2.add(new BasicNameValuePair("UserName",emailid));
-                params2.add(new BasicNameValuePair("RAmount",String.valueOf(amount)));
-
-                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
-
-                if (Jsonstr != null)
-                {
-                    JSONObject c1= new JSONObject(Jsonstr);
-                    Status =c1.getInt("Status");
-                }
-                else{
-                    Toast.makeText(RegistrationActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
-                }
-            }
-            catch ( JSONException e){
-                e.printStackTrace();
-            }
-
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
-        }
-
-    }
-
-    class getReferData extends AsyncTask<Void, Void, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            shh = new ServiceHandler();
-            String url = path + "Registration/getReferCodeData";
-            Log.d("Url: ", "> " + url);
-
-            try{
-                List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("ReferCode", regrefercode));
-                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
-
-                if (jsonStr != null) {
-                    JSONObject c1 = new JSONObject(jsonStr);
-                    JSONArray classArray = c1.getJSONArray("Response");
-                    for (int i = 0; i < classArray.length(); i++) {
-                        JSONObject a1 = classArray.getJSONObject(i);
-                        referuser = a1.getString("Email");
-                        refername = a1.getString("CustFirstName");
-                        referlastname = a1.getString("CustLastName");
-                        refermobile = a1.getString("PhoneNo");
-                        amount = a1.getInt("RAmount");
-                    }
-                }
-                else
-                {
-                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-                }
-
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
+//                params2.add(new BasicNameValuePair("RUserName",referuser));
+//                params2.add(new BasicNameValuePair("RAmount","50"));
+//                params2.add(new BasicNameValuePair("RefStatus","1"));
+//
+//                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+//
+//                if (Jsonstr != null)
+//                {
+//                    JSONObject c1= new JSONObject(Jsonstr);
+//                    Status =c1.getInt("Status");
+//                }
+//                else{
+//                    Toast.makeText(RegistrationActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            catch ( JSONException e){
+//                e.printStackTrace();
+//            }
+//
+//
+//            return null;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//
+//        }
+//
+//    }
+//
+//    class UpdateReferCodeData extends AsyncTask<String,String,String>
+//    {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            amount=amount+ramount;
+//
+//        }
+//
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//
+//            shh = new ServiceHandler();
+//            String url = path + "Registration/UpdateRegReferAmt";
+//
+//            try {
+//                List<NameValuePair> params2 = new ArrayList<>();
+//                params2.add(new BasicNameValuePair("ReferCode",regrefercode));
+////                params2.add(new BasicNameValuePair("UserName",emailid));
+//                params2.add(new BasicNameValuePair("RAmount",String.valueOf(amount)));
+//
+//                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+//
+//                if (Jsonstr != null)
+//                {
+//                    JSONObject c1= new JSONObject(Jsonstr);
+//                    Status =c1.getInt("Status");
+//                }
+//                else{
+//                    Toast.makeText(RegistrationActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            catch ( JSONException e){
+//                e.printStackTrace();
+//            }
+//
+//
+//            return null;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//
+//
+//        }
+//
+//    }
+//
+//    class getReferData extends AsyncTask<Void, Void, String>
+//    {
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... params) {
+//            shh = new ServiceHandler();
+//            String url = path + "Registration/getReferCodeData";
+//            Log.d("Url: ", "> " + url);
+//
+//            try{
+//                List<NameValuePair> params2 = new ArrayList<>();
+//                params2.add(new BasicNameValuePair("ReferCode", regrefercode));
+//                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+//
+//                if (jsonStr != null) {
+//                    JSONObject c1 = new JSONObject(jsonStr);
+//                    JSONArray classArray = c1.getJSONArray("Response");
+//                    for (int i = 0; i < classArray.length(); i++) {
+//                        JSONObject a1 = classArray.getJSONObject(i);
+//                        referuser = a1.getString("Email");
+//                        refername = a1.getString("CustFirstName");
+//                        referlastname = a1.getString("CustLastName");
+//                        refermobile = a1.getString("PhoneNo");
+//                        amount = a1.getInt("RAmount");
+//                    }
+//                }
+//                else
+//                {
+//                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//            catch (JSONException e)
+//            {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//        }
+//    }
 
 
 

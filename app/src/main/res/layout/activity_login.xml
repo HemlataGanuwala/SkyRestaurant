@@ -45,27 +45,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight=".95"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
                 android:src="@drawable/restaurantlogo" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight=".80"
+            android:layout_marginTop="10dp"
+            android:layout_weight=".70"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etusername"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="40dp"
@@ -75,14 +78,14 @@
                 android:ems="10"
                 android:fontFamily="@font/acme"
                 android:hint="Email Id"
-                android:inputType="textPersonName"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="15dp"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/etpassword"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="40dp"
@@ -98,6 +101,25 @@
                 android:textSize="20sp" />
 
             <CheckBox
+                android:id="@+id/chkrefercode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginBottom="10dp"
+                android:text="I Have Referal Code" />
+
+            <EditText
+                android:id="@+id/etregrefercode"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_rect"
+                android:inputType="textCapCharacters"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <CheckBox
                 android:id="@+id/chkrememberme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,18 +130,6 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/btnlogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:background="@drawable/bg_button"
-                android:fontFamily="@font/acme"
-                android:text="Sign in"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -131,15 +141,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight=".80"
+                android:layout_weight=".52"
                 android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnlogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:background="@drawable/bg_button"
+                    android:fontFamily="@font/acme"
+                    android:text="Sign in"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="40dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp" />
@@ -157,23 +180,23 @@
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/btgoogle"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="75dp"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="40dp"
                     android:layout_weight="1"
                     android:visibility="visible" />
 
                 <Button
+                    android:id="@+id/btnsignout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/btnsignout"
                     android:layout_marginLeft="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
-                    android:visibility="invisible"
+                    android:layout_weight="1"
                     android:text="Sign Out"
-                    android:layout_weight="1"/>
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
