@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new getAllItem().execute();
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (Exception e) {}
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);

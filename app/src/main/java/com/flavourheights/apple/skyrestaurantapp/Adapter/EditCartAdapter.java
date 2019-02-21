@@ -78,7 +78,9 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
         holder.textViewplus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
+
+                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText().length() >= 1));
+
                 count++;
 
                 holder.textViewtotcount.setText(String.valueOf(count));
@@ -110,7 +112,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
         holder.textViewminus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
+                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText().length() >= 1));
                 count--;
 
                 holder.textViewtotcount.setText(String.valueOf(count));

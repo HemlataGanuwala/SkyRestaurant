@@ -34,6 +34,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnselectlocation"
+            android:background="@color/colorsplash"
+            android:text="Select Current Location"
+            android:textColor="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/icon_locations"
+            android:paddingLeft="20dp"/>
+
         <TextView
             android:id="@+id/tvselectcity"
             android:layout_width="match_parent"
@@ -62,31 +72,25 @@
             android:layout_height="0.3dp"
             android:background="#cdc6c6"/>
 
-        <TextView
-            android:id="@+id/tvselectlocation"
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:drawableRight="@drawable/downarrow"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
+        <EditText
+            android:id="@+id/etpincode"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorsplash"
+            android:drawableLeft="@drawable/icon_location"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/acme"
             android:gravity="center|left"
+            android:hint="Pin Code"
             android:paddingLeft="20dp"
-            android:paddingRight="30dp"
-            android:text="Select Your location"
-            android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-            android:textSize="16sp" />
-
-
-        <TextView
-            android:id="@+id/tvlocation"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:fontFamily="@font/acme"
-            android:gravity="center|left"
-            android:paddingLeft="10dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
-
-
         <View
             android:layout_width="match_parent"
             android:layout_height="0.3dp"
@@ -110,6 +114,24 @@
             android:layout_height="0.3dp"
             android:background="#cdc6c6"/>
 
+        <EditText
+            android:id="@+id/etlandmark"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/colorsplash"
+            android:drawableLeft="@drawable/icon_appartment"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/acme"
+            android:gravity="center|left"
+            android:hint="LandMark/AppartmentName"
+            android:paddingLeft="20dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#cdc6c6"/>
+
 
         <EditText
             android:id="@+id/etlocality"
@@ -120,7 +142,7 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/acme"
             android:gravity="center|left"
-            android:hint="Apartment/LocalityName"
+            android:hint="LocalityName"
             android:paddingLeft="20dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -130,23 +152,7 @@
             android:background="#cdc6c6"/>
 
 
-        <EditText
-            android:id="@+id/etotheradd"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/colorsplash"
-            android:drawableLeft="@drawable/icon_appartment"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/acme"
-            android:gravity="center|left"
-            android:hint="Address Other(Optional)"
-            android:paddingLeft="20dp"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#cdc6c6"/>
+
 
         <Button
             android:id="@+id/btnsave"

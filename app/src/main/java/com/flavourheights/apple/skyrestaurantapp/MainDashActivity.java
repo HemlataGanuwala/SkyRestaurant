@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainDashActivity extends AppCompatActivity implements ItemAllFragment.ActivityCommunicator {
+public class MainDashActivity extends AppCompatActivity implements ItemAllFragment.ActivityCommunicator,ItemNonVegFragment.ActivityCommunicator,ItemVegFragment.ActivityCommunicator {
 
     ViewFlipper viewFlipper;
     String itemname,path;
@@ -233,6 +233,34 @@ public class MainDashActivity extends AppCompatActivity implements ItemAllFragme
 
     @Override
     public void passDataActivity(String someValue) {
+        if (textViewitemcount.equals("0"))
+        {
+            textViewitemcount.setVisibility(View.GONE);
+        }
+        else {
+            textViewitemcount.setVisibility(View.VISIBLE);
+            textViewitemcount.setText(someValue);
+        }
+
+        //countitem = Integer.parseInt(someValue);
+    }
+
+    @Override
+    public void passDataActivitynonveg(String someValue) {
+        if (textViewitemcount.equals("0"))
+        {
+            textViewitemcount.setVisibility(View.GONE);
+        }
+        else {
+            textViewitemcount.setVisibility(View.VISIBLE);
+            textViewitemcount.setText(someValue);
+        }
+
+        //countitem = Integer.parseInt(someValue);
+    }
+
+    @Override
+    public void passDataActivityveg(String someValue) {
         if (textViewitemcount.equals("0"))
         {
             textViewitemcount.setVisibility(View.GONE);

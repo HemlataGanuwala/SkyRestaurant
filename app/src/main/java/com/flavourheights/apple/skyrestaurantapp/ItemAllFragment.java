@@ -188,36 +188,38 @@ public class ItemAllFragment extends Fragment{
 
             @Override
             public void iconImageViewOnClick(View v, int position) {
-//                int t1 =0;
-//                t1 = recyclerView.getAdapter().getItemCount();
-//
-//                for (int i=0; i<t1; i++)
-//                {
+                if (user != null)
+                {
                     ItemPlanet planet1 = mPlanetlist1.get(position);
                     subitem1 = planet1.getSubItemname();
                     rate1 = planet1.getRate();
-//                }
-                new getAllItemcount().execute();
 
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {}
+                    new getAllItemcount().execute();
 
-                if (Response == "null")
-                {
-                    count++;
-                    cnt = String.valueOf(count);
-                    new RegisterData().execute();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {}
+
+                    if (Response == "null")
+                    {
+                        count++;
+                        cnt = String.valueOf(count);
+                        new RegisterData().execute();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "Item Already Added", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getActivity(),EditCartActivity.class);
+                        startActivity(intent);
+                    }
+
+                    activityCommunicator.passDataActivity(cnt);
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "Item Already Added", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Login First", Toast.LENGTH_LONG).show();
+                    //textViewcount.setVisibility(View.GONE);
                 }
-
-                activityCommunicator.passDataActivity(cnt);
-
-
-
             }
 
         });
