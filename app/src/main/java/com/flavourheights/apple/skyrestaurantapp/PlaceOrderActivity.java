@@ -52,7 +52,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
     RadioButton radioButtoncash, radioButtononline, radioButtoncashondelivery;
     Button buttonproceed,buttonaddaddress;
     private int mYear, mMonth, mDay, mHour, mMinite;
-    String path, cartstatus, password, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
+    String path, cartstatus, totalcount, password, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
     boolean valid=true;
     ServiceHandler shh;
     int Status=1;
@@ -148,6 +148,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         if (bundle!=null)
         {
             totalamount = (String) bundle.get("Cost");
+            totalcount = (String) bundle.get("Count");
         }
         textViewcost.setText(totalamount);
         textViewmobileno.setText(mobileno);
@@ -425,6 +426,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
                 params2.add(new BasicNameValuePair("ODate",mdate));
                 params2.add(new BasicNameValuePair("OTime",mtime));
                 params2.add(new BasicNameValuePair("PaymentMode",paymentmode));
+                params2.add(new BasicNameValuePair("NoOfItem", totalcount));
                 params2.add(new BasicNameValuePair("Status","1"));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
