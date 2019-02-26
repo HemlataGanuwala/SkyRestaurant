@@ -64,6 +64,7 @@
                             android:drawablePadding="10dp"
                             android:fontFamily="@font/acme"
                             android:gravity="center|left"
+                            android:paddingLeft="10dp"
                             android:text="Cost"
                             android:textSize="16sp" />
 
@@ -172,7 +173,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/rvaddress">
+                        android:id="@+id/rvaddaddress">
 
                     </android.support.v7.widget.RecyclerView>
 
@@ -235,13 +236,13 @@
                     android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/btnaddaddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/btnaddaddress"
+                        android:layout_marginRight="3dp"
                         android:background="@drawable/bg_button"
-                        android:text="Add Address"
-                        android:textColor="@color/colorsplash"
-                        android:layout_marginRight="3dp"/>
+                        android:text="Add and CHANGE Address"
+                        android:textColor="@color/colorsplash" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -274,6 +275,7 @@
                             android:id="@+id/rbonlinepay"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:background="@color/colorsplash"
                             android:fontFamily="@font/acme"
                             android:text="Online Payment"
                             android:textSize="16sp" />

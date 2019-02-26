@@ -4,19 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:drawable/editbox_background"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".10"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tveditcartitemname"
@@ -24,7 +24,17 @@
                 android:layout_height="match_parent"
                 android:fontFamily="@font/acme"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_weight=".10"/>
+
+
+            <ImageView
+                android:id="@+id/imgdelete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|top"
+                android:layout_weight="1"
+                android:src="@drawable/icon_multiplication" />
 
         </LinearLayout>
 
@@ -115,6 +125,8 @@
 
         </LinearLayout>
 
+
     </LinearLayout>
+
 
 </LinearLayout>

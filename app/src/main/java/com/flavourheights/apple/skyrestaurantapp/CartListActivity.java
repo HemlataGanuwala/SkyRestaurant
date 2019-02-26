@@ -69,7 +69,7 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
         textViewtotlcost=(TextView)findViewById(R.id.tvtotal_cost);
 
 //        Display();
-
+        mPlanetlist.clear();
         new addCartItem().execute();
 
         imageViewback=(ImageView)findViewById(R.id.img_back);
@@ -81,14 +81,7 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-//        imageViewedit = (ImageView)findViewById(R.id.img_edit_pencile);
-//        imageViewedit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent= new Intent(CartListActivity.this, EditCartActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+
 
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclecartlist);
@@ -96,6 +89,15 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarcartlist);
         setSupportActionBar(toolbar);
+
+//        imageViewedit = (ImageView)findViewById(R.id.cartpencile);
+//        imageViewedit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent(CartListActivity.this, EditCartActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setTitle("Cart List");
 
@@ -117,7 +119,7 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             public void onClick(View v) {
                 Intent intent=new Intent(CartListActivity.this, PlaceOrderActivity.class);
                 intent.putExtra("Cost", String.valueOf(totalamount));
-                intent.putExtra("Count", String.valueOf(totcount));
+//                intent.putExtra("Count", String.valueOf(totcount));
                 startActivity(intent);
             }
         });
@@ -355,9 +357,5 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
             textViewtotlcost.setText(String.valueOf(totalamount));
         }
     }
-
-
-
-
 
 }

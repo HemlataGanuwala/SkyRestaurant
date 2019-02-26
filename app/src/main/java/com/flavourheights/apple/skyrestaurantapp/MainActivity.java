@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.flavourheights.apple.skyrestaurantapp.Adapter.OfferAdapter;
@@ -211,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent intent = new Intent(MainActivity.this, CartListActivity.class);
                     startActivity(intent);
                     return true;
+
                 }
                 return true;
 
@@ -298,10 +300,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_cartlist:
 
-                Intent intent6= new Intent(getApplicationContext(), CartList2Activity.class);
-                intent6.putExtra("Username",user);
-                intent6.putExtra("Password",pass);
-                startActivity(intent6);
+                if (count.equals("0"))
+                {
+                    Toast.makeText(getApplicationContext(), "No Item in cart", Toast.LENGTH_LONG).show();
+                }else {
+
+                    Intent intent6 = new Intent(getApplicationContext(), CartList2Activity.class);
+                    intent6.putExtra("Username", user);
+                    intent6.putExtra("Password", pass);
+                    startActivity(intent6);
+                }
                 break;
 
             case R.id.nav_orderhis:

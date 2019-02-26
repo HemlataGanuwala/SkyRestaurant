@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -45,10 +44,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center|right"
+                android:drawableLeft="@drawable/icon_rupee_order"
+                android:drawablePadding="10dp"
+                android:gravity="center|left"
+                android:paddingLeft="20dp"
                 android:paddingTop="20dp"
-                android:paddingRight="40dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#E74C3C"
                 android:textSize="16sp"
                 app:fontFamily="@font/acme" />
 
@@ -114,12 +115,13 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:background="#cdc6c6"/>
-
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cdc6c6" />
+
 
 </LinearLayout>

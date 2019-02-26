@@ -39,7 +39,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class EmailFragment extends Fragment {
 
-    String path,user;
+    String path,user,password;
     EditText editTextemail;
     Button buttonsend;
     View view;
@@ -47,6 +47,7 @@ public class EmailFragment extends Fragment {
     FirebaseAuth auth;
     ServiceHandler shh;
     private FirebaseAnalytics mFirebaseAnalytics;
+    int Status =1;
 
     public EmailFragment() {
         // Required empty public constructor
@@ -58,21 +59,30 @@ public class EmailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_email, container, false);
+
         final GlobalClass globalVariable = (GlobalClass) getActivity().getApplicationContext();
         path = globalVariable.getconstr();
-       // user = globalVariable.getUsername();
+//        user = globalVariable.getUsername();
+//        password = globalVariable.getloginPassword();
 
         editTextemail = (EditText)view.findViewById(R.id.etemail);
         buttonsend=(Button)view.findViewById(R.id.btnsend);
+
+        buttonsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetData();
+
+                resetPassword();
+            }
+        });
 
         auth=FirebaseAuth.getInstance();
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
 
-        GetData();
 
-        resetPassword();
 
         return view;
     }
@@ -95,34 +105,38 @@ public class EmailFragment extends Fragment {
                     Toast.makeText(getActivity(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                else
+                {
+                    new getEmailData().execute();
+                }
 
-                progressDialog=new ProgressDialog(getActivity());
-                progressDialog.setMessage("verifying..");
-                progressDialog.show();
-
-                auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful())
-                        {
-                            Toast.makeText(getActivity(), "We have send you instruction to reset your password", Toast.LENGTH_LONG).show();
-                        }else{
-                            Toast.makeText(getActivity(), "Failed to send reset email", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+//                progressDialog=new ProgressDialog(getActivity());
+//                progressDialog.setMessage("verifying..");
+//                progressDialog.show();
+//
+//                auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        if (task.isSuccessful())
+//                        {
+//                            Toast.makeText(getActivity(), "We have send you instruction to reset your password", Toast.LENGTH_LONG).show();
+//                        }else{
+//                            Toast.makeText(getActivity(), "Failed to send reset email", Toast.LENGTH_LONG).show();
+//                        }
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        progressDialog.dismiss();
+//                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
+//                    }
+//                });
             }
         });
     }
 
 
-    class getCustlistData extends AsyncTask<Void, Void, String>
+    class getEmailData extends AsyncTask<Void, Void, String>
     {
         @Override
         protected void onPreExecute() {
@@ -138,38 +152,24 @@ public class EmailFragment extends Fragment {
         @Override
         protected String doInBackground(Void... params) {
             shh = new ServiceHandler();
-            String url = path + "Values/MyMailSend";
+            String url = "http://emailsms.skyvisionitsolutions.com/api/Email/EmailSend";
             Log.d("Url: ", "> " + url);
 
             try{
                 List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("Email",user));
-                params2.add(new BasicNameValuePair("Subject","Reset Password"));
-               // params2.add(new BasicNameValuePair("MailBody",mailbody));
-                params2.add(new BasicNameValuePair("senderEmail","abcxyzinfotech@gmail.com"));
-                params2.add(new BasicNameValuePair("senderPassword","demo#1234"));
+                params2.add(new BasicNameValuePair("toEmail",user));
+                params2.add(new BasicNameValuePair("subject","Reset Password"));
+                params2.add(new BasicNameValuePair("emailBody","Your Password is" +" " + password));
+                params2.add(new BasicNameValuePair("from","Flavour Heights Recovered Password"));
+//                params2.add(new BasicNameValuePair("senderPassword","demo#1234"));
 
                 String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
 
                 if (jsonStr != null) {
                     JSONObject jObj = new JSONObject(jsonStr);
                     String msg = jObj.getString("Message");
-                    int Status = Integer.parseInt(jObj.getString("Status"));
-                    if (Status == 1)
-                    {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_LONG).show();
+                    Status = Integer.parseInt(jObj.getString("Status"));
 
-                            }
-                        });
-
-                    }
-                    else
-                    {
-                        Toast.makeText(getActivity(), "Register Failed", Toast.LENGTH_LONG).show();
-                    }
                 }
                 else
                 {
@@ -187,6 +187,21 @@ public class EmailFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressDialog.dismiss();
+//            if (Status == 1)
+//            {
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_LONG).show();
+//
+//                    }
+//                });
+//
+//            }
+//            else
+//            {
+//                Toast.makeText(getActivity(), "Register Failed", Toast.LENGTH_LONG).show();
+//            }
 
 //            editTextname.setText("");
 //            editTextaddress.setText("");
@@ -230,7 +245,7 @@ public class EmailFragment extends Fragment {
                     JSONArray classArray = jObj.getJSONArray("Response");
                     for (int i = 0; i < classArray.length(); i++) {
                         JSONObject a1 = classArray.getJSONObject(i);
-//                        itemname = a1.getString("ItemName");
+                        password = a1.getString("Password");
 //                        subitem = a1.getString("SubItemName");
 //                        rate = a1.getString("ItemRate");
 //                        img = a1.getString("ListImg");

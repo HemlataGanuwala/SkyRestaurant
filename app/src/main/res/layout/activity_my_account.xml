@@ -1,9 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorsplash"
     tools:context=".MyAccountActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+
+        <ImageView
+            android:id="@+id/imgvmyacountback"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/icon_back"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="My Account"
+            android:gravity="center"
+            android:textColor="@color/colorsplash"
+            android:textSize="24sp"
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight=".50">
+
+        <EditText
+            android:id="@+id/etmyacountname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/comfortaa_light"
+            android:gravity="bottom|center|left"
+            android:paddingLeft="10dp"
+            android:paddingTop="30dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etmyacountemailid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/comfortaa_light"
+            android:gravity="bottom|center|left"
+            android:hint="Email id "
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/etmyacountmobileno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="@font/comfortaa_light"
+            android:gravity="bottom|center|left"
+            android:hint="Mobile No"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvmyacountorder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="30dp"
+            android:text="My Orders"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="16sp"
+            app:fontFamily="@font/comfortaa_light" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa_light"
+                android:gravity="bottom|center|left"
+                android:paddingLeft="10dp"
+                android:text="Wallet Amount"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvmyacountwallet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="bottom|center"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="16sp"
+                app:fontFamily="@font/comfortaa_light" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    </LinearLayout>

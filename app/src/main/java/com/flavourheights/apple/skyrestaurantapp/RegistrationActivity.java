@@ -274,9 +274,16 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
-        if(!emailid.equals(user)  || !phoneno.equals(mobileno)) {
+        if(!emailid.equals(user)) {
 
-            validation();
+            if (!phoneno.equals(mobileno))
+            {
+                validation();
+            }
+            else {
+
+                Toast.makeText(RegistrationActivity.this, "You are already registered", Toast.LENGTH_LONG).show();
+            }
         }
         else {
 
@@ -423,8 +430,6 @@ public class RegistrationActivity extends AppCompatActivity {
                 params2.add(new BasicNameValuePair("PhoneNo",phoneno));
                 params2.add(new BasicNameValuePair("ReferCode",refercode));
 
-
-
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 
                 if (Jsonstr != null)
@@ -458,6 +463,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Register Successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegistrationActivity.this,LoginActivity.class);
                     intent.putExtra("MobileNo", phoneno);
+                    intent.putExtra("Email", emailid);
+                    intent.putExtra("Password", password);
                     startActivity(intent);
                 }
 

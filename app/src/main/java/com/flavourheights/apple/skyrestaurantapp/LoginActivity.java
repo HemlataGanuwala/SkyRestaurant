@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     SignInButton buttongooglelogin;
     Button buttonlogin,buttonsignout;
     String username, password;
-    String path, email, mobile, pass, regrefercode, refercode, referuser, refername, referlastname, refermobile, mobileno;
+    String path, email, mobile, pass, regrefercode, refercode, referuser, refername, referlastname, refermobile, emailid;
     int amount, ramount=50;
     int Status;
     ServiceHandler shh;
@@ -176,6 +176,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
         textViewforgetpass=(TextView)findViewById(R.id.tvforgetpass);
         textViewforgetpass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +201,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         buttonlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                new getRegData().execute();
 
                 insertLoginData();
 
@@ -281,6 +285,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         if (bundle != null)
         {
             mobile = (String)bundle.get("MobileNo");
+            emailid = (String)bundle.get("Email");
+            pass= (String)bundle.get("Password");
         }
     }
 
@@ -621,32 +627,39 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
             if (Status == 1) {
 
-                if (mcheck.isChecked())
-                {
-                    Boolean boolIscheck = mcheck.isChecked();
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("pref_name",editTextuserid.getText().toString());
-                    editor.putString("pref_pass",editTextpassword.getText().toString());
-                    editor.putBoolean("pref_check",boolIscheck);
-                    editor.apply();
-                }
-                else
-                {
-                    preferences.edit().clear().apply();
-                }
+                if (username.equals(emailid) && password.equals(pass)) {
 
-                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
-                globalVariable.setUsername(username);
-                globalVariable.setloginPassword(password);
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("User",username);
-                intent.putExtra("Password",password);
-                startActivity(intent);
+                    if (mcheck.isChecked()) {
+                        Boolean boolIscheck = mcheck.isChecked();
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("pref_name", editTextuserid.getText().toString());
+                        editor.putString("pref_pass", editTextpassword.getText().toString());
+                        editor.putBoolean("pref_check", boolIscheck);
+                        editor.apply();
+                    } else {
+                        preferences.edit().clear().apply();
+                    }
+
+                    Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                    final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+                    globalVariable.setUsername(username);
+                    globalVariable.setloginPassword(password);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("User", username);
+                    intent.putExtra("Password", password);
+                    startActivity(intent);
 //                editTextuserid.setText("");
 //                editTextpassword.setText("");
 
-            }else {
+                }
+            }
+
+//            else if (username.equals("null") && password.equals("null") || !username.equals(emailid) && !password.equals(pass))
+//            {
+//                Toast.makeText(LoginActivity.this, "Your not Registered", Toast.LENGTH_LONG).show();
+//            }
+
+            else {
                 Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
                 editTextuserid.setText("");
                 editTextpassword.setText("");
@@ -803,6 +816,69 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+        }
+    }
+
+    class getRegData extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress=new ProgressDialog(LoginActivity.this);
+            progress.setMessage("Loading...");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.setProgress(0);
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/ForgetPassword";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("Email",username));
+
+
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject jObj = new JSONObject(jsonStr);
+                    JSONArray classArray = jObj.getJSONArray("Response");
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        pass = a1.getString("Password");
+                        emailid = a1.getString("Email");
+//                        rate = a1.getString("ItemRate");
+//                        img = a1.getString("ListImg");
+//
+//                        ItemPlanet planet1 = new ItemPlanet(itemname,subitem,rate,img);
+//                        mPlanetlist1.add(planet1);
+
+                    }
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this, "You are not Registered user", Toast.LENGTH_LONG).show();
+                }
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            progress.dismiss();
+
+
         }
     }
 

@@ -37,11 +37,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 public class PlaceOrderActivity extends AppCompatActivity implements AddressAdapter.OnItemClickListner{
@@ -51,8 +53,8 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
     ImageView imageViewback;
     RadioButton radioButtoncash, radioButtononline, radioButtoncashondelivery;
     Button buttonproceed,buttonaddaddress;
-    private int mYear, mMonth, mDay, mHour, mMinite;
-    String path, cartstatus, totalcount, password, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
+    private int mYear, mMonth, mDay, mHour, mMinite, sday, smonth, syear, shour, sminute;
+    String path, currentDate,  cartstatus, totalcount, password, stime, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
     boolean valid=true;
     ServiceHandler shh;
     int Status=1;
@@ -74,8 +76,9 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         mobileno = globalVariable.getMobileNo();
         password = globalVariable.getloginPassword();
 
+        new getAllItem().execute();
+
         buttonproceed=(Button)findViewById(R.id.btnproceed);
-        buttonaddaddress = (Button) findViewById(R.id.btnaddaddress);
 
         textViewcost = (TextView) findViewById(R.id.tvcost);
         textViewdate = (TextView) findViewById(R.id.tvdate);
@@ -84,20 +87,37 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 //        editTextaddress1 = (EditText)findViewById(R.id.etaddress1);
 //        editTextaddress2 = (EditText)findViewById(R.id.etaddress2);
 //        editTextaddress3 = (EditText)findViewById(R.id.etaddress3);
-
+        buttonaddaddress = (Button) findViewById(R.id.btnaddaddress);
 
         radioButtoncash=(RadioButton)findViewById(R.id.rbcashpay);
         radioButtononline=(RadioButton)findViewById(R.id.rbonlinepay);
         radioButtoncashondelivery = (RadioButton) findViewById(R.id.rbcashondelivery);
 
-        new getAllItem().execute();
-
-        recyclerView=(RecyclerView)findViewById(R.id.rvaddress);
+        recyclerView=(RecyclerView)findViewById(R.id.rvaddaddress);
         recyclerView.setLayoutManager(new LinearLayoutManager(PlaceOrderActivity.this));
 
         new getAddressData().execute();
 
         display();
+
+
+
+
+//
+//        sdate = DateFormat.getDateInstance().format(new Date());
+//        sday = String.format((String) DateFormat, );
+//        stime = DateFormat.getTimeInstance().format(new Date());
+////        SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
+////        try {
+////            Date newDate = simpleDateFormat.parse(sdate);
+////            simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+////            sdate = simpleDateFormat.format(newDate);
+////        } catch (ParseException e) {
+////            e.printStackTrace();
+////        }
+
+
+
 
         buttonproceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,16 +132,27 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
             }
         });
 
-        sdate = DateFormat.getDateTimeInstance().format(new Date());
+        Calendar c= Calendar.getInstance();
+        sday = c.get(Calendar.DAY_OF_MONTH);
+        smonth = c.get(Calendar.MONTH);
+        syear = c.get(Calendar.YEAR);
+        shour = c.get(Calendar.HOUR);
+        sminute = c.get(Calendar.MINUTE);
 
-        textViewdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mdate=sday+"-"+ (smonth+1) +"-"+syear;
+        mtime=shour+":"+sminute;
+        sdate = mdate+"  "+mtime;
+        textViewdate.setText(sdate);
 
-                datePicker();
 
-            }
-        });
+//        textViewdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                datePicker();
+//
+//            }
+//        });
 
         buttonaddaddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,21 +284,20 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
     public boolean validation()
     {
 
-        if(!sdate.equals(cdate))
-        {
-            textViewdate.setError("Select valid date and time");
-            valid=false;
-        }
-
-        else if (address.isEmpty())
+//        if(!sdate.equals(cdate))
+//        {
+//            textViewdate.setError("Select valid date and time");
+//            valid=false;
+//        }
+        if (address.isEmpty())
         {
             editTextaddress1.setError("Enter your Address");
             valid=false;
         }
-
         else {
-            valid = true;
+            valid=true;
         }
+
         return valid;
     }
 
@@ -401,59 +431,6 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 
     }
 
-    class getAllItem extends AsyncTask<Void, Void, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-//            progress=new ProgressDialog(MainActivity.this);
-//            progress.setMessage("Loading...");
-//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-//            progress.setIndeterminate(true);
-//            progress.setProgress(0);
-//            progress.show();
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            shh = new ServiceHandler();
-            String url = path + "Registration/getItemsWise";
-            Log.d("Url: ", "> " + url);
-
-            try{
-                List<NameValuePair> params2 = new ArrayList<>();
-                params2.add(new BasicNameValuePair("Username", user));
-                params2.add(new BasicNameValuePair("Password", password));
-                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
-
-                if (jsonStr != null) {
-                    JSONObject c1 = new JSONObject(jsonStr);
-                    totalcount = c1.getString("Response");
-                }
-
-                else
-                {
-                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-                }
-
-            }
-            catch (JSONException e)
-            {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-//            progress.dismiss();
-//            textViewcount.setText(count);
-
-        }
-    }
-
-
     class OrderData extends AsyncTask<String,String,String>
     {
         @Override
@@ -481,7 +458,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
                 params2.add(new BasicNameValuePair("OTime",mtime));
                 params2.add(new BasicNameValuePair("PaymentMode",paymentmode));
                 params2.add(new BasicNameValuePair("NoOfItem", totalcount));
-                params2.add(new BasicNameValuePair("Status","0"));
+                params2.add(new BasicNameValuePair("Status","1"));
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 
@@ -529,12 +506,12 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progress = new ProgressDialog(PlaceOrderActivity.this);
-            progress.setMessage("Loading...");
-            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progress.setIndeterminate(true);
-            progress.setProgress(0);
-            progress.show();
+//            progress = new ProgressDialog(PlaceOrderActivity.this);
+//            progress.setMessage("Loading...");
+//            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progress.setIndeterminate(true);
+//            progress.setProgress(0);
+//            progress.show();
         }
 
 
@@ -570,7 +547,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-//            new getCartData().execute();
+            new getCartData().execute();
 
 
         }
@@ -594,7 +571,7 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
 
-                params2.add(new BasicNameValuePair("Email", user));
+                params2.add(new BasicNameValuePair("Username", user));
                 params2.add(new BasicNameValuePair("Password", password));
                 String Jsonstr = shh.makeServiceCall(url, ServiceHandler.POST, params2);
 
@@ -679,7 +656,61 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
             }
 
         }
+
+
+    class getAllItem extends AsyncTask<Void, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress=new ProgressDialog(PlaceOrderActivity.this);
+            progress.setMessage("Loading...");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.setProgress(0);
+            progress.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            shh = new ServiceHandler();
+            String url = path + "Registration/getItemsWise";
+            Log.d("Url: ", "> " + url);
+
+            try{
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("Username", user));
+                params2.add(new BasicNameValuePair("Password", password));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    totalcount = c1.getString("Response");
+                }
+
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
+
+            }
+            catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            progress.dismiss();
+//            textViewcount.setText(count);
+
+        }
     }
+
+}
 
 
 

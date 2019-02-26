@@ -22,6 +22,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ListHold
 
     private List<AddressPlanet> mPlanetList;
     private OnItemClickListner mlistner;
+    int selectedPosition = -1;
 
 
     public interface OnItemClickListner
@@ -48,17 +49,28 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ListHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ListHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ListHolder holder, final int position) {
         holder.textViewhousenm.setText(mPlanetList.get(position).getHousename());
         holder.textViewlandmark.setText(mPlanetList.get(position).getLandmark());
         holder.textViewlocality.setText(mPlanetList.get(position).getLocality());
         holder.textViewcity.setText(mPlanetList.get(position).getCity());
         holder.textViewpincode.setText(mPlanetList.get(position).getPincode());
 
+        if (selectedPosition == position)
+        {
+            holder.imageViewcheck.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.imageViewcheck.setVisibility(View.GONE);
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.imageViewcheck.setVisibility(View.VISIBLE);
+
+            selectedPosition = position;
+            notifyDataSetChanged();
 //                if (holder.imageViewcheck.isEnabled())
 //                {
 //                    holder.imageViewcheck.setVisibility(View.GONE);

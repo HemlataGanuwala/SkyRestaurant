@@ -7,6 +7,7 @@ public class AddressPlanet {
     private String Locality;
     private String City;
     private String Pincode;
+//    private String Check;
 
     public AddressPlanet(String housename, String landmark, String locality, String city,String pincode)
     {
@@ -15,6 +16,7 @@ public class AddressPlanet {
         this.Locality = locality;
         this.City = city;
         this.Pincode = pincode;
+//        this.Check = check;
     }
 
     public String getHousename() {
@@ -56,4 +58,6 @@ public class AddressPlanet {
     public void setPincode(String pincode) {
         Pincode = pincode;
     }
+
+
 }

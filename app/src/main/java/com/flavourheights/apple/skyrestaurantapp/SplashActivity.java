@@ -31,11 +31,14 @@ public class SplashActivity extends AppCompatActivity {
 //        } catch (Exception e) {}
 
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
-        globalVariable.setconstr("http://192.168.0.108:8098/api/");
+//        final GlobalClass globalVariable1 = (GlobalClass) getApplicationContext();
+
+        globalVariable.setconstr("http://192.168.0.117:8098/api/");
         globalVariable.setUsername(dataemail);
         globalVariable.setloginPassword(datapass);
         globalVariable.setMobileNo(datamobile);
 //        globalVariable.setconstr("http://restaurant.skyvisioncables.com/api/");
+//        globalVariable1.setconstr("http://emailsms.skyvisionitsolutions.com/api/");
 //        globalVariable.setconstr("http://restaurant.flavourheights.co.in/api/");
 
         path = globalVariable.getconstr();

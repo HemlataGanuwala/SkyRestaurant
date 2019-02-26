@@ -36,25 +36,25 @@ import java.util.List;
 
 public class EditCartActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EditCartAdapter.ClickOnItemListener{
 
-    ImageView imageViewback,imageVieweditcheck;
+    ImageView imageViewback,imageViewshow, imageViewdelete;
     NavigationView navigationView;
     private SharedPreferences preferences;
     private DrawerLayout drawerLayout;
     CartListPlanet mPlanet;
     View headerview;
-    ImageView imageViewshow;
     Class fragmentClass;
     private static final String PREFS_NAME = "PrefsFile";
     Fragment fragment = null;
     RecyclerView recyclerView;
-    String subitem, path,user,pass,totamt,totaleditcount;
+    String subitem, path,user,pass,totamt,totaleditcount,editcount,totalrate;
     ServiceHandler shh;
     ArrayList<CartListPlanet> mPlanetlist= new ArrayList<CartListPlanet>();
     EditCartAdapter adapter;
     TextView textViewtotlcost;
     int Status = 1,rate,totalcost,totcount;
+    String editsubitem,edittotalcount,edittotalrate;
     CartListPlanet cartListPlanet;
-
+    ArrayList<CartListPlanet> mPlanlist= new ArrayList<CartListPlanet>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +72,8 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
 
 
         textViewtotlcost=(TextView)findViewById(R.id.tvedittotal_cost);
+
         imageViewback=(ImageView)findViewById(R.id.img_back);
-        imageViewback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(EditCartActivity.this, CartListActivity.class);
-                startActivity(intent);
-            }
-        });
 
         recyclerView=(RecyclerView)findViewById(R.id.recycleeditcartlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(EditCartActivity.this));
@@ -87,8 +81,10 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarcartlist);
         setSupportActionBar(toolbar);
 
+
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         headerview=navigationView.getHeaderView(0);
+
         imageViewshow=(ImageView)headerview.findViewById(R.id.imgshow);
         imageViewshow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,16 +94,14 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
             }
         });
 
-//        imageVieweditcheck=(ImageView)findViewById(R.id.img_edit_check);
-//        imageVieweditcheck.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                new UpdateCount().execute();
-//                Intent i = new Intent(EditCartActivity.this, CartListActivity.class);
-//                startActivity(i);
-//
-//            }
-//        });
+        imageViewback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(EditCartActivity.this, CartListActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
@@ -225,6 +219,22 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
 
 
             case R.id.cartcheck:
+
+                for (int i=0; i<mPlanlist.size(); i++)
+                {
+                    subitem = (mPlanlist.get(i).getItemName());
+                    editcount = (mPlanlist.get(i).getTotalCount());
+                    totamt = (mPlanlist.get(i).getTotalCost());
+
+                    new UpdateCount().execute();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {}
+
+
+                }
+
+//                new UpdateCount().execute();
                 Intent intent = new Intent(EditCartActivity.this, CartListActivity.class);
                 startActivity(intent);
                 return true;
@@ -240,21 +250,49 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
 
     }
 
+//    @Override
+//    public void onOrderItemClick(ArrayList<CartListPlanet> mPlist) {
+//        mPlanlist = mPlist;
+//        int total = 0;
+//        for (int i=0; i<mPlist.size(); i++)
+//        {
+//            total = total + Integer.parseInt(mPlist.get(i).getTotalCost());
+////            new UpdateCount().execute();
+//        }
+//        textViewtotlcost.setText(String.valueOf(total));
+//    }
+
+//    @Override
+//    public void onOrderItemClick(int total) {
+//        textViewtotlcost.setText(String.valueOf(total));
+//        totamt = String.valueOf(total);
+//    }
+
+//    @Override
+//    public void clickOnPlusButton(ArrayList<CartListPlanet> mPlist) {
+////        mPlanlist = mPlist;
+////        for (int i=0; i<mPlist.size(); i++)
+////        {
+////            editsubitem = (mPlanlist.get(i).getItemName());
+////            edittotalcount = (mPlanlist.get(i).getTotalCount());
+////            edittotalrate = (mPlanlist.get(i).getTotalCost());
+////
+////            CartListPlanet planet = new CartListPlanet(subitem,totalrate,totamt,editcount);
+////            mPlanetlist.add(planet);
+////        }
+//
+//    }
 
     @Override
-    public void onOrderItemClick(int total) {
-
-        textViewtotlcost.setText(String.valueOf(total));
-        totamt = String.valueOf(total);
-
-        for (int i=0; i<mPlanetlist.size();i++) {
-            totaleditcount = mPlanetlist.get(i).getTotalCount();
-//            CartListPlanet planet = new CartListPlanet(subitem, String.valueOf(rate), totamt, totaleditcount);
-//            mPlanetlist.add(planet);
-//            new UpdateCount().execute();
+    public void onOrderItemClick(ArrayList<CartListPlanet> mPlist) {
+        mPlanlist = mPlist;
+        int totalamt = 0;
+        for (int i=0; i<mPlanlist.size(); i++)
+        {
+            totalamt = totalamt + Integer.parseInt(mPlanlist.get(i).getTotalCost());
         }
 
-//        totaleditcount = cartListPlanet.getTotalCount();
+        textViewtotlcost.setText(String.valueOf(totalamt));
 
     }
 
@@ -271,16 +309,16 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
         protected String doInBackground(String... strings) {
 
             shh = new ServiceHandler();
-            String url = path + "Cart/UpdateCount";
+            String url = path + "Cart/UpdateCartItem";
 
             try {
                 List<NameValuePair> params2 = new ArrayList<>();
                 params2.add(new BasicNameValuePair("SubItemName",subitem));
                 //params2.add(new BasicNameValuePair("ItemRate",String.valueOf(rate)));
                 params2.add(new BasicNameValuePair("Username",user));
-                params2.add(new BasicNameValuePair("Password",pass));
-                params2.add(new BasicNameValuePair("TotalCount",totaleditcount));
+                params2.add(new BasicNameValuePair("TotalCount",String.valueOf(editcount)));
                 params2.add(new BasicNameValuePair("TotalAmt",totamt));
+
 
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
@@ -371,9 +409,87 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
             });
 
             adapter.setOnItemClick(EditCartActivity.this);
+            adapter.setOnItemClickListner(new EditCartAdapter.OnItemClickListner() {
+                @Override
+                public void onItemClick(int position) {
+
+                }
+
+                @Override
+                public void plusOnClick(View v, int position) {
+
+                }
+
+                @Override
+                public void icondeleteImageViewOnClick(View v, int position) {
+
+                    new DeleteItem().execute();
+
+
+                }
+
+
+                @Override
+                public void iconImageViewOnClick(View v, int position) {
+
+                }
+            });
+
 
         }
     }
+
+
+    public class DeleteItem extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            shh = new ServiceHandler();
+            String url = path + "Cart/DeleteEditCartItem";
+
+            try {
+                List<NameValuePair> params2 = new ArrayList<>();
+
+                params2.add(new BasicNameValuePair("Username",user));
+                params2.add(new BasicNameValuePair("SubItemName",subitem));
+
+
+
+                String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
+
+                if (Jsonstr != null)
+                {
+                    JSONObject c1= new JSONObject(Jsonstr);
+                    Status =c1.getInt("Status");
+                }
+                else{
+                    Toast.makeText(EditCartActivity.this, "Data not Found", Toast.LENGTH_SHORT).show();
+                }
+            }
+            catch ( JSONException e){
+                e.printStackTrace();
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+        }
+
+    }
+
 
 
 }

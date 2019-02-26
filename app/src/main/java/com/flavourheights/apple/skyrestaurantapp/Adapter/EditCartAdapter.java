@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.flavourheights.apple.skyrestaurantapp.Model.CartListPlanet;
@@ -19,7 +20,10 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
     public static ArrayList<CartListPlanet> mPlanetList;
     private OnItemClickListner mlistner;
     private ClickOnItemListener clickItemListerner;
+
+
     int total = 0;
+    int totalcount;
    // private LayoutInflater inflater;
 
     int totalamount;
@@ -30,14 +34,20 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
 
         void plusOnClick(View v, int position);
 
-        void minusOnClick(View v, int position);
+        void icondeleteImageViewOnClick(View v, int position);
+
+        void iconImageViewOnClick(View v, int position);
     }
 
     public interface ClickOnItemListener {
-        void onOrderItemClick(int position);
-
+        void onOrderItemClick(ArrayList<CartListPlanet> mPlist);
+        //int position;
 
     }
+
+
+
+
 
     public void setOnItemClick(ClickOnItemListener listner){
         this.clickItemListerner = listner;
@@ -79,14 +89,23 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
             @Override
             public void onClick(View v) {
 
-                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText().length() >= 1));
+                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
+                if (count >= 1)
+                {
+                    count++;
+                }
+                else
+                {
 
-                count++;
+                }
+
 
                 holder.textViewtotcount.setText(String.valueOf(count));
                 int totrate = Integer.parseInt(String.valueOf(holder.textViewrate.getText())) * Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
 
                 holder.textViewtot.setText(String.valueOf(totrate));
+
+
 
                 //totalamount = Integer.parseInt(holder.textViewtot.getText().toString());
 
@@ -99,12 +118,21 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
 ////                    int ammount = Integer.parseInt(String.valueOf(mPlanetList.get(i).getTotalCost()));
 ////                    totalamount = totalamount + ammount;
 //
-//                    //clickItemListerner.onOrderItemClick(totalamount);
+
 //                }
 
                // totalamount = totalamount + Integer.parseInt(String.valueOf(holder.textViewrate.getText()));
+                mPlanetList.get(holder.getAdapterPosition()).setTotalCost(holder.textViewtot.getText().toString());
+                mPlanetList.get(holder.getAdapterPosition()).setTotalCount(holder.textViewtotcount.getText().toString());
+                for (int i=0; i<mPlanetList.size(); i++)
+                {
+                      String totcst = (mPlanetList.get(i).getTotalCount().toString());
+                    total = total + Integer.parseInt(mPlanetList.get(i).getTotalCost());
 
-               // mPlanetList.get(holder.getAdapterPosition()).setTotalCost(holder.textViewtot.getText().toString());
+
+                }
+
+                clickItemListerner.onOrderItemClick(mPlanetList);
             }
         });
 
@@ -112,11 +140,19 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
         holder.textViewminus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText().length() >= 1));
-                count--;
+                int count= Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
+                if (count >= 2)
+                {
+                    count--;
+                }
+                else
+                {
+
+                }
+
 
                 holder.textViewtotcount.setText(String.valueOf(count));
-                int totrate = Integer.parseInt(String.valueOf(holder.textViewrate.getText())) * Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
+                               int totrate = Integer.parseInt(String.valueOf(holder.textViewrate.getText())) * Integer.parseInt(String.valueOf(holder.textViewtotcount.getText()));
 
                 holder.textViewtot.setText(String.valueOf(totrate));
 
@@ -137,6 +173,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
 
     public class ListHolder extends RecyclerView.ViewHolder {
         TextView textViewsubitemname,textViewrate,textViewtot,textViewplus,textViewminus,textViewtotcount;
+        ImageView imageViewdelete;
 
         public ListHolder(View itemView) {
             super(itemView);
@@ -147,6 +184,7 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
             textViewplus = (TextView) itemView.findViewById(R.id.tvplus);
             textViewminus = (TextView) itemView.findViewById(R.id.tvminus);
             textViewtotcount = (TextView) itemView.findViewById(R.id.tveditnoofitem);
+            imageViewdelete = (ImageView) itemView.findViewById(R.id.imgdelete);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +199,44 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
                 }
             });
 
+            imageViewdelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mlistner != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            mlistner.icondeleteImageViewOnClick(v, getAdapterPosition());
+                        }
+                    }
+                }
+            });
+
+//            textViewtotcount.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                    mPlanetList.get(getAdapterPosition()).setTotalCount(textViewtotcount.getText().toString());
+//
+//                    for (int i=0; i<mPlanetList.size(); i++)
+//                    {
+//                        totalcount = Integer.parseInt(mPlanetList.get(i).getTotalCount());
+//
+//                    }
+//                    clickOnPlusButton.clickOnPlusButton(mPlanetList);
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//
+//                }
+//            });
+
+
+
             textViewtot.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -171,21 +247,25 @@ public class EditCartAdapter extends RecyclerView.Adapter<EditCartAdapter.ListHo
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                      mPlanetList.get(getAdapterPosition()).setTotalCost(textViewtot.getText().toString());
+//                    mPlanetList.get(getAdapterPosition()).setTotalCount(textViewtotcount.getText().toString());
+
                     total = 0;
+
                     for (int i=0; i<mPlanetList.size(); i++)
                     {
+//                      String totcst = (mPlanetList.get(i).getTotalCount().toString());
                         total = total + Integer.parseInt(mPlanetList.get(i).getTotalCost());
 
 
                     }
 
-                clickItemListerner.onOrderItemClick(total);
-
+                clickItemListerner.onOrderItemClick(mPlanetList);
 
                 }
 
                 @Override
                 public void afterTextChanged(Editable s) {
+
 
                 }
             });
