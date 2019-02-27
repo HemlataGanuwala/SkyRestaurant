@@ -40,7 +40,8 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                 />
 
             <TextView
                 android:id="@+id/tvname"
@@ -50,8 +51,8 @@
                 android:paddingLeft="15dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvrate"
@@ -61,7 +62,8 @@
                 android:paddingLeft="15dp"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="16sp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout

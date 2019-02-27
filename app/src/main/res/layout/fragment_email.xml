@@ -21,12 +21,13 @@
             android:background="@color/colorsplash"
             android:drawableLeft="@drawable/icon_pass"
             android:drawablePadding="20dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/comfortaa_light"
             android:hint="Email Address"
             android:inputType="textEmailAddress"
             android:paddingLeft="20dp"
             android:textColor="@color/browser_actions_title_color"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnsend"
@@ -36,7 +37,8 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/bg_button"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"
             android:text="Send"
             android:textAllCaps="false"
             android:textColor="@color/colorsplash"
@@ -44,12 +46,13 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/comfortaa_light"
             android:text="@string/emailquet"
             android:textColor="@color/gray"
             android:textSize="14sp"
-            app:fontFamily="@font/acme" />
+            android:textStyle="bold" />
 
 
     </LinearLayout>

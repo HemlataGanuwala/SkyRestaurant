@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class CartList2Activity extends AppCompatActivity implements NavigationVi
     View headerview;
     ImageView imageViewshow;
     Class fragmentClass;
+    Button buttonorder;
     private static final String PREFS_NAME = "PrefsFile";
     Fragment fragment = null;
     ImageView imageViewback,imageViewedit;
@@ -73,7 +75,7 @@ public class CartList2Activity extends AppCompatActivity implements NavigationVi
         imageViewshow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent i = new Intent(getApplicationContext(), AddAddressActivity.class);
                 startActivity(i);
             }
         });
@@ -95,6 +97,17 @@ public class CartList2Activity extends AppCompatActivity implements NavigationVi
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclecartlistmenu);
         recyclerView.setLayoutManager(new LinearLayoutManager(CartList2Activity.this));
+
+        buttonorder=(Button)findViewById(R.id.btnorder);
+        buttonorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CartList2Activity.this, PlaceOrderActivity.class);
+                intent.putExtra("Cost", String.valueOf(totalamount));
+//                intent.putExtra("Count", String.valueOf(totcount));
+                startActivity(intent);
+            }
+        });
 
         preferences = getSharedPreferences(PREFS_NAME,MODE_PRIVATE);
         drawerLayout = findViewById(R.id.drawer_layout);

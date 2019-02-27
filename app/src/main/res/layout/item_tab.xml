@@ -4,7 +4,8 @@
     android:id="@+id/tab"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/acme"
+    android:fontFamily="@font/comfortaa_light"
+    android:textStyle="bold"
     android:gravity="center_horizontal"
     android:textSize="17sp">
 

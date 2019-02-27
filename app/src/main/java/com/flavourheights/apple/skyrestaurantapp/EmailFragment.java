@@ -39,7 +39,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class EmailFragment extends Fragment {
 
-    String path,user,password;
+    String path,user,password, email;
     EditText editTextemail;
     Button buttonsend;
     View view;
@@ -62,8 +62,6 @@ public class EmailFragment extends Fragment {
 
         final GlobalClass globalVariable = (GlobalClass) getActivity().getApplicationContext();
         path = globalVariable.getconstr();
-//        user = globalVariable.getUsername();
-//        password = globalVariable.getloginPassword();
 
         editTextemail = (EditText)view.findViewById(R.id.etemail);
         buttonsend=(Button)view.findViewById(R.id.btnsend);
@@ -71,70 +69,29 @@ public class EmailFragment extends Fragment {
         buttonsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 GetData();
 
-                resetPassword();
+                new getRegData().execute();
+
             }
         });
-
-        auth=FirebaseAuth.getInstance();
-
-        // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
-
-
 
         return view;
     }
 
+
     public void GetData()
     {
         user = editTextemail.getText().toString();
-        new getRegData().execute();
+
+        if (user.equals(email)) {
+
+            new getEmailData().execute();
+        }else {
+            Toast.makeText(getActivity(), "Enter your registered email id", Toast.LENGTH_LONG).show();
+        }
     }
-
-    public void resetPassword(){
-
-        buttonsend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String email= editTextemail.getText().toString().trim();
-
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getActivity(), "Enter your registered email id", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else
-                {
-                    new getEmailData().execute();
-                }
-
-//                progressDialog=new ProgressDialog(getActivity());
-//                progressDialog.setMessage("verifying..");
-//                progressDialog.show();
-//
-//                auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        if (task.isSuccessful())
-//                        {
-//                            Toast.makeText(getActivity(), "We have send you instruction to reset your password", Toast.LENGTH_LONG).show();
-//                        }else{
-//                            Toast.makeText(getActivity(), "Failed to send reset email", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        progressDialog.dismiss();
-//                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_LONG).show();
-//                    }
-//                });
-            }
-        });
-    }
-
 
     class getEmailData extends AsyncTask<Void, Void, String>
     {
@@ -187,30 +144,14 @@ public class EmailFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             progressDialog.dismiss();
-//            if (Status == 1)
-//            {
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(getActivity(), "Register Successfully", Toast.LENGTH_LONG).show();
-//
-//                    }
-//                });
-//
-//            }
-//            else
-//            {
-//                Toast.makeText(getActivity(), "Register Failed", Toast.LENGTH_LONG).show();
-//            }
+            if (Status == 1)
+            {
+                Toast.makeText(getActivity(), "Email successfully send", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
 
-//            editTextname.setText("");
-//            editTextaddress.setText("");
-//            editTextmobileno.setText("");
-//            editTexttypebusi.setText("");
-//            editTextcity.setText("");
-//            editTextemail.setText("");
-
-
+            }
         }
     }
 
@@ -219,12 +160,12 @@ public class EmailFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog=new ProgressDialog(getActivity());
-            progressDialog.setMessage("Loading...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setProgress(0);
-            progressDialog.show();
+//            progressDialog=new ProgressDialog(getActivity());
+//            progressDialog.setMessage("Loading...");
+//            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setProgress(0);
+//            progressDialog.show();
         }
 
         @Override
@@ -246,6 +187,7 @@ public class EmailFragment extends Fragment {
                     for (int i = 0; i < classArray.length(); i++) {
                         JSONObject a1 = classArray.getJSONObject(i);
                         password = a1.getString("Password");
+                        email = a1.getString("Email");
 //                        subitem = a1.getString("SubItemName");
 //                        rate = a1.getString("ItemRate");
 //                        img = a1.getString("ListImg");
@@ -270,9 +212,7 @@ public class EmailFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            progressDialog.dismiss();
-
-
+//            progressDialog.dismiss();
 
         }
     }

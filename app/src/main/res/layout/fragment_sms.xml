@@ -21,7 +21,8 @@
             android:background="@color/colorsplash"
             android:drawableLeft="@drawable/icon_sms"
             android:drawablePadding="20dp"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"
             android:hint="Mobile Number"
             android:inputType="phone"
             android:paddingLeft="20dp"
@@ -36,7 +37,8 @@
             android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/bg_button"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"
             android:text="Send"
             android:textAllCaps="false"
             android:textColor="@color/colorsplash"
@@ -44,12 +46,13 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:text="@string/smsquet"
             android:textColor="@color/gray"
             android:textSize="14sp"
-            app:fontFamily="@font/acme" />
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"/>
 
 
     </LinearLayout>

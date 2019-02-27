@@ -24,12 +24,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:fontFamily="@font/acme"
         android:gravity="center"
         android:text="No Item In Cart"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/almendra" />
+        android:fontFamily="@font/comfortaa_light"
+        android:textStyle="bold" />
 
 </LinearLayout>

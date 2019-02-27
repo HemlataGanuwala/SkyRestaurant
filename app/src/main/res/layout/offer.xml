@@ -33,7 +33,8 @@
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,18 +49,18 @@
                     android:text="Valid From:"
                     android:textColor="@color/gray"
                     android:textSize="12sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvfromdt"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/acme"
                     android:paddingLeft="5dp"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView14"
@@ -68,18 +69,18 @@
                     android:text="To:"
                     android:textColor="@color/gray"
                     android:textSize="12sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvtodt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/acme"
                     android:paddingLeft="5dp"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -94,7 +95,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/colorPrimaryDark" />
 
@@ -106,7 +108,8 @@
                 android:paddingTop="5dp"
                 android:text="DISCOUNT"
                 android:textSize="13sp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

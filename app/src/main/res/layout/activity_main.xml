@@ -32,7 +32,8 @@
                 android:text="Menu"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
-                app:fontFamily="@font/comfortaa_light" />
+                app:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"/>
 
         </android.support.v7.widget.Toolbar>
 

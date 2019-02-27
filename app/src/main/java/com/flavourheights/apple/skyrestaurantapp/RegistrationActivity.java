@@ -71,14 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
     String dataemail,datapass,datamobile;
     ProgressDialog progress;
 
-    public final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
-            "[a-zA-Z0-9+._%-+]{1,256}" +
-                    "@" +
-                    "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" +
-                    "(" +
-                    "." +
-                    "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" +
-                    ")+");
+    public String EMAIL_ADDRESS_PATTERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
     @Override
@@ -161,41 +154,12 @@ public class RegistrationActivity extends AppCompatActivity {
         buttonreg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (user == null|| mobileno == null)
-//                {
-                    insertData();
-//                }
-//                else
-//                {
-//                    Toast.makeText(RegistrationActivity.this, "You are already register", Toast.LENGTH_LONG).show();
-//                }
+
+                insertData();
+
             }
         });
 
-//        editTextconformpass.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                String passwrd=editTextconformpass.getText().toString();
-//                if (s.length() > 0 && passwrd.length() > 0) {
-//                    if (!editTextpass.equals(passwrd)) {
-//                        // give an error that password and confirm password not match
-//
-//                    }
-//
-//                }
-//
-//            }
-//        });
 
     }
 
@@ -310,7 +274,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         }
 
-        else if (emailid.isEmpty() || !EMAIL_ADDRESS_PATTERN.matcher(emailid).matches())
+        else if (emailid.isEmpty() || (!emailid.matches(EMAIL_ADDRESS_PATTERN) && emailid.length()>0))
         {
 
             editTextemail.setError("Enter valid Email id");

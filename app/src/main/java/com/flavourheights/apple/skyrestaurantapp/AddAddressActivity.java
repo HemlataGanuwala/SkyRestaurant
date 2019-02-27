@@ -28,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,10 +48,12 @@ public class AddAddressActivity extends AppCompatActivity{
     //    Spinner spinnercity, spinnerlocation;
     ImageView imageViewback;
     EditText editTexthouseno, editTextlocality, editTextlandmark,editTextpincode;
-    TextView textViewcity, textViewlocation, textViewselectcity, textViewselectlocation;
+    TextView textViewcity, textViewlocation,  textViewselectlocation;
+    Spinner textViewselectcity;
+    RadioButton radioButtonhome, radioButtonoffice;
     Button buttonsave, buttonlocation;
     ServiceHandler shh;
-    String path, houseno, landmark, locality, city, pincode, area, tv_location;
+    String path, houseno, landmark, locality, city, pincode, area, custname, addresstype, selectedcity;
     int Status = 1;
     boolean valid = true;
     private LocationManager locationManager = null;
@@ -63,6 +66,11 @@ public class AddAddressActivity extends AppCompatActivity{
     GPSTracker gpsTracker;
     double latitude,longitude;
 
+    ArrayAdapter arrayAdapter;
+
+    String spincity[]={"Select City","Nagpur","Amravati","Akola","Pune","Mumbai","Thane","Aurangabad","Kolhapur","Solapur","Nashik","Agra",
+    "Allahabad", "Jhansi", "Lucknow", "Kanpur", "Meerut", "Varanasi", "Raipur", "Bhilai","Bilaspur", "Rajnandgaon"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +80,8 @@ public class AddAddressActivity extends AppCompatActivity{
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
 //        mobileno = globalVariable.getMobileNo();
+
+        display();
 
         gpsTracker = new GPSTracker(AddAddressActivity.this);
 
@@ -94,10 +104,28 @@ public class AddAddressActivity extends AppCompatActivity{
         editTextlocality = (EditText) findViewById(R.id.etlocality);
         editTextpincode = (EditText) findViewById(R.id.etpincode);
 
-        textViewselectcity = (TextView) findViewById(R.id.tvselectcity);
-//        textViewselectlocation = (TextView) findViewById(R.id.tvselectlocation);
+        textViewselectcity = (Spinner) findViewById(R.id.spincity);
         textViewcity = (TextView) findViewById(R.id.tvcity);
-//        textViewlocation = (TextView) findViewById(R.id.tvlocation);
+
+        radioButtonhome = (RadioButton)findViewById(R.id.rbhome);
+        radioButtonoffice = (RadioButton)findViewById(R.id.rboffice);
+
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, spincity);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        textViewselectcity.setAdapter(arrayAdapter);
+
+//        textViewselectcity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedItemText = (String) parent.getItemAtPosition(position);
+//                textViewcity.setText(selectedItemText);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         checkLocationPermission();
 
@@ -130,6 +158,8 @@ public class AddAddressActivity extends AppCompatActivity{
                     //textViewcity.setText(addresses.get(0).getFeatureName() + ", " + addresses.get(0).getLocality() + ", " + addresses.get(0).getAdminArea() + ", " + addresses.get(0).getCountryName());
 //                    String result = "Latitude: " + gpsTracker.getLatitude() +
 //                            " Longitude: " + gpsTracker.getLongitude();
+                    textViewcity.setVisibility(View.VISIBLE);
+
                     textViewcity.setText(city);
 //                    textViewlocation.setText(address);
                     editTextpincode.setText(pincode);
@@ -216,10 +246,15 @@ public class AddAddressActivity extends AppCompatActivity{
     }
 
 
-
-
-
-
+    public void display()
+    {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null)
+        {
+            custname = (String)bundle.get("CustName");
+        }
+    }
 
     public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
@@ -305,6 +340,15 @@ public class AddAddressActivity extends AppCompatActivity{
         landmark=editTextlandmark.getText().toString();
         locality=editTextlocality.getText().toString();
 
+        selectedcity = textViewselectcity.getSelectedItem().toString();
+
+        if (radioButtonhome.isChecked() == true)
+        {
+            addresstype="Home";
+        }else {
+            addresstype = "Office";
+        }
+
 
 
         if (validation())
@@ -321,7 +365,7 @@ public class AddAddressActivity extends AppCompatActivity{
             editTexthouseno.setError("Enter House No");
             valid=false;
         }
-        if (landmark.isEmpty())
+        else if (landmark.isEmpty())
         {
             editTextlandmark.setError("Enter Appartment Name or LandMark");
             valid=false;
@@ -348,10 +392,13 @@ public class AddAddressActivity extends AppCompatActivity{
 //                params2.add(new BasicNameValuePair("Location",location));
                 params2.add(new BasicNameValuePair("HouseNo",houseno));
                 params2.add(new BasicNameValuePair("AppartmentName",landmark));
-                params2.add(new BasicNameValuePair("City",city));
+                params2.add(new BasicNameValuePair("City",selectedcity));
                 params2.add(new BasicNameValuePair("Pincode",pincode));
                 params2.add(new BasicNameValuePair("UserName",user));
                 params2.add(new BasicNameValuePair("Location",locality));
+                params2.add(new BasicNameValuePair("AddressType",addresstype));
+                params2.add(new BasicNameValuePair("CustName",custname));
+
 
                 String Jsonstr = shh.makeServiceCall(url ,ServiceHandler.POST , params2);
 
@@ -376,14 +423,22 @@ public class AddAddressActivity extends AppCompatActivity{
 
             if (Status==1){
 
-                Toast.makeText(AddAddressActivity.this, "Address Save Successfully", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(AddAddressActivity.this, PlaceOrderActivity.class);
-                intent.putExtra("City", city);
-                intent.putExtra("Pincode", pincode);
-                intent.putExtra("HouseNo", houseno);
-                intent.putExtra("AppartmentName", landmark);
-                intent.putExtra("Locality", locality);
-                startActivity(intent);
+                if (radioButtonhome.isChecked() || radioButtonoffice.isChecked()) {
+
+                    Toast.makeText(AddAddressActivity.this, "Address Save Successfully", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AddAddressActivity.this, PlaceOrderActivity.class);
+                    intent.putExtra("City", city);
+                    intent.putExtra("Pincode", pincode);
+                    intent.putExtra("HouseNo", houseno);
+                    intent.putExtra("AppartmentName", landmark);
+                    intent.putExtra("Locality", locality);
+                    intent.putExtra("AddressType", addresstype);
+                    intent.putExtra("CustName", custname);
+                    startActivity(intent);
+                }else {
+
+                    Toast.makeText(AddAddressActivity.this, "Select Address Type", Toast.LENGTH_LONG).show();
+                }
 
             }
         }

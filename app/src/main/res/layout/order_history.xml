@@ -22,11 +22,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:drawableRight="@drawable/icon_calender"
+                android:fontFamily="@font/comfortaa_light"
                 android:gravity="center"
+                android:paddingLeft="2dp"
                 android:paddingTop="20dp"
                 android:text="Ordered On"
                 android:textSize="16sp"
-                app:fontFamily="@font/acme" />
+                android:textStyle="bold" />
 
 
             <TextView
@@ -37,7 +39,8 @@
                 android:gravity="center|left"
                 android:paddingTop="20dp"
                 android:textSize="16sp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvorderamount"
@@ -51,7 +54,8 @@
                 android:paddingTop="20dp"
                 android:textColor="#E74C3C"
                 android:textSize="16sp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -76,7 +80,8 @@
                     android:paddingBottom="20dp"
                     android:text="Time"
                     android:textSize="16sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
 
                 <TextView
@@ -87,7 +92,8 @@
                     android:gravity="center|left"
                     android:paddingBottom="20dp"
                     android:textSize="16sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -97,7 +103,8 @@
                     android:paddingBottom="20dp"
                     android:text="No of Item"
                     android:textSize="16sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvordernoofitem"
@@ -109,7 +116,8 @@
                     android:paddingRight="20dp"
                     android:paddingBottom="20dp"
                     android:textSize="16sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     SignInButton buttongooglelogin;
     Button buttonlogin,buttonsignout;
     String username, password;
-    String path, email, mobile, pass, regrefercode, refercode, referuser, refername, referlastname, refermobile, emailid;
+    String path, email, mobile, pass, phoneno, regrefercode, refercode, referuser, refername, referlastname, refermobile, emailid;
     int amount, ramount=50;
     int Status;
     ServiceHandler shh;
@@ -105,9 +106,11 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         editTextuserid=(EditText)findViewById(R.id.etusername);
         editTextpassword=(EditText)findViewById(R.id.etpassword);
 
+
+
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
-        globalVariable.setMobileNo(mobile);
+
 
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarlogin);
@@ -206,6 +209,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
                 insertLoginData();
 
+
+
 //                if (username.equals("PhoneNo") || username.equals("Email"))
 //                {
 //                    new LoginData().execute();
@@ -222,6 +227,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
             }
         });
+
+
 
 
 //        facebook=(LoginButton)findViewById(R.id.btfacebook);
@@ -284,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         Bundle bundle  = intent.getExtras();
         if (bundle != null)
         {
-            mobile = (String)bundle.get("MobileNo");
+//            mobile = (String)bundle.get("MobileNo");
             emailid = (String)bundle.get("Email");
             pass= (String)bundle.get("Password");
         }
@@ -409,8 +416,10 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     public void insertLoginData()
     {
         username=editTextuserid.getText().toString().trim();
+        phoneno=editTextuserid.getText().toString().trim();
         password=editTextpassword.getText().toString().trim();
 
+        GetData();
 
         if ((checkBoxrefercode).isChecked())
         {
@@ -573,6 +582,22 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 //        Log.i(TAG, "onAPICallStarted");
 //    }
 
+    public void GetData()
+    {
+        Cursor c = databaseHelpher.GetMobileData(username);
+
+        if (c != null)
+        {
+            if (c.moveToFirst()) {
+                do {
+
+                    mobile = c.getString(c.getColumnIndex("PhoneNo"));
+                }
+                while (c.moveToNext());
+            }
+        }
+    }
+
 
     class LoginData extends AsyncTask<Void,Void,String> {
         @Override
@@ -597,6 +622,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
             {
                 List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("PhoneNo",phoneno));
                 params2.add(new BasicNameValuePair("Email", username));
                 params2.add(new BasicNameValuePair("Password", password));
                 params2.add(new BasicNameValuePair("ReferCode",refercode));
@@ -636,7 +662,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
                         editor.putString("pref_pass", editTextpassword.getText().toString());
                         editor.putBoolean("pref_check", boolIscheck);
                         editor.apply();
-                    } else {
+                    }
+                    else {
                         preferences.edit().clear().apply();
                     }
 
@@ -644,6 +671,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
                     final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
                     globalVariable.setUsername(username);
                     globalVariable.setloginPassword(password);
+                    globalVariable.setMobileNo(mobile);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.putExtra("User", username);
                     intent.putExtra("Password", password);
@@ -653,6 +681,34 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
                 }
             }
+
+            else if (phoneno.equals(mobile) && password.equals(pass)) {
+                if (mcheck.isChecked()) {
+                    Boolean boolIscheck = mcheck.isChecked();
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("pref_name", editTextuserid.getText().toString());
+                    editor.putString("pref_pass", editTextpassword.getText().toString());
+                    editor.putBoolean("pref_check", boolIscheck);
+                    editor.apply();
+                } else {
+                    preferences.edit().clear().apply();
+                }
+
+                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
+                globalVariable.setUsername(username);
+                globalVariable.setloginPassword(password);
+                globalVariable.setMobileNo(mobile);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("User", username);
+                intent.putExtra("Password", password);
+                startActivity(intent);
+
+//                editTextuserid.setText("");
+//                editTextpassword.setText("");
+
+            }
+
 
 //            else if (username.equals("null") && password.equals("null") || !username.equals(emailid) && !password.equals(pass))
 //            {
@@ -835,12 +891,13 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         @Override
         protected String doInBackground(Void... params) {
             shh = new ServiceHandler();
-            String url = path + "Registration/ForgetPassword";
+            String url = path + "Registration/getCustDetail";
             Log.d("Url: ", "> " + url);
 
             try{
                 List<NameValuePair> params2 = new ArrayList<>();
                 params2.add(new BasicNameValuePair("Email",username));
+                params2.add(new BasicNameValuePair("PhoneNo",phoneno));
 
 
                 String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
@@ -852,6 +909,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
                         JSONObject a1 = classArray.getJSONObject(i);
                         pass = a1.getString("Password");
                         emailid = a1.getString("Email");
+                        mobile = a1.getString("PhoneNo");
 //                        rate = a1.getString("ItemRate");
 //                        img = a1.getString("ListImg");
 //
@@ -877,7 +935,6 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
             super.onPostExecute(s);
 
             progress.dismiss();
-
 
         }
     }

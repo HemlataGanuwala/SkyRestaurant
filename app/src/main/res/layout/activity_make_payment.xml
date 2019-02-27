@@ -15,7 +15,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"
             android:gravity="center"
             android:text="Payment Status"
             android:textColor="@color/colorsplash"
@@ -48,7 +49,8 @@
                 android:text="Your Payment Status Is"
                 android:textColor="@color/black"
                 android:textSize="20dp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +60,8 @@
                 android:text="Successful"
                 android:textColor="@color/green"
                 android:textSize="20dp"
-                app:fontFamily="@font/acme" />
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -77,7 +80,8 @@
             android:paddingRight="40dp"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:fontFamily="@font/acme" />
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -89,7 +93,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/bg_button"
-        android:fontFamily="@font/acme"
+        android:fontFamily="@font/comfortaa_light"
+        android:textStyle="bold"
         android:text="Home"
         android:textAllCaps="false"
         android:textColor="@color/colorsplash"

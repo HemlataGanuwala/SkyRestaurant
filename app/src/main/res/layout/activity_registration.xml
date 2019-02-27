@@ -31,11 +31,12 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/comfortaa_light"
                     android:paddingLeft="90dp"
                     android:text="Register"
                     android:textColor="#fff"
-                    android:textSize="20sp"
-                    app:fontFamily="@font/acme" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
             </android.support.v7.widget.Toolbar>
 
@@ -57,12 +58,13 @@
                 android:background="@drawable/bg_rect"
                 android:drawableLeft="@drawable/icon_name"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:hint="First Name"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingLeft="10dp"
-                android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etlname"
@@ -72,12 +74,13 @@
                 android:background="@drawable/bg_rect"
                 android:drawableLeft="@drawable/icon_name"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:hint="Last Name"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingLeft="10dp"
-                android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etemail"
@@ -87,12 +90,13 @@
                 android:background="@drawable/bg_rect"
                 android:drawableLeft="@drawable/ic_mail"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="10dp"
-                android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etphoneno"
@@ -102,12 +106,13 @@
                 android:background="@drawable/bg_rect"
                 android:drawableLeft="@drawable/icon_phone"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:hint="Phone Number"
                 android:inputType="phone"
                 android:paddingLeft="10dp"
-                android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etpassword"
@@ -117,12 +122,13 @@
                 android:background="@drawable/bg_rect"
                 android:drawableLeft="@drawable/icon_pass"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
-                android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
 
             <EditText
@@ -133,12 +139,13 @@
                 android:background="@drawable/bg_rect"
                 android:drawableLeft="@drawable/icon_pass"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:hint="Conform Password"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
-                android:textColor="@color/gray"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
 
             <LinearLayout
@@ -167,7 +174,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center|left"
                     android:textSize="16sp"
-                    app:fontFamily="@font/acme" />
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
@@ -193,7 +201,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/bg_button"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:text="Register"
                 android:layout_marginTop="10dp"
                 android:textAllCaps="false"

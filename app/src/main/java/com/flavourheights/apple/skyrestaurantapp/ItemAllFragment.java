@@ -48,9 +48,9 @@ public class ItemAllFragment extends Fragment{
     public ActivityCommunicator activityCommunicator;
     public Context context;
 
-   public interface ActivityCommunicator{
-       public void passDataActivity(String someValue);
-   }
+    public interface ActivityCommunicator{
+        public void passDataActivity(String someValue);
+    }
 
 
     @Override
@@ -135,30 +135,30 @@ public class ItemAllFragment extends Fragment{
             Log.d("Url: ", "> " + url);
 
             try{
-                    List<NameValuePair> params2 = new ArrayList<>();
-                    params2.add(new BasicNameValuePair("ItemName", itemname));
-                    String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
+                List<NameValuePair> params2 = new ArrayList<>();
+                params2.add(new BasicNameValuePair("ItemName", itemname));
+                String jsonStr = shh.makeServiceCall(url, ServiceHandler.POST , params2);
 
-                    if (jsonStr != null) {
-                        JSONObject c1 = new JSONObject(jsonStr);
-                        JSONArray classArray = c1.getJSONArray("Response");
-                        for (int i = 0; i < classArray.length(); i++) {
-                            JSONObject a1 = classArray.getJSONObject(i);
-                            itemname = a1.getString("ItemName");
-                            subitem = a1.getString("SubItemName");
-                            rate = a1.getString("ItemRate");
-                            img = a1.getString("ListImg");
+                if (jsonStr != null) {
+                    JSONObject c1 = new JSONObject(jsonStr);
+                    JSONArray classArray = c1.getJSONArray("Response");
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject a1 = classArray.getJSONObject(i);
+                        itemname = a1.getString("ItemName");
+                        subitem = a1.getString("SubItemName");
+                        rate = a1.getString("ItemRate");
+                        img = a1.getString("ListImg");
 
-                            ItemPlanet planet1 = new ItemPlanet(itemname,subitem,rate,img);
-                            mPlanetlist1.add(planet1);
-
-                        }
+                        ItemPlanet planet1 = new ItemPlanet(itemname,subitem,rate,img);
+                        mPlanetlist1.add(planet1);
 
                     }
-                    else
-                    {
-                        //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-                    }
+
+                }
+                else
+                {
+                    //Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+                }
 
             }
             catch (JSONException e)
@@ -180,20 +180,23 @@ public class ItemAllFragment extends Fragment{
                 }
             });
 
-        adapter.setOnItemClickListner(new ItemAdapter.OnItemClickListner() {
-            @Override
-            public void onItemClick(int position) {
+            adapter.setOnItemClickListner(new ItemAdapter.OnItemClickListner() {
+                @Override
+                public void onItemClick(int position) {
 
-            }
+                }
 
-            @Override
-            public void iconImageViewOnClick(View v, int position) {
-                if (user != null)
-                {
+                @Override
+                public void iconImageViewOnClick(View v, int position) {
+//                int t1 =0;
+//                t1 = recyclerView.getAdapter().getItemCount();
+//
+//                for (int i=0; i<t1; i++)
+//                {
                     ItemPlanet planet1 = mPlanetlist1.get(position);
                     subitem1 = planet1.getSubItemname();
                     rate1 = planet1.getRate();
-
+//                }
                     new getAllItemcount().execute();
 
                     try {
@@ -209,20 +212,15 @@ public class ItemAllFragment extends Fragment{
                     else
                     {
                         Toast.makeText(getActivity(), "Item Already Added", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(getActivity(),EditCartActivity.class);
-                        startActivity(intent);
                     }
 
                     activityCommunicator.passDataActivity(cnt);
-                }
-                else
-                {
-                    Toast.makeText(getActivity(), "Login First", Toast.LENGTH_LONG).show();
-                    //textViewcount.setVisibility(View.GONE);
-                }
-            }
 
-        });
+
+
+                }
+
+            });
 
 
         }
@@ -289,7 +287,7 @@ public class ItemAllFragment extends Fragment{
         }
     }
 
-        class getAllItemcount extends AsyncTask<Void, Void, String>
+    class getAllItemcount extends AsyncTask<Void, Void, String>
     {
         @Override
         protected void onPreExecute() {
@@ -312,7 +310,7 @@ public class ItemAllFragment extends Fragment{
 
                 if (jsonStr != null) {
                     JSONObject c1 = new JSONObject(jsonStr);
-                   Response  = c1.getString("Response");
+                    Response  = c1.getString("Response");
 
 
                 }
@@ -332,11 +330,11 @@ public class ItemAllFragment extends Fragment{
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-           // progress.dismiss();
+            // progress.dismiss();
         }
     }
 
-   public class RegisterData extends AsyncTask<String,String,String>
+    public class RegisterData extends AsyncTask<String,String,String>
     {
         @Override
         protected void onPreExecute() {

@@ -50,6 +50,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ListHold
 
     @Override
     public void onBindViewHolder(@NonNull final ListHolder holder, final int position) {
+
+        holder.textViewcustname.setText(mPlanetList.get(position).getCustName());
+        holder.textViewaddresstype.setText(mPlanetList.get(position).getAddressType());
         holder.textViewhousenm.setText(mPlanetList.get(position).getHousename());
         holder.textViewlandmark.setText(mPlanetList.get(position).getLandmark());
         holder.textViewlocality.setText(mPlanetList.get(position).getLocality());
@@ -91,12 +94,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ListHold
     }
 
     public class ListHolder extends RecyclerView.ViewHolder {
-        TextView textViewhousenm,textViewlandmark,textViewlocality,textViewcity,textViewpincode;
+        TextView textViewhousenm,textViewlandmark,textViewlocality,textViewcity,textViewpincode, textViewaddresstype, textViewcustname;
         ImageView imageViewcheck;
         //LinearLayout parentlayout;
         public ListHolder(View itemView) {
             super(itemView);
             // parentlayout = itemView.findViewById(R.id.list);
+
+            textViewcustname = (TextView) itemView.findViewById(R.id.tvcustname);
+            textViewaddresstype = (TextView) itemView.findViewById(R.id.tvaddresstype);
             textViewhousenm = (TextView) itemView.findViewById(R.id.tvaddhouse);
             textViewlandmark = (TextView) itemView.findViewById(R.id.tvaddlandmark);
             textViewlocality = (TextView) itemView.findViewById(R.id.tvaddlocality);

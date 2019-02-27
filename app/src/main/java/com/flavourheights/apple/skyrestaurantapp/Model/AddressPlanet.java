@@ -7,16 +7,36 @@ public class AddressPlanet {
     private String Locality;
     private String City;
     private String Pincode;
+    private String AddressType;
+    private String CustName;
 //    private String Check;
 
-    public AddressPlanet(String housename, String landmark, String locality, String city,String pincode)
+    public AddressPlanet(String custName, String addressType, String housename, String landmark, String locality, String city,String pincode)
     {
+        this.CustName = custName;
+        this.AddressType = addressType;
         this.Housename = housename;
         this.Landmark = landmark;
         this.Locality = locality;
         this.City = city;
         this.Pincode = pincode;
 //        this.Check = check;
+    }
+
+    public String getCustName() {
+        return CustName;
+    }
+
+    public void setCustName(String custName) {
+        CustName = custName;
+    }
+
+    public String getAddressType() {
+        return AddressType;
+    }
+
+    public void setAddressType(String addressType) {
+        AddressType = addressType;
     }
 
     public String getHousename() {

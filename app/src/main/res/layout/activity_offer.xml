@@ -31,7 +31,8 @@
             android:text="Offers"
             android:textColor="@android:color/white"
             android:textSize="22sp"
-            app:fontFamily="@font/acme" />
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -46,7 +47,8 @@
         android:paddingTop="10dp"
         android:text="Offers Available"
         android:textSize="16sp"
-        app:fontFamily="@font/acme" />
+        android:fontFamily="@font/comfortaa_light"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleoffer"

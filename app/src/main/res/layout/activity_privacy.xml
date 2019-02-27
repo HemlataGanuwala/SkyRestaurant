@@ -26,7 +26,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:text="Term and Condition"
                 android:textColor="@color/colorsplash"
@@ -66,7 +67,7 @@
                             android:text="Terms and Conditions"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -75,7 +76,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/term"
                             android:textSize="12sp"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -84,7 +85,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/privacy"
                             android:textSize="12sp"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -93,7 +94,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/privacys"
                             android:textSize="12sp"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -102,7 +103,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/terms"
                             android:textSize="12sp"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -111,7 +112,7 @@
                             android:layout_weight="1"
                             android:text="@string/termsss"
                             android:textSize="15sp"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -120,7 +121,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/item"
                             android:textSize="16sp"
-                            app:fontFamily="@font/acme" />
+                            app:fontFamily="@font/comfortaa_light" />
 
 
                     </LinearLayout>

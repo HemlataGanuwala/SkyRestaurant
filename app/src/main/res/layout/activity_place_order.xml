@@ -25,7 +25,8 @@
             android:gravity="center"
             android:textColor="@color/colorsplash"
             android:textSize="24sp"
-            android:fontFamily="@font/acme"/>
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -66,7 +67,9 @@
                             android:gravity="center|left"
                             android:paddingLeft="10dp"
                             android:text="Cost"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:id="@+id/tvcost"
@@ -78,7 +81,9 @@
                             android:paddingLeft="10dp"
                             android:paddingRight="40dp"
                             android:textColor="@color/gray"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/comfortaa_light" />
 
 
 
@@ -88,6 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.3dp"
                         android:background="#cdc6c6"/>
+
                     <TextView
                         android:id="@+id/etmobileno"
                         android:layout_width="match_parent"
@@ -97,7 +103,9 @@
                         android:drawablePadding="10dp"
                         android:gravity="center|left"
                         android:paddingLeft="10dp"
-                        android:textSize="16sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/comfortaa_light" />
 
                     <View
                         android:layout_width="match_parent"
@@ -121,7 +129,9 @@
                             android:gravity="center|left"
                             android:hint="Date"
                             android:paddingLeft="10dp"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/comfortaa_light" />
 
                         <TextView
                             android:id="@+id/tvdate"
@@ -129,13 +139,15 @@
                             android:layout_height="30dp"
                             android:layout_weight="1"
                             android:background="@color/browser_actions_bg_grey"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
                             android:fontFamily="@font/acme"
                             android:gravity="center|left"
                             android:hint="Select Date"
-                            android:textSize="16sp"
-                            android:focusable="false"
-                            android:clickable="true"
-                            android:focusableInTouchMode="false"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:fontFamily="@font/comfortaa_light" />
 
                     </LinearLayout>
 
@@ -145,15 +157,33 @@
                         android:background="#cdc6c6"/>
 
                     <TextView
+                        android:id="@+id/tventeraddress"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:fontFamily="@font/comfortaa_light"
                         android:gravity="bottom|center|left"
                         android:hint="Enter Your Address"
                         android:paddingLeft="20dp"
                         android:paddingBottom="10dp"
-                        android:textSize="16sp">
+                        android:textSize="14sp"
+                        android:textStyle="bold">
 
                     </TextView>
+
+                    <TextView
+                        android:id="@+id/tvselectaddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:fontFamily="@font/comfortaa_light"
+                        android:gravity="bottom|center|left"
+                        android:hint="Select Your Address"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="14sp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
 
                     <View
                         android:layout_width="match_parent"
@@ -239,11 +269,22 @@
                         android:id="@+id/btnaddaddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/bg_button"
-                        android:text="Add and CHANGE Address"
-                        android:textColor="@color/colorsplash" />
+                        android:fontFamily="@font/comfortaa_light"
+                        android:text="Add or CHANGE Address"
+                        android:textColor="@color/colorsplash"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:background="#cdc6c6"/>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -254,11 +295,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:fontFamily="@font/acme"
+                        android:fontFamily="@font/comfortaa_light"
                         android:gravity="center|left"
                         android:paddingLeft="10dp"
                         android:text="Payment"
-                        android:textSize="16sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
@@ -276,9 +318,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@color/colorsplash"
-                            android:fontFamily="@font/acme"
+                            android:fontFamily="@font/comfortaa_light"
                             android:text="Online Payment"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -290,21 +333,35 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@color/colorsplash"
-                            android:fontFamily="@font/acme"
+                            android:fontFamily="@font/comfortaa_light"
                             android:text="Cash Payment"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.3dp"
+                            android:background="#cdc6c6" />
+
 
                         <RadioButton
                             android:id="@+id/rbcashondelivery"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:background="@color/colorsplash"
-                            android:fontFamily="@font/acme"
+                            android:fontFamily="@font/comfortaa_light"
                             android:text="Cash On Delivery"
-                            android:textSize="16sp" />
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
 
                     </RadioGroup>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.3dp"
+                        android:background="#cdc6c6" />
+
 
                 </LinearLayout>
 
@@ -319,7 +376,8 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_button"
-                    android:fontFamily="@font/acme"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold"
                     android:text="Proceed"
                     android:textAllCaps="false"
                     android:textColor="@color/colorsplash"

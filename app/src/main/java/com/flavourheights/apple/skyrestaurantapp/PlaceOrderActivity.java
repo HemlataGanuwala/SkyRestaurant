@@ -48,17 +48,17 @@ import java.util.regex.Pattern;
 
 public class PlaceOrderActivity extends AppCompatActivity implements AddressAdapter.OnItemClickListner{
 
-    TextView textViewcost, textViewdate, textViewmobileno;
+    TextView textViewcost, textViewdate, textViewmobileno, textViewenteraddress, textViewselectaddress;
     EditText editTextaddress1,editTextaddress2,editTextaddress3;
     ImageView imageViewback;
     RadioButton radioButtoncash, radioButtononline, radioButtoncashondelivery;
     Button buttonproceed,buttonaddaddress;
     private int mYear, mMonth, mDay, mHour, mMinite, sday, smonth, syear, shour, sminute;
-    String path, currentDate,  cartstatus, totalcount, password, stime, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
+    String path, addresstype,  cartstatus, totalcount, password, stime, mdate, sdate, mobileno, address,totalamount, cdate, paymentmode, user, mtime, refferamount, custname, custfname, custlname, totalcost, amount;
     boolean valid=true;
     ServiceHandler shh;
     int Status=1;
-    String pincode,landmark,houseno,locality,city,datapincode,datalandmark,datahouseno,datalocality,datacity;
+    String pincode,landmark,houseno,locality,city,datapincode,datalandmark,datahouseno,datalocality,datacity, dataaddresstype, datausername;
     RecyclerView recyclerView;
     List<AddressPlanet> mPlanetlist= new ArrayList<AddressPlanet>();
     AddressAdapter adapter;
@@ -76,6 +76,8 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         mobileno = globalVariable.getMobileNo();
         password = globalVariable.getloginPassword();
 
+
+
         new getAllItem().execute();
 
         buttonproceed=(Button)findViewById(R.id.btnproceed);
@@ -83,6 +85,8 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         textViewcost = (TextView) findViewById(R.id.tvcost);
         textViewdate = (TextView) findViewById(R.id.tvdate);
         textViewmobileno = (TextView) findViewById(R.id.etmobileno);
+        textViewenteraddress = (TextView) findViewById(R.id.tventeraddress);
+        textViewselectaddress = (TextView) findViewById(R.id.tvselectaddress);
 
 //        editTextaddress1 = (EditText)findViewById(R.id.etaddress1);
 //        editTextaddress2 = (EditText)findViewById(R.id.etaddress2);
@@ -96,14 +100,13 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         recyclerView=(RecyclerView)findViewById(R.id.rvaddaddress);
         recyclerView.setLayoutManager(new LinearLayoutManager(PlaceOrderActivity.this));
 
-        new getAddressData().execute();
-
         display();
 
 
 
+        new getAddressData().execute();
 
-//
+        //
 //        sdate = DateFormat.getDateInstance().format(new Date());
 //        sday = String.format((String) DateFormat, );
 //        stime = DateFormat.getTimeInstance().format(new Date());
@@ -114,16 +117,13 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 ////            sdate = simpleDateFormat.format(newDate);
 ////        } catch (ParseException e) {
 ////            e.printStackTrace();
-////        }
-
-
+////
+        new getCustomerData().execute();
 
 
         buttonproceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                new getCustomerData().execute();
 
                 insertData();
 
@@ -131,6 +131,16 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 
             }
         });
+
+        buttonaddaddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PlaceOrderActivity.this,AddAddressActivity.class);
+                intent.putExtra("CustName", custname);
+                startActivity(intent);
+            }
+        });
+
 
         Calendar c= Calendar.getInstance();
         sday = c.get(Calendar.DAY_OF_MONTH);
@@ -142,6 +152,8 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         mdate=sday+"-"+ (smonth+1) +"-"+syear;
         mtime=shour+":"+sminute;
         sdate = mdate+"  "+mtime;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(sdate);
+        simpleDateFormat.applyPattern("dd/mm/yyyy hh:mm");
         textViewdate.setText(sdate);
 
 
@@ -154,13 +166,6 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
 //            }
 //        });
 
-        buttonaddaddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PlaceOrderActivity.this,AddAddressActivity.class);
-                startActivity(intent);
-            }
-        });
 
         imageViewback = (ImageView) findViewById(R.id.imgback);
         imageViewback.setOnClickListener(new View.OnClickListener() {
@@ -395,10 +400,16 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
                         datalandmark = a1.getString("AppartmentName");
                         datalocality = a1.getString("Location");
                         datacity = a1.getString("City");
+                        dataaddresstype = a1.getString("AddressType");
                         datapincode = a1.getString("Pincode");
+                        datausername = a1.getString("CustName");
 
-                        AddressPlanet planet = new AddressPlanet(datahouseno, datalandmark,datalocality,datacity,datapincode);
+                        addresstype = "[" + dataaddresstype + "]";
+
+                        AddressPlanet planet = new AddressPlanet(datausername,addresstype,datahouseno, datalandmark,datalocality,datacity,datapincode);
                         mPlanetlist.add(planet);
+
+
                     }
                 }
                 else{
@@ -417,6 +428,14 @@ public class PlaceOrderActivity extends AppCompatActivity implements AddressAdap
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+
+            if (mPlanetlist.isEmpty())
+            {
+                textViewselectaddress.setVisibility(View.GONE);
+            }else {
+                textViewenteraddress.setVisibility(View.GONE);
+                textViewselectaddress.setVisibility(View.VISIBLE);
+            }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

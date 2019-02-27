@@ -24,7 +24,8 @@
                 android:id="@+id/tvcartitemname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
@@ -40,7 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:text="Cost"
                 android:textColor="@color/gray"
@@ -52,7 +54,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/gray"
                 android:textSize="14sp" />
@@ -73,7 +76,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@android:drawable/editbox_background"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
@@ -93,7 +97,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="14sp" />

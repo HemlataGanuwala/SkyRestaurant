@@ -27,7 +27,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold"
                 android:paddingLeft="80dp"
                 android:text="Refer and Earn"
                 android:textColor="@color/colorsplash"
@@ -74,6 +75,7 @@
                 android:paddingRight="20dp"
                 android:text="@string/text1"
                 android:textColor="@color/cardview_dark_background"
+                android:fontFamily="@font/comfortaa_light"
                 android:textSize="16sp" />
 
             <TextView
@@ -82,6 +84,7 @@
                 android:paddingLeft="20dp"
                 android:paddingTop="20dp"
                 android:paddingRight="20dp"
+                android:fontFamily="@font/comfortaa_light"
                 android:text="@string/text2"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="16sp" />
@@ -92,6 +95,7 @@
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
+                android:fontFamily="@font/comfortaa_light"
                 android:text="@string/text3"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="16sp" />
@@ -102,6 +106,7 @@
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
+                android:fontFamily="@font/comfortaa_light"
                 android:text="@string/text4"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="16sp" />
@@ -122,6 +127,7 @@
                 android:gravity="center"
                 android:paddingTop="15dp"
                 android:text="Your Referal Code is"
+                android:fontFamily="@font/comfortaa_light"
                 android:textColor="@color/colorPrimary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -135,6 +141,7 @@
                 android:paddingTop="15dp"
                 android:textColor="@color/blue"
                 android:textSize="28sp"
+                android:fontFamily="@font/comfortaa_light"
                 android:textStyle="bold" />
 
             <Button
@@ -145,7 +152,7 @@
                 android:layout_marginRight="140dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_button"
-                android:fontFamily="@font/acme"
+                android:fontFamily="@font/comfortaa_light"
                 android:text="Share"
                 android:textAllCaps="false"
                 android:textColor="@color/colorsplash"

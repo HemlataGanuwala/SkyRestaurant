@@ -26,7 +26,8 @@
         <TextView
             android:layout_width="250dp"
             android:layout_height="match_parent"
-            android:fontFamily="@font/acme"
+            android:fontFamily="@font/comfortaa_light"
+            android:textStyle="bold"
             android:gravity="center"
             android:text="Cart List"
             android:textColor="@color/colorsplash"
@@ -52,7 +53,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/acme"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold"
                     android:paddingLeft="10dp"
                     android:paddingTop="20dp"
                     android:text="Items"
@@ -85,7 +87,8 @@
                         android:text="Total Cost"
                         android:textColor="@color/colorPrimary"
                         android:textSize="28sp"
-                        app:fontFamily="@font/acme" />
+                        app:fontFamily="@font/comfortaa_light"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/tvtotal_costmenu"
@@ -95,6 +98,8 @@
                         android:layout_weight=".80"
                         android:gravity="center"
                         android:paddingRight="20dp"
+                        android:fontFamily="@font/comfortaa_light"
+                        android:textStyle="bold"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="28sp" />
 
@@ -108,11 +113,12 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:background="@drawable/bg_button"
-                    android:fontFamily="@font/acme"
+                    android:fontFamily="@font/comfortaa_light"
+                    android:textStyle="bold"
                     android:text="Order"
                     android:textAllCaps="false"
                     android:textColor="@color/cardview_light_background"
-                    android:textSize="18sp" />
+                    android:textSize="24sp" />
 
             </LinearLayout>
 

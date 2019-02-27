@@ -99,6 +99,14 @@ public Boolean RegistrationData(String fname,String lname,String email,String ph
         return cursor;
     }
 
+    public Cursor GetMobileData(String user)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from Registration where Email=?", new String[]{user});
+        return cursor;
+    }
+
 
 
 

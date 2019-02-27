@@ -17,13 +17,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvcustname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".60"
+                android:fontFamily="@font/comfortaa_light"
+                android:gravity="right"
+                android:paddingRight="3dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvaddresstype"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvaddhouse"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center" />
+                android:layout_height="match_parent"
+                android:fontFamily="@font/comfortaa_light"
+                android:gravity="center"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -35,16 +62,20 @@
             <TextView
                 android:id="@+id/tvaddlandmark"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/comfortaa_light"
                 android:gravity="right"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvaddlocality"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,16 +88,20 @@
             <TextView
                 android:id="@+id/tvaddcity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/comfortaa_light"
                 android:gravity="right"
-                android:paddingRight="3dp" />
+                android:paddingRight="3dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvaddpincode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/comfortaa_light"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -81,7 +116,7 @@
             android:id="@+id/imgaddcheck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/icon_blackcheck" />
+            android:src="@drawable/icon_blackcheck" />
     </LinearLayout>
 
 </LinearLayout>
