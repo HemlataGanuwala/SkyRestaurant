@@ -179,15 +179,6 @@
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/textView4"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="1"-->
-                <!--android:gravity="center"-->
-                <!--android:text="OR"-->
-                <!--android:textSize="18sp"-->
-                <!--app:fontFamily="@font/acme" />-->
 
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/btgoogle"

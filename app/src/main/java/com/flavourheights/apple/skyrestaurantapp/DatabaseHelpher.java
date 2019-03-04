@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
 
+import com.flavourheights.apple.skyrestaurantapp.Model.CartListPlanet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,41 @@ public static final String DATABSE_NAME= "Restaurant.db";
     public static final String COL4_Registration="PhoneNo";
     public static final String COL5_Registration="Password";
 
+    //ItemMaster
+    public static final String TABLE_Itemmaster="ItemMaster";
+    public static final String COL0_Itemmaster="Itemid";
+    public static final String COL1_Itemmaster="ItemName";
+    public static final String COL2_Itemmaster="SubItemName";
+    public static final String COL3_Itemmaster="ItemRate";
+    public static final String COL4_Itemmaster="ItemType";
+
+   //CardMaster
+    public static final String TABLE_Cardmaster="CardMaster";
+    public static final String COL0_Cardmaster="CID";
+    public static final String COL1_Cardmaster="ItemName";
+    public static final String COL2_Cardmaster="SubItemName";
+    public static final String COL3_Cardmaster="ItemRate";
+    public static final String COL4_Cardmaster="Username";
+    public static final String COL5_Cardmaster="Password";
+    public static final String COL6_Cardmaster="TotalCount";
+    public static final String COL7_Cardmaster="TotalAmt";
+    public static final String COL8_Cardmaster="Status";
+
+   //Ordermaster
+    public static final String TABLE_Ordermaster="OrderMaster";
+    public static final String COL0_Ordermaster="OID";
+    public static final String COL1_Ordermaster="CustomerName";
+    public static final String COL2_Ordermaster="UserName";
+    public static final String COL3_Ordermaster="ODate";
+    public static final String COL4_Ordermaster="OTime";
+    public static final String COL5_Ordermaster="MobileNo";
+    public static final String COL6_Ordermaster="TotalAmout";
+    public static final String COL7_Ordermaster="Status";
+    public static final String COL8_Ordermaster="Address";
+    public static final String COL9_Ordermaster="RAmount";
+    public static final String COL10_Ordermaster="PaymentMode";
+    public static final String COL11_Ordermaster="NoOfItem";
+
 
     public DatabaseHelpher(Context context) {
         super(context, DATABSE_NAME, null, 1);
@@ -34,13 +70,19 @@ public static final String DATABSE_NAME= "Restaurant.db";
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL("create table " +TABLE_Registration+ "(Id Integer  primary key autoincrement, FName Text ,LName Text, Email Text,PhoneNo Text,Password Text)");
+        db.execSQL("create table " +TABLE_Registration+ "(Id Integer  primary key autoincrement, FName Text ,LName Text, Email Text,PhoneNo Text,Password Text)");
+        db.execSQL("create table " +TABLE_Itemmaster+ "(Itemid Integer  primary key autoincrement, ItemName Text ,SubItemName Text, ItemRate Text,ItemType Text)");
+        db.execSQL("create table " +TABLE_Cardmaster+ "(CID Integer  primary key autoincrement, ItemName Text ,SubItemName Text, ItemRate Integer,ItemType Text,Username Text,Password Text, TotalCount Integer,TotalAmt Integer,Status Integer)");
+        db.execSQL("create table " +TABLE_Ordermaster+ "(OID Integer  primary key autoincrement, CustomerName Text ,UserName Text, ODate Text,OTime Text,MobileNo Text,TotalAmout Text, Status Text,Address Text,RAmount Text, PaymentMode Text,NoOfItem Text)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL(" DROP TABLE " +TABLE_Registration);
+        db.execSQL(" DROP TABLE " +TABLE_Itemmaster);
+        db.execSQL(" DROP TABLE " +TABLE_Cardmaster);
+        db.execSQL(" DROP TABLE " +TABLE_Ordermaster);
 
     }
 
@@ -67,7 +109,46 @@ public Boolean RegistrationData(String fname,String lname,String email,String ph
     }
 }
 
+    public Boolean CardData(String itemname,String subitem1,String rate1,String user,String pass,int totalcount,String totalamt,int status)
+    {
+        SQLiteDatabase db= getWritableDatabase();
 
+        ContentValues contentValues=new ContentValues();
+
+        contentValues.put(COL1_Cardmaster,itemname);
+        contentValues.put(COL2_Cardmaster,subitem1);
+        contentValues.put(COL3_Cardmaster,rate1);
+        contentValues.put(COL4_Cardmaster,user);
+        contentValues.put(COL5_Cardmaster,pass);
+        contentValues.put(COL6_Cardmaster,totalcount);
+        contentValues.put(COL7_Cardmaster,totalamt);
+        contentValues.put(COL8_Cardmaster,status);
+
+        long result = db.insert(TABLE_Cardmaster, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public List<CartListPlanet> getcardlist(String user,String pass) {
+        SQLiteDatabase db = getWritableDatabase();
+        CartListPlanet planet = null;
+        List<CartListPlanet>  mPlanetlis = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select SubItemName,ItemRate,TotalCount,TotalAmt from CardMaster Where Username = ? And Password = ?", new String[]{user,pass});
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            planet = new CartListPlanet(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            mPlanetlis.add(planet);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return  mPlanetlis;
+
+    }
 
 
 //    public Boolean UpdateGiveTakeData(String id, String name, String amount, String des, String cdate, String duedate, String type)

@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
 //        final GlobalClass globalVariable1 = (GlobalClass) getApplicationContext();
 
-        globalVariable.setconstr("http://192.168.0.117:8098/api/");
+        globalVariable.setconstr("http://192.168.0.114:8098/api/");
         globalVariable.setUsername(dataemail);
         globalVariable.setloginPassword(datapass);
         globalVariable.setMobileNo(datamobile);

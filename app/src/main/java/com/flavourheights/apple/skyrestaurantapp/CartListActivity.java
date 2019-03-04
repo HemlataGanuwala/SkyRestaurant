@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flavourheights.apple.skyrestaurantapp.Adapter.CardAdapterOff;
 import com.flavourheights.apple.skyrestaurantapp.Adapter.CartAdapter;
 import com.flavourheights.apple.skyrestaurantapp.Model.CartListPlanet;
 
@@ -52,25 +53,32 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
     ServiceHandler shh;
     List<CartListPlanet> mPlanetlist= new ArrayList<CartListPlanet>();
     CartAdapter adapter;
+    CardAdapterOff cardAdapterOff;
     int ammount, totalamount;
     TextView textViewtotlcost;
     int rate,totcount,totalcost;
+    DatabaseHelpher helpher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_list);
 
+        helpher = new DatabaseHelpher(this);
+
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
         user = globalVariable.getUsername();
         pass = globalVariable.getloginPassword();
 
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarcartlist);
+        setSupportActionBar(toolbar);
+
+
         textViewtotlcost=(TextView)findViewById(R.id.tvtotal_cost);
 
 //        Display();
-        mPlanetlist.clear();
-        new addCartItem().execute();
+
 
         imageViewback=(ImageView)findViewById(R.id.img_back);
         imageViewback.setOnClickListener(new View.OnClickListener() {
@@ -87,8 +95,12 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
         recyclerView=(RecyclerView)findViewById(R.id.recyclecartlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(CartListActivity.this));
 
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarcartlist);
-        setSupportActionBar(toolbar);
+        mPlanetlist.clear();
+        mPlanetlist = helpher.getcardlist(user,pass);
+        cardAdapterOff = new CardAdapterOff( mPlanetlist);
+        recyclerView.setAdapter(cardAdapterOff);
+        new addCartItem().execute();
+
 
 //        imageViewedit = (ImageView)findViewById(R.id.cartpencile);
 //        imageViewedit.setOnClickListener(new View.OnClickListener() {
@@ -145,10 +157,10 @@ public class CartListActivity extends AppCompatActivity implements NavigationVie
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent1 = new Intent(CartListActivity.this, MainDashActivity.class);
-                startActivity(intent1);
-                return true;
+//            case android.R.id.home:
+//                Intent intent1 = new Intent(CartListActivity.this, MainDashActivity.class);
+//                startActivity(intent1);
+//                return true;
 
 
             case R.id.cartpencile:

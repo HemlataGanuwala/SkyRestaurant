@@ -24,16 +24,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -44,7 +43,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.Task;
+import com.squareup.picasso.Picasso;
 
 
 import org.apache.http.NameValuePair;
@@ -62,9 +63,8 @@ import static com.flavourheights.apple.skyrestaurantapp.GoogleHelper.RC_SIGN_IN;
 public class LoginActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
     EditText editTextuserid, editTextpassword;
-    TextView textViewregister, textViewforgetpass, textViewrefercode;
+    TextView textViewregister, textViewforgetpass, textViewrefercode,textView;
     CheckBox checkBoxrefercode;
-    LoginButton facebook;
     SignInButton buttongooglelogin;
     Button buttonlogin,buttonsignout;
     String username, password;
@@ -73,11 +73,7 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     int Status;
     ServiceHandler shh;
     ProgressDialog progress;
-    private FacebookHelper facebookHelper;
-    private GoogleHelper googleHelper;
-    private boolean isFbLogin = false;
     private static final String TAG = LoginActivity.class.getSimpleName();
-
     NavigationView navigationView;
     private SharedPreferences preferences;
     private DrawerLayout drawerLayout;
@@ -92,6 +88,11 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
     private static final String EMAIL = "email";
     LoginButton loginButton;
     DatabaseHelpher databaseHelpher;
+    private boolean mIsResolving = false;
+    private boolean mShouldResolve = false;
+    private GoogleApiClient mGoogleApiClient;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +108,8 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         editTextpassword=(EditText)findViewById(R.id.etpassword);
 
 
-
         final GlobalClass globalVariable = (GlobalClass) getApplicationContext();
         path = globalVariable.getconstr();
-
-
 
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbarlogin);
         setSupportActionBar(toolbar);
@@ -209,44 +207,15 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
                 insertLoginData();
 
-
-
-//                if (username.equals("PhoneNo") || username.equals("Email"))
-//                {
-//                    new LoginData().execute();
-//                }else {
-//                    Toast.makeText(LoginActivity.this, "Username Not Matched", Toast.LENGTH_LONG).show();
-//                }
-//
-//                if (password.equals("Password"))
-//                {
-//                    new LoginData().execute();
-//                }else {
-//                    Toast.makeText(LoginActivity.this, "Password Not Matched", Toast.LENGTH_LONG).show();
-//                }
-
             }
         });
 
 
-
-
-//        facebook=(LoginButton)findViewById(R.id.btfacebook);
-//        facebook.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(LoginActivity.this, FacebookActivity.class);
-//                startActivity(intent);
-//            }
-//        });
         loginButton = (LoginButton) findViewById(R.id.login_button);
-//       FacebookSdk.sdkInitialize(getApplicationContext());
-//        AppEventsLogger.activateApp(this);
-
         boolean loggedOut = AccessToken.getCurrentAccessToken() == null;
 
         if (!loggedOut) {
-            //Picasso.with(this).load(Profile.getCurrentProfile().getProfilePictureUri(200, 200)).into(imageView);
+//            Picasso.with(this).load(Profile.getCurrentProfile().getProfilePictureUri(200, 200)).into(imageView);
             Log.d("TAG", "Username is: " + Profile.getCurrentProfile().getName());
 
             //Using Graph API
@@ -256,30 +225,40 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
         loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
         callbackManager = CallbackManager.Factory.create();
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                //loginResult.getAccessToken();
-                //loginResult.getRecentlyDeniedPermissions()
-                //loginResult.getRecentlyGrantedPermissions()
-                boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
-                Log.d("API123", loggedIn + " ??");
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        textView.setText("Successfully logged in");
+                    }
 
-            }
+                    @Override
+                    public void onCancel() {
+                        textView.setText("Login canceled");
+                    }
 
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
+            public void onClick(View view) {
+                if (AccessToken.getCurrentAccessToken() == null)
+                    textView.setText("Logged out");
             }
         });
 
 
+
+//        if (!loggedOut) {
+//            //Picasso.with(this).load(Profile.getCurrentProfile().getProfilePictureUri(200, 200)).into(imageView);
+//            Log.d("TAG", "Username is: " + Profile.getCurrentProfile().getName());
+//
+//            //Using Graph API
+//            getUserProfile(AccessToken.getCurrentAccessToken());
+//        }
 
         getPreferencedata();
 
@@ -352,20 +331,25 @@ public class LoginActivity extends AppCompatActivity implements NavigationView.O
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+
         }
         else
         {
             callbackManager.onActivityResult(requestCode, resultCode, data);
+            getUserProfile(AccessToken.getCurrentAccessToken());
         }
     }
+
+
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {

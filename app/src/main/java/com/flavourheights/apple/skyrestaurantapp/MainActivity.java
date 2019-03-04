@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        int images[] = {R.drawable.rest_slide1, R.drawable.rest_slide2, R.drawable.rest_slide3, R.drawable.rest_slide4, R.drawable.rest_slide5};
+        int images[] = {R.drawable.rest_slide1, R.drawable.rest_slide2, R.drawable.rest_slide3, R.drawable.rest_slide4};
         viewFlipper = (ViewFlipper)findViewById(R.id.viewflipper);
         for(int image: images)
         {
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new getAllItem().execute();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (Exception e) {}
 
         NavigationView navigationView = (NavigationView)findViewById(R.id.nav_view);

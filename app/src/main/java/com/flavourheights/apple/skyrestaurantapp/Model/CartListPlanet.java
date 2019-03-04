@@ -47,4 +47,6 @@ public class CartListPlanet {
     public void setTotalCount(String totalCount) {
         TotalCount = totalCount;
     }
+
+
 }

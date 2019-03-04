@@ -47,6 +47,7 @@ public class ItemAllFragment extends Fragment{
     String cnt,Response;
     public ActivityCommunicator activityCommunicator;
     public Context context;
+    DatabaseHelpher helpher;
 
     public interface ActivityCommunicator{
         public void passDataActivity(String someValue);
@@ -58,6 +59,7 @@ public class ItemAllFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_itemall, container, false);
+        helpher = new DatabaseHelpher(getActivity());
 
         final GlobalClass globalVariable = (GlobalClass) getActivity().getApplicationContext();
         path = globalVariable.getconstr();
@@ -207,6 +209,7 @@ public class ItemAllFragment extends Fragment{
                     {
                         count++;
                         cnt = String.valueOf(count);
+                        helpher.CardData(itemname,subitem1,rate1,user,pass,1,rate1,0);
                         new RegisterData().execute();
                     }
                     else

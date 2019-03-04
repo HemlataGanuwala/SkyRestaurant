@@ -212,10 +212,10 @@ public class EditCartActivity extends AppCompatActivity implements NavigationVie
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent1 = new Intent(EditCartActivity.this, MainDashActivity.class);
-                startActivity(intent1);
-                return true;
+//            case android.R.id.home:
+//                Intent intent1 = new Intent(EditCartActivity.this, MainDashActivity.class);
+//                startActivity(intent1);
+//                return true;
 
 
             case R.id.cartcheck:
