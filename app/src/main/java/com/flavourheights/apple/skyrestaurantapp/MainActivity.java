@@ -74,10 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        first = (TextView) findViewById(R.id.first);
-//        second = (TextView) findViewById(R.id.second);
-
-//        new getofferlist().execute();
 
         navigationView=(NavigationView)findViewById(R.id.nav_view);
         headerview=navigationView.getHeaderView(0);
